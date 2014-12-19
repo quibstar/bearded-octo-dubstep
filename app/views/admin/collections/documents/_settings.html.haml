@@ -1,0 +1,43 @@
+%ul.form-list.label-left.list-bordered
+  =form_for [:admin, @collection], :html => {:id => "asset-settings-form"}  do |f|
+    %li.control-group
+      =f.label "Title *", :class => "control-label"
+      .controls
+        =f.text_field :title, :class => "required"
+    =f.fields_for :settings do |set|
+      %li.control-group
+        %label.inline.checkbox
+          =set.check_box :icons,:checked => checked( @collection.settings ?  @collection.settings['icons'] : 0)
+          Use icons instead of document images
+          .help-block.text-error
+            Image size will not apply if you choose icons.
+      %li.control-group
+        -image_sizes = ['square75','square100','square150', 'square260','horizontal75','horizontal100', 'horizontal150', 'horizontal200', 'horizontal260','vertical75','vertical100','vertical150','vertical200', 'vertical260']
+        %label.control-label
+          Image Size
+        =select("collection[settings]", "image_size", image_sizes,{:selected => @collection.settings ?  @collection.settings["image_size"] : 0})
+        =link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Image Sizes", 'data-toggle' => 'popover', 'data-content' => "#{render 'image_sizes'}"
+
+      %li.control-group
+        %label.inline.checkbox
+          =set.check_box :categories,:checked => checked( @collection.settings ?  @collection.settings['categories'] : 0)
+          Use Categories
+
+      %li.control-group#category-filter
+        %label
+          Add to gallery by category.
+        -categories = Category.where(:document => 1) 
+        -if categories.count > 0
+          -categories.each do |cat| 
+            %label.checkbox.inline
+              -if @collection.categories.include?(cat)
+                -active = 'active'
+              =check_box_tag "collection[category_ids][]",cat.id, @collection.categories.include?(cat), :id => cat.id, :class => "checkbox #{active}",'data-filter' => "#{cat.name}", 'data-categoryId' => "#{cat.id}"
+              =cat.name
+
+      %li.control-group
+        =set.text_field :asset_ids, :value => @collection.settings ?  @collection.settings['asset_ids'] : ''
+        
+      =set.hidden_field :collection, :value => "Document"
+    %hr
+    =f.submit "Save", :class =>'btn btn-primary'

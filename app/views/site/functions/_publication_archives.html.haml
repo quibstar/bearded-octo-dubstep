@@ -1,0 +1,23 @@
+-pub = s.publications.first
+-if pub
+  -post_months = pub.posts.group_by { |t| t.created_at.beginning_of_month }
+.archives
+  %h2
+    Blog Archive
+
+  -post_months.sort.reverse.each do |month, posts|
+    %p
+      =month.strftime('%B %Y')
+    %ul
+      -for post in posts
+        %li
+          -if !current_user
+            -if @page.id == 1
+              =link_to post.title, "#{publication.slug}/#{post.slug}", :class => 'archive link'
+            -else
+              =link_to post.title, "#{request.fullpath}/#{post.slug}", :class => 'archive link'
+          -else
+            -if controller.controller_name == 'site' || controller.controller_name == 'publications'
+              =link_to post.title, "#{request.fullpath}/#{post.slug}", :class => 'archive link'
+            -else
+              =link_to post.title, "#", :class => 'archive link' 

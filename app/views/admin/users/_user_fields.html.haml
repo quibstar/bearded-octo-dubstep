@@ -1,0 +1,100 @@
+%li.control-group
+	=f.label "First Name *" , :class => "control-label"
+	%div{:class => "controls"}
+		=f.text_field :first_name,:class => "required"
+%li.control-group
+	=f.label "Last Name *" , :class => "control-label"
+	%div{:class => "controls"}
+		=f.text_field :last_name,:class => "required"
+-if can?  :create, User
+	%li.section-form
+		%h4
+			%icon.fontello-icon-cog-if
+			Roles
+	%li.control-group
+		-roles = Role.all
+		-roles.each do |r|
+			=label_tag r.name, r.name, :class => "radio inline"	do
+				=check_box_tag "user[role_ids][]",r.id, @user.roles.include?(r)
+				=r.name
+				
+
+
+%li.section-form
+	%h4
+		%icon.fontello-icon-cog-if 
+		Personal
+%li.control-group
+	=f.label :title, :class => "control-label"
+	%div{:class => "controls"}
+		=f.text_field :title
+
+%li.control-group
+	=f.label :email, :class => "control-label"
+	%div{:class => "controls"}
+		=f.text_field :email
+
+%li.control-group
+	=f.label :phone, :class => "control-label"
+	%div{:class => "controls"}
+		=f.text_field :phone
+
+%li.control-group
+	=f.label :twitter, :class => "control-label"
+	%div{:class => "controls"}
+		=f.text_field :twitter, :class => 'input-xlarge'
+		.help-block
+			Example: https://twitter.com/joesmith
+
+%li.control-group
+	=f.label :facebook, :class => "control-label"
+	%div{:class => "controls"}
+		=f.text_field :facebook, :class => 'input-xlarge'
+		.help-block
+			Example: http://wwww.facebook.com/joe.smith
+
+%li.control-group
+	=f.label "LinkedIn", :class => "control-label"
+	%div{:class => "controls"}
+		=f.text_field :linkedin, :class => 'input-xlarge'
+		.help-block
+			Example: http://www.linkedin.com/pub/joe-smith/41/586/491/
+			%br
+			%a{:href => 'http://help.linkedin.com/app/answers/detail/a_id/36316', :target => '_blank'}
+				How to share Linkedin profile
+
+%li.control-group
+	=f.label :bio
+	%div{:class => "controls"}
+		=f.text_area :bio, :class => 'mceEditor', :id => 'textareaTinyMce'
+		.help-block
+			Small summary for including in blog posts.
+
+%li.control-group
+	=f.label :image, :class => "control-label"
+	%div{:class => "controls"}
+		=f.file_field :image
+		.help-block
+			Upload a new image if you wish
+-if @user.image?
+	%li.control-group
+		%label.checkbox
+			= f.check_box :remove_image
+			= f.hidden_field :image_cache
+			Remove current image
+
+%li.section-form
+	%h4
+		%icon.fontello-icon-cog-if 
+		Position/Department
+%li.control-group
+	-categories = Category.where(:user => 1)
+	-if categories.count > 0
+		-categories.each do |cat| 
+			%label.radio.inline
+				=check_box_tag "user[category_ids][]",cat.id, @user.categories.include?(cat), :id => cat.id
+				=cat.name
+	-else
+		%p
+			No categories associated with users.
+			=link_to 'Go to categories', admin_categories_path,:class => 'btn btn-yellow'

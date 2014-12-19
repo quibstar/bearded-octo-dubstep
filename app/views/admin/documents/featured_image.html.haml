@@ -1,0 +1,100 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+.modal-header
+	=link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+	%h4
+		New Document
+.modal-body.form-horizontal
+	#featuredImage
+		%div{:class => 'tabbable tabbable-bordered tabs-top'}
+			%ul.nav.nav-tabs
+				%li.active
+					=link_to "Use Existing Image", '#existing-image', 'data-toggle' => 'tab'
+				%li
+					=link_to "Update Featured Image", '#update-featured-image', 'data-toggle' => 'tab'
+				%li
+					=link_to "New Document Image", '#new-document-image', 'data-toggle' => 'tab'
+			.tab-content
+				.tab-pane.active#existing-image
+					=form_for [:admin, @document] do |f|
+						%h4
+							Select an existing image.
+						%div{:class => 'content-input fields'}
+							%div{:id => 'image_select'}
+								=render 'image_select'
+						=label_tag 'Current Image Size:'
+
+						=collection_select(:document, :image_size, ImageSize.all, :size_value, :size, :selected => @document.document_image.image_size)
+						%hr
+						=f.submit :class => 'btn btn-primary'
+
+				.tab-pane#update-featured-image
+					- doc_image = @document.image ?  [:admin, @document.image] : [:admin, Image.new]
+					=form_for doc_image , :html => {:id => 'update_image' ,:multipart => true } do |f|
+						%h4
+							Update this image.
+						%div{:class => 'content-input fields'}
+							-if @document.image 
+								%div
+									Current image.
+								%span{:class => 'image'}
+									=image_tag @document.image.image_url(:small)
+
+							=render 'shared/error_messages', :object => f.object 
+							=f.hidden_field :asset , :value => 'document'
+							=f.hidden_field :asset_id , :value => params[:id]
+
+							%ul.form-list.label-left.list-bordered.dotted
+								%li.control-group
+									=f.label :title, :class => "control-label"
+									.controls
+										=f.text_field :title
+										.help-box
+											(required)
+								%li.control-group
+									=f.label :description, :class => "control-label"
+									.controls
+										=f.text_area :description, :rows => 3
+								%li.control-group
+									=f.label :image, :class => "control-label"
+									.controls
+										=f.file_field :image, :class => "control-label"
+								%li.control-group
+									=f.label 'Image Size', :class => "control-label"
+									.control
+										=collection_select(:image, :image_size, ImageSize.all, :size_value, :size, :selected => @document.document_image.image_size )
+								%li.control-group
+									=f.submit :class => 'btn btn-primary'
+
+				.tab-pane#new-document-image
+					=form_for [:admin, Image.new] , :html => {:multipart => true } do |f|
+						%h4
+							Upload a new image.
+						%div{:class => 'content-input fields'}
+
+							=render 'shared/error_messages', :object => f.object 
+							=f.hidden_field :asset , :value => 'document'
+							=f.hidden_field :asset_id , :value => params[:id]
+							%ul.form-list.label-left.list-bordered.dotted
+								%li.control-group
+									=f.label :title, :class => "control-label"
+									.controls
+										=f.text_field :title
+										.help-box
+											(required)
+								%li.control-group
+									=f.label :description, :class => "control-label"
+									.controls
+										=f.text_area :description, :rows => 3
+								%li.control-group
+									=f.label :image, :class => "control-label"
+									.controls
+										=f.file_field :image, :class => "control-label"	
+								%li.control-group			
+									=label_tag 'Current Image Size:'
+									.control
+										=collection_select(:image, :image_size, ImageSize.all, :size_value, :size, :selected => @document.document_image.image_size )
+								%li.control-group	
+									=f.submit :class => 'btn btn-primary'
+
+

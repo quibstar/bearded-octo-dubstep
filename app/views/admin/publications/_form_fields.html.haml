@@ -1,0 +1,136 @@
+.widget-content.form-horizontal
+  %ul.form-list.label-left.list-bordered
+    %li.control-group 
+      =f.label "Title *", :class => "control-label"
+      .controls
+        =f.text_field :title
+  
+    %li.control-group 
+      =f.label :allow_comments, :class => "control-label"
+      %div{:class => "controls"}
+        =f.check_box :allow_comments
+      
+    %li.control-group 
+      =f.label 'Comments open ', :class => "control-label"
+      .controls
+        =f.text_field :duration 
+        .help-block
+          (Duration is set for days. Set to 0 for no time limit)
+    %li.control-group 
+      =f.label :nesting, :class => "control-label"
+      .controls
+        =f.check_box :nesting
+        
+    %li.control-group 
+      =f.label :nesting_level, :class => "control-label"
+      .controls
+        =f.text_field :nesting_level
+    %li.control-group 
+      =f.label :notify_author, :class => "control-label"
+      %div{:class => "controls"}
+        =f.check_box :notify_author
+        
+    %li.control-group 
+      =f.label :templates
+      .help-block
+        Posts will go in main content are. You will have to fill out the side bars with content.
+        
+      %ul.templates
+        -for t in @templates
+          %li
+            %span{:class => "templates-sprite templates-#{t.temp_class}"}
+            -if t.id == publication.template_id
+              -checked = 'checked'
+              %label.radio
+                .radios
+                  =radio_button("publication", "template_id", t.id, :checked => checked, :class => 'radios') 
+                %span.template-title
+                  =t.template_name
+            -else
+              %label.radio
+                .radios
+                  =radio_button("publication", "template_id", t.id, :class => 'radios')
+                %span.template-title
+                  =t.template_name
+
+    %li
+      =f.label :post_template
+      .help-block
+        All post for this publication will have this layout.
+
+      %ul.templates
+        %li
+          .img-left
+          %label.radio.inline
+            .radios
+              =f.radio_button(:post_template, 1)
+              Image left
+        %li
+          .img-center
+          %label.radio.inline
+            .radios
+              =f.radio_button(:post_template, 2)
+              Text under large image
+        %li
+          .img-right
+          %label.radio.inline
+            .radios
+              =f.radio_button(:post_template, 3)
+              Image right.
+      .text-warning.help-block
+        Make sure you set your image to a small size if you choose image right or image left post template
+    %li.control-group    
+      =f.label "Footer for #{publication.title}"
+      -footer = Footer.all  
+      =select 'publication', 'footer_id',  footer.collect {|f| [f.title, f.id]}, :selected => publication.footer_id
+            
+  .social-icons
+    .fieldset
+      %legend
+        %h4
+          %i.fontello-icon-thumbs-up
+          Social "Like" Buttons
+    .like-buttons
+      =image_tag('social_icons/icons_24px/facebook.png')
+      %label.checkbox.inline
+        =f.check_box :facebook
+        Facebook
+      
+      =image_tag('social_icons/icons_24px/twitter.png')
+      %label.checkbox.inline
+        =f.check_box :twitter
+        Twitter
+
+      =image_tag('social_icons/icons_24px/google.png')
+      %label.checkbox.inline
+        =f.check_box :google
+        Google Plus 1 Button
+
+      =image_tag('social_icons/icons_24px/linkedin.png')
+      %label.checkbox.inline
+        =f.check_box :linkedin
+        Linkedin Button
+
+      =image_tag('social_icons/icons_24px/pinterest.png')
+      %label.checkbox.inline
+        =f.check_box :pinterest
+        Pinterest Button"
+      
+
+
+    .fieldset
+      %legend
+        %h4
+          %i.fontello-icon-comment
+          Post Sharing            
+    .sharing-icons.clearfix
+      %p
+        Choose social networks you would like shown at the end of every post.
+      %ul
+        -networks = Network.order(:name)
+        -for network in networks 
+          %li
+            %span{:class => "social-icons-16-sprite social-icons-16-#{network.name.downcase.gsub(' ','')} icons"}
+            %label.checkbox.inline
+              =check_box_tag "publication[network_ids][]",network.id, publication.networks.include?(network), :id => publication.id 
+              =network.name

@@ -1,0 +1,15 @@
+-if @page
+	-@sections.where(:parent_id => s.id).order('position ASC').each do |s|
+		%div{:id => "#{s.section_type}-#{s.id}"}	
+			=render 'site/sub_section', :s => s
+
+-if @publication
+	-@sections.where(:parent_id => s.id).order('position ASC').each do |s|
+		%div{:id => "#{s.section_type}-#{s.id}"}	
+			=render 'site/sub_section', :s => s
+			
+			
+-if @footer
+	-@footer.where(:parent_id => s.id).order('position ASC').each do |s|
+		%div{:id => "#{s.section_type}-#{s.id}"}	
+			=render 'site/sub_section', :s => s

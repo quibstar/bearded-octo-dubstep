@@ -1,0 +1,11 @@
+%div{:class => 'action-nav-top'}
+	%ul
+		%li
+			=link_to "Back to Site Settings", settings_path
+%div{:class => 'data-container full'}
+	%div{:class => 'data-container-header'}
+		%h2
+			Edit 
+			=@setting.site_title
+	=render 'form'
+%div{:class => 'clear-both'}

@@ -1,0 +1,19 @@
+-# empty array for getting cagegories
+-pubs = []
+%li.section-form
+	%h4
+		Choose a slider.
+	.help-block
+		This will show all the categories from a particular publication.
+%li.control-group 
+	-for pub in Publication.all
+		-pub.posts.each do |post|
+			-if !post.categories.empty?
+				-pubs << pub.id
+
+	-# remove duplicates
+	-pubs.uniq!
+	-for pub in Publication.where(:id => pubs)
+		%label.radio.inline
+			=radio_button_tag "section[publication_ids][]",pub.id, @section.publications.include?(pub), :id => pub.id
+			=pub.title

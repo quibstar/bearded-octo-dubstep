@@ -1,0 +1,20 @@
+=content_for :page_title do
+  %h1.page-title
+    New Publication
+
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          = link_to 'Back to Publications', admin_publications_path
+
+.widget.widget-simple
+  .widget-header
+    %h4
+      %i.fontello-icon-cog-alt
+      New Publication
+      %small
+        settings
+  =render 'form'

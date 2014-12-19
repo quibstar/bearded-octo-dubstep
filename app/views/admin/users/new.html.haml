@@ -1,0 +1,44 @@
+=content_for :custom_js do
+	=javascript_include_tag 'form-validation/jquery.validate.min.js'
+	=javascript_include_tag 'form-validation/users-form-validate'
+
+=content_for :page_title do
+	%h1.page-title
+		New User
+
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i,'',:class => 'fontello-icon-back') + ' Back to Users',admin_users_path
+
+
+.widget.widget-simple
+	.widget-header
+		%h4
+			%i.fontello-icon-user
+			Nerw User
+			%small
+				settings
+	=form_for [:admin, @user], :html => {:multipart => true } do |f|
+		.widget-content.form-horizontal	
+			.widget-body
+				=render 'shared/error_messages', :object => f.object 
+				%fieldset
+					%ul.form-list.label-left.list-bordered.dotted
+						%li.section-form
+							%h4
+								Required
+						%li.control-group
+							=f.label "Email * ", :class => "control-label"
+							%div{:class => "controls"}
+								=f.text_field :email, :class => "required"
+						%li.control-group
+							=f.label "Password *" , :class => "control-label"
+							%div{:class => "controls"}
+								=f.password_field :password	, :class => "required"			
+						= render :partial => 'user_fields', :locals => { :f => f }
+		.widget-footer
+			=f.submit "Save", :class =>'btn btn-primary'

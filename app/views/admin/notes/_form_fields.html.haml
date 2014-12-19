@@ -1,0 +1,36 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+:javascript
+  $("#note_reference").select2({tags:["Content", "CSS", "Programming", "Design", "Development"]});
+:css
+  .input-500{width:500px;display:block;}
+%ul.form-list.label-left.list-bordered
+  %li.control-group
+    =f.label :title, :class => "control-label"
+    .controls
+      =f.text_field :title,:class => 'required'
+  %li.control-group
+    =f.label 'Note', :class => "control-label"
+    .controls
+      =f.text_area :content, :class => 'required mceEditor', :id => 'textareaTinyMce'
+  %li.control-group
+    =f.label 'In Reference to', :class => "control-label"
+    =f.text_field :reference, :class => 'input-500'
+    .help-text.clear-both
+      Example: CSS, Content, Post-launch
+
+  %li
+    %h5
+      Page Reference
+    -Navigation.order('id').each do |navigation|
+      =collection_check_boxes(:note, :page_ids, navigation.pages.order(:position), :id, :title)  do |b|
+        =b.label(class: "checkbox inline"){ b.check_box + b.text }
+  %li
+    %h5
+      Reference Users
+    =collection_check_boxes(:note, :user_ids, User.all, :id, :name) do |b|
+      =b.label(class: "checkbox inline"){ b.check_box + b.text }
+
+  =f.hidden_field :user_id, :value => @note.user_id ? @note.user_id : current_user.id
+  =f.hidden_field :current_user_id, :value => current_user.id
+      

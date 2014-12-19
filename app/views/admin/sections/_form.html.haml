@@ -1,0 +1,48 @@
+%div{:class => 'data-container-content form-container'}
+	=form_for [set_resource, @section] do |f|
+		=f.hidden_field set_resource_symbol, :value => set_resource_id
+		=f.hidden_field :section_type, :value => params[:section_type]
+		=f.hidden_field :location, :value => params[:location]
+		=f.hidden_field :parent_id, :value => set_parent_id(params[:sid])
+		=hidden_field_tag :route, set_resource_route
+		%ul	
+			%li
+				%div{:class => 'divider'}
+					=f.label :extra_class
+					=f.text_field :extra_class
+					=f.label :section_class
+					=select 'section', 'section_class',  CssClasses.all.collect {|c| [c.css_class, c.css_class]},:include_blank => true
+					%span{:class => 'float-right'}
+						=f.check_box :visible
+						=f.label "Visible"
+
+			-if(params[:section_type] == "tabbed")
+				%p
+					How many tabs would you like to create?
+					-num = [1,2,3,4,5,6,7,8,9,10]
+					=select 'section', 'tabs',  num,{}
+									
+			-elsif (params[:section_type] == "accordions")
+				%p
+					How many accordions would you like to create?
+					-num = [1,2,3,4,5,6,7,8,9,10]
+					=select 'section', 'accordions',  num,{}
+			-elsif(params[:section_type] == "columns")
+				%div{:class => 'content-input fields'}
+					=render :partial => 'sections/columns/columns', :locals => {:f => f}
+					
+			-elsif(params[:section_type] == "functions")
+				%div{:class => 'content-input fields'}
+					=render :partial => 'sections/functions/functions', :locals => {:f => f}
+					
+			-elsif(params[:section_type] == "slideshow")
+				%div{:class => 'content-input fields'}
+					=render :partial => 'slideshow/slideshow_forms/slideshow', :locals => {:f => f}
+				
+			-else
+				=f.fields_for :contents do |b|
+					%li
+						=b.label :content
+						=b.text_area :content, :class => 'textarea'
+			%li{:class => 'submit-button'}
+				=f.submit "Submit" 

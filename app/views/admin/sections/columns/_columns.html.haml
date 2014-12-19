@@ -1,0 +1,197 @@
+%p
+	How many columns would you like to create?
+	-num = ['',2,3,4,5]
+	=select 'section', 'cols',  num,{},:class => 'section_cols'
+
+-# 2h -2 halves, 4q - 4 quaters, 3t- 3 thirds etc 
+
+%div{:class => 'col-2 col-div'}
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column, '2h'
+	%div{:class => 'col-90'}
+		Two Column 50%.
+
+	%div{:class => 'col-50 col clear-both'}
+		50%
+	%div{:class => 'col-50 col last append-bottom'}
+		50%
+	%div{:class => 'clear-both spacer'}
+	
+	%div{:class => 'columnWidth-5'}	
+		=f.radio_button :column,  '1q-3q'			
+	%div{:class => 'col-100'}
+		Two Column 25% 75%.
+	%div{:class => 'col-25 col clear-both'}
+		25%
+	%div{:class => 'col-75 col last append-bottom'}
+		75%
+	%div{:class => 'clear-both spacer'}
+
+	%div{:class => 'columnWidth-5'}	
+		=f.radio_button :column,  '3q-1q'
+	%div{:class => 'col-100 '}
+		Two Column 75% 25%.	
+	%div{:class => 'col-75 col clear-both'}
+		75%
+	%div{:class => 'col-25 col last append-bottom'}
+		25%
+	%div{:class => 'clear-both spacer'}
+	
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  '1t-2t'
+	%div{:class => 'col-100 '}
+		Two Column 33% 66%.	
+	%div{:class => 'col-33 col clear-both'}
+		33%
+	%div{:class => 'col-66 col last append-bottom'}
+		66%
+	
+	%div{:class => 'clear-both spacer'}
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  '2t-1t'
+	%div{:class => 'col-100 '}
+		Two Column 66% 33%.	
+	%div{:class => 'col-66 col clear-both'}
+		66%
+	%div{:class => 'col-33 col last append-bottom'}
+		33%
+	%div{:class => 'clear-both spacer'}	
+
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  'two-eight'
+	%div{:class => 'col-100'}
+		Two Column 20% 80%.		
+	%div{:class => 'col-20 col clear-both'}
+		20%
+	%div{:class => 'col-80 col last append-bottom'}
+		80%	
+	%div{:class => 'clear-both spacer'}
+	
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  'eight-two'
+	%div{:class => 'col-100'}
+		Two Column 80% 20%.
+	%div{:class => 'col-80 col clear-both'}
+		80%		
+	%div{:class => 'col-20 col last append-bottom'}
+		20%	
+	%div{:class => 'clear-both spacer'}
+	
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  'six-four'
+	%div{:class => 'col-100 '}
+		Two Column 60% 40%.
+	%div{:class => 'col-60 col clear-both'}
+		60%
+	%div{:class => 'col-40 col last append-bottom'}
+		40%		
+	%div{:class => 'clear-both spacer'}
+	
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  'four-six'
+	%div{:class => 'col-100'}
+		Two Column 40% 60%.
+	%div{:class => 'col-40 col clear-both'}
+		40%
+	%div{:class => 'col-60 col last append-bottom'}
+		60%	
+	%div{:class => 'clear-both spacer'}
+		
+%div{:class => 'col-3 col-div'}	
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  '1q-2q-1q'			
+	%div{:class => 'col-100 '}
+		Three Column 25% 50% 25%.	
+	%div{:class => 'col-25 col clear-both'}
+		25%
+	%div{:class => 'col-50 col '}
+		50%
+	%div{:class => 'col-25 col last append-bottom'}
+		25%
+	%div{:class => 'clear-both spacer'}
+	
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  '2q-1q-1q'			
+	%div{:class => 'col-100 '}
+		Three Column 50% 25% 25%.	
+	%div{:class => 'col-50 col clear-both'}
+		50%
+	%div{:class => 'col-25 col '}
+		25%
+	%div{:class => 'col-25 col last append-bottom'}
+		25%
+	%div{:class => 'clear-both spacer'}
+	
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  '1q-1q-2q'			
+	%div{:class => 'col-100 '}
+		Three Column 25% 25% 50%.	
+	%div{:class => 'col-25 col clear-both'}
+		25%
+	%div{:class => 'col-25 col '}
+		25%
+	%div{:class => 'col-50 col last append-bottom'}
+		50%
+	%div{:class => 'clear-both spacer'}
+	
+
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  '3t'
+	%div{:class => 'col-100'}
+		Three Column 33%.		
+	%div{:class => 'col-33 col clear-both'}
+		33%
+	%div{:class => 'col-33 col'}
+		33%
+	%div{:class => 'col-33 col last append-bottom'}
+		33%
+	%div{:class => 'clear-both spacer'}
+
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  'two-six-two'
+	%div{:class => 'col-100'}
+		Three Column 20% 60% 20%.
+	%div{:class => 'col-20 col clear-both'}
+		20%
+	%div{:class => 'col-60 col'}
+		60%
+	%div{:class => 'col-20 col last append-bottom'}
+		20%
+	
+	%div{:class => 'clear-both spacer'}
+
+%div{:class => 'col-4 col-div'}		
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  '4q'	
+	%div{:class => 'col-90'}
+		Four Column 25%.		
+	%div{:class => 'clear-both spacer'}
+	
+	%div{:class => 'col-25 col clear-both'}
+		25%
+	%div{:class => 'col-25 col '}
+		25%
+	%div{:class => 'col-25 col'}
+		25%
+	%div{:class => 'col-25 col last append-bottom'}
+		25%	
+	%div{:class => 'clear-both spacer'}
+	
+	
+%div{:class => 'col-5 col-div'}
+	%div{:class => 'columnWidth-5'}
+		=f.radio_button :column,  '5p'
+	%div{:class => 'col-100'}
+		Five Column 20%.		
+	%div{:class => 'col-20 col clear-both'}
+		20%
+	%div{:class => 'col-20 col '}
+		20%
+	%div{:class => 'col-20 col '}
+		20%
+	%div{:class => 'col-20 col'}
+		20%
+	%div{:class => 'col-20 col last append-bottom'}
+		20%
+		
+	%div{:class => 'clear-both spacer'}

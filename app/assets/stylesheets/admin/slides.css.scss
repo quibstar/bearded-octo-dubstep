@@ -1,0 +1,126 @@
+@import "../partials/variables.css.scss";
+
+.custom-html {
+	.header-text p {
+		/* Mimics public side h3 for sliders */
+		font-size: 28px; 
+		line-height: 1;
+		margin-bottom: 1.00em;
+	}	
+}
+.slider-tool-bar {
+	position: absolute;
+}
+.slider-image {
+	position: relative;
+	margin: 5px 0;
+	p {
+		margin: 0;
+		padding: 0;
+	}
+	
+	.header-text {
+		font-size: 2.5em;
+		position: absolute;
+		top: 50px;
+		left: 30px;
+	}
+	.slider-content {
+		position: absolute;
+		top: 150px;
+		left: 30px;
+		/*width: 33%;*/
+		p {
+			font-size: 1.3em;
+		}
+
+	}
+	.link-one {
+		position: absolute;
+		top: 220px;
+		left: 30px;
+	}
+	.link-two {
+		position: absolute;
+		top: 220px;
+		left: 150px;
+	}
+	.slider-header-slider,
+	.slider-content-slider {
+		margin-bottom: 5px;
+		width: 90%;
+		margin:  0 auto 5px;
+	}
+}
+.slide-settings {
+	border:3px solid black;
+	position: absolute;
+	right: 0;
+	top: -50px;
+	z-index: 1000;
+	width: 240px;
+	background-color: #333;
+	@include border-radius(4px);
+	padding: 5px;
+	display: none;
+	color: #DDD;
+	h3,p {
+		color: #DDD;
+	}
+	.divide {
+		clear: both;
+		border-top: 1px solid #555;
+		.control{
+			color:yellow;
+			padding: 2px;
+			background:#111;
+			cursor: pointer;
+		}
+	}
+	input[type='text'],
+	textarea {
+		width: 190px !important;
+		background-color: #555;
+		border: none;
+		@include border-radius(4px);
+		color: #DDD;
+		border: 1px solid black;
+	}
+	textarea {
+		height: 50px;
+	}
+	.closer {
+		float: right;
+	}
+}
+.html-content {
+	display: none;
+}
+
+.internal-link-box {
+	position: relative;
+	float: left;
+	a {
+		color: white !important;
+	}
+}
+.internal-links-modal {
+	display: none;
+}
+.int-link-btn {
+	margin-bottom: 5px;
+}
+#internal-links-list {
+	> ol {
+		margin: 0;
+		padding-left: 0;
+		list-style: none;
+		a:hover {
+			text-decoration:none;
+		}
+		ol,
+		ul {
+			list-style: none;
+		}
+	}
+}

@@ -1,0 +1,20 @@
+%ul.form-list.label-left.list-bordered.form-horizontal
+  =render 'admin/documents/common_fields', :f => f
+  %li.section-form
+    %h4
+      Categories
+  %li.control-group
+    -categories = Category.where('document = 1') 
+    -if categories.count > 0
+      -categories.each do |cat|
+        %label.checkbox.inline
+          =check_box_tag "document[category_ids][]",cat.id, @document.categories.include?(cat), :id => cat.id, :class => 'checkbox'
+          =cat.name 
+    -else
+      %p
+        No categories assoicated with Documents.
+        =link_to 'Go to categories', admin_categories_path,:class => 'btn btn-yellow'
+
+    %li.control-group
+      Current image Size: 
+      =collection_select( :document, :image_size, ImageSize.all, :size_value, :size, :selected => @document.document_image.image_size)

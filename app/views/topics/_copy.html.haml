@@ -1,0 +1,26 @@
+%div{:id => "copy-#{copy.id}", :class => "copy"} 
+  .copy-content
+    .span2.text-right
+      %strong
+        Copy For:
+    .span6
+      -if copy.for_network == "Twitter"
+        =image_tag "../social_icons/16px/twitter.png"
+      -if copy.for_network == "Google"
+        =image_tag "../social_icons/16px/google.png"
+      -if copy.for_network == "FaceBook Ad"
+        =image_tag "../social_icons/16px/facebook.png"
+      -if copy.for_network == "FaceBook Post"
+        =image_tag "../social_icons/16px/facebook.png"
+      -if copy.for_network == "LinkedIn"
+        =image_tag "../social_icons/16px/linkedin.png"
+      =copy.for_network
+  .copy-content
+    .span2.text-right
+      %strong
+        Copy:
+    .span8
+      =simple_format copy.content
+  .span2
+  .span8
+    =link_to "Create Alternative Copy", new_topic_group_copy_path(@topic, group, :copy_id => copy.id, :rev_id => @review.url), :class => "btn-u btn-u-small new-copy fbox-copy fancybox.ajax clear-both", :data => {:textarea => "copy_content", :network => "#{group.network}"}

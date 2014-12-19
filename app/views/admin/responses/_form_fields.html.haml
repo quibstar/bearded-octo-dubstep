@@ -1,0 +1,11 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered
+  %li.control-group
+    =f.label 'Response', :class => "control-label"
+    .controls
+      =f.text_area :response, :class => 'required mceEditor', :id => 'textareaTinyMce'
+
+  =f.hidden_field :user_id, :value => @response.user_id ? @response.user_id : current_user.id
+  =f.hidden_field :note_id, :value => @response.note_id ? @response.note_id : params[:note]
+      

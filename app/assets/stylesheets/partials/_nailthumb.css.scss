@@ -1,0 +1,233 @@
+.gall-caption {
+  padding: 10px 0 0;
+}
+
+.gall-legend {
+  font-size: 12px;
+}
+
+.data-icon {
+  color: #999999;
+  cursor: default;
+}
+
+.menu-icon {
+  float: right;
+}
+
+/* GALLERY STYLE 
+ ---------------------------------------------------------------------------- */
+/* GALLERY WELL STYLE
+ ---------------------------------------- */
+.gallery-well {
+  font-size: 13px;
+}
+
+.gallery-well p {
+  line-height: 16px;
+}
+
+.gallery-well .thumbnail {
+  color: #333;
+  background-color: #f6f7fe;
+  border-color: #fff;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30);
+}
+
+.gallery-small .thumbnail {
+ /* margin: 0 10px 10px 0;*/
+  margin: 5px;
+}
+
+/* GALLERY CONDENSED STYLE
+ ---------------------------------------- */
+.gallery-condensed .thumbnail {
+  border: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.gallery-nailthumb a.thumbnail:hover {
+  border-color: #0088cc;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+
+.gallery-nailthumb .thumbnail > img {
+  display: block;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.gallery-nailthumb .thumbnail .caption {
+  padding: 9px;
+  color: #555555;
+}
+
+/* NAILTHUMB
+ ---------------------------------------------------------------------------- */
+.nailthumb-container {
+  display: block;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: left; 
+}
+
+.nailthumb-container img.nailthumb-image {
+  margin: 0px;
+  padding: 0px;
+  max-width: none;
+  text-align: left;
+  float: left;
+}
+
+.nailthumb-container span.nailthumb-title {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  color: White;
+  display: block;
+  font-size: 10px;
+  height: 30px;
+  left: 0;
+  margin-top: 2px;
+  padding: 0 9px;
+  line-height: 30px;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+  float: left;
+}
+
+/* THUMBNAIL SIZE
+ ---------------------------------------- */
+.square75 .gall-caption {
+  width: 75px;
+}
+
+.square100 .gall-caption {
+  width: 100px;
+}
+
+.square150 .gall-caption {
+  width: 150px;
+}
+
+.square200 .gall-caption {
+  width: 200px;
+}
+
+.square260 .gall-caption {
+  width: 260px;
+}
+
+.horizontal75 .gall-caption {
+  width: 75px;
+}
+
+.horizontal100 .gall-caption {
+  width: 100px;
+}
+
+.horizontal200 .gall-caption {
+  width: 200px;
+}
+
+.vertical75 .gall-caption {
+  width: 75px;
+}
+
+.vertical100 .gall-caption {
+  width: 100px;
+}
+
+.vertical200 .gall-caption {
+  width: 200px;
+}
+
+.square75 .nailthumb-container {
+  width: 75px;
+  height: 75px;
+}
+
+.square100 .nailthumb-container {
+  width: 100px;
+  height: 100px;
+}
+
+.square150 .nailthumb-container {
+  width: 150px;
+  height: 150px;
+}
+
+.square200 .nailthumb-container {
+  width: 200px;
+  height: 200px;
+}
+
+.square260 .nailthumb-container {
+  width: 260px;
+  height: 260px;
+}
+
+.horizontal75 .nailthumb-container {
+  width: 75px;
+  height: 47px;
+}
+
+.horizontal100 .nailthumb-container {
+  width: 100px;
+  height: 63px;
+}
+
+.horizontal150 .nailthumb-container {
+  width: 150px;
+  height: 94px;
+}
+
+.horizontal200 .thumbnail-size,
+.horizontal200 .nailthumb-container {
+  width: 200px;
+  height: 125px;
+}
+
+.horizontal260 .thumbnail-size,
+.horizontal260 .nailthumb-container {
+  width: 260px;
+  height: 162px;
+}
+
+.vertical75 .nailthumb-container {
+  width: 75px;
+  height: 120px;
+}
+
+.vertical100 .nailthumb-container {
+  width: 100px;
+  height: 160px;
+}
+
+.vertical150 .nailthumb-container {
+  width: 150px;
+  height: 240px;
+}
+
+.vertical200 .nailthumb-container {
+  width: 200px;
+  height: 320px;
+}
+
+.vertical260 .nailthumb-container {
+  width: 260px;
+  height: 416px;
+}

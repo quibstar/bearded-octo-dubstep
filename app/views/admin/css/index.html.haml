@@ -1,0 +1,33 @@
+=content_for :page_title do 
+	%h1
+		CSS
+
+.navbar.navbar-page
+	.navbar-inner
+		.container
+
+%p{:class => 'info'}
+	Be very careful updating this file incorrectly could result in you site being unpleasant to look at.
+%p
+	Changes will be saved to the css.css file. Any changes here can/will be applied to user assigned classes on page sections. For more information on user assigned go to the help area of the CMS.
+
+.span4
+	=form_tag '/admin/css/1', :method => :put do 
+		%ul.form-list.label-left.list-bordered
+			%li.control-group
+				%label.control-label
+					CSS
+				.controls
+					=text_area_tag 'css', @css, :rows => 15, :cols => 25
+
+		=submit_tag "Save",:class =>'btn btn-yellow'
+
+.span6
+	.widget.widget-box
+		.widget-header
+			%h4
+				Current Styles.
+		.widget-content
+			.widget-body
+				%div{:class => 'data-container-content'}
+					=@css.gsub(/}/, '}<br />').html_safe

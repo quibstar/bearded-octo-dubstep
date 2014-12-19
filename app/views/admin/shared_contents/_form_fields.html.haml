@@ -1,0 +1,9 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+	%li.control-group
+		=f.label "Title *", :class => "control-label"
+		.controls
+			=f.text_field :title, :class => "required"
+			.help-block
+				Title will be used identification for inserting into content areas.

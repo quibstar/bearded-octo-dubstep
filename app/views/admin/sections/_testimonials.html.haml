@@ -1,0 +1,83 @@
+-testimonials =Testimonial.all
+-if testimonials.count > 0
+  -if @section.settings
+    -if @section.settings['in_carousel'] != '1' 
+      -hide = 'hide'
+    -else
+      -hide = ''
+  -else
+    -hide = 'hide'
+
+  :javascript 
+    $(document).ready(function(){
+      $("#section_settings_in_carousel").change(function(){
+        $('.carousel-settings').slideToggle();
+        $.fancybox.update();
+      });
+    });
+
+  %li
+    If you are planning on showing more than one testimonial you can use a carousel slider
+    %br
+    =f.fields_for :settings do |set|
+      =set.check_box :in_carousel,:checked => checked( @section.settings ? @section.settings['in_carousel'] : '')
+      %label.checkbox.inline
+        Yes I'd like to use a carousel
+
+      %div{:class => "carousel-settings #{hide}"}
+        .control-group
+          %label.control-label
+            Slide Width
+          .controls
+            =set.text_field :slideWidth,:value => @section.settings ?  @section.settings['slideWidth'] : ''
+            .help-block
+              When telling a horizontal slider to display more than one slide, we need to supply a width for which 
+              %br
+              the slides should use. If no slideWidth is supplied, the slider will expand each slide to 100% width 
+              %br
+              of the container. Therefore: use this setting as the maximum width for each slide. When space allows, 
+              %br
+              slides will be set to this width, and will never grow beyond it.
+        .control-group
+          %label.control-label
+            Minimum slides
+          .controls
+            =set.text_field :minSlides,:value => @section.settings ?  @section.settings['minSlides'] : ''
+            .help-block
+              Always display at least this many slides. This means that no matter what, this amount of slides will always be displayed. 
+              %br
+              Even if we size our browser down to 200px wide, the specified value of slides will be shown
+      
+        .control-group
+          %label.control-label
+            Maximum slides
+          .controls
+            =set.text_field :maxSlides,:value => @section.settings ? @section.settings['maxSlides'] : ''
+            .help-block
+              Never display more than this many slides. This value combined with the slideWidth value is used to generate the slider container's 
+              %br 
+              max-width value which ensures that the viewport can never display more than y slides. So basically, the width of our slider container 
+              %br 
+              will always be either: maxSlides * slideWidth or 100% (if maxSlides * slideWidth is greater than the page container).
+        .control-group
+          %label.control-label
+            Slide margin(optional)
+          .controls
+            =set.text_field :slideMargin,:value => @section.settings ? @section.settings['slideMargin'] : ''
+        .control-group
+          %label.control-label
+            Pause (time between sliding)
+          .controls
+            =set.text_field :pause,:value => @section.settings ? @section.settings['pause'] : ''
+  %li.section-form
+    %h4
+      Choose Testimonials:
+  %li.control-group
+    -for test in testimonials
+      %label.checkbox.inline
+        =check_box_tag "section[testimonial_ids][]",test.id, @section.testimonials.include?(test), :id => test.id
+        =test.title
+-else
+  %p
+    No current testimonials. would you like to make one?
+  =link_to "Testimonials", admin_testimonials_path, :class => 'btn btn-mini btn-yellow'

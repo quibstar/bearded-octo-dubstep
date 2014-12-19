@@ -1,0 +1,40 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered
+  %li.control-group
+    =f.label 'Audio *', :class => "control-label" 
+    .controls
+      =f.file_field :audio
+
+  %li.control-group
+    =f.label "Artist *", :class => "control-label"
+    .controls
+      =f.text_field :artist
+
+  %li.control-group
+    =f.label "Title *", :class => "control-label"
+    .controls
+      =f.text_field :title
+
+  %li.control-group
+    =f.label :description, :class => "control-label"
+    .controls
+      =f.text_area :description, :rows => 3
+
+%ul.form-list.label-left.list-bordered
+  %li.section-form
+    %h4
+      Categories
+  %li.control-group
+    -categories = Category.where('audio = 1') 
+    -if categories.count > 0
+      -categories.each do |cat| 
+        %label.checkbox.inline
+          =check_box_tag "audio[category_ids][]",cat.id, @audio.categories.include?(cat), :id => cat.id, :class => 'checkbox'
+          =cat.name   
+      .help-block
+        Check category to update asset.
+    -else
+      %p
+        No categories associated with audios.
+        =link_to 'Go to categories', admin_categories_path,:class => 'btn btn-yellow'

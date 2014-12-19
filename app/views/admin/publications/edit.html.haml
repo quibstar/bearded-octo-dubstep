@@ -1,0 +1,63 @@
+=content_for :page_title do
+	%h1.page-title
+		Edit
+		=@publication.title
+
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li
+					.btn-group
+						=link_to content_tag(:span, '', :class => 'caret') + " Action", '#',:class => "btn dropdown-toggle ", 'data-toggle' => "dropdown"
+						%ul.dropdown-menu
+							%li
+							-if @publication.template_id != 1
+								%li
+									= link_to content_tag(:i,'',:class => 'fontello-icon-doc-1') + " Edit #{@publication.title} section", admin_publication_sections_path(@publication)
+							%li
+								=link_to content_tag(:i,'',:class => 'fontello-icon-pencil') + ' Write New Post',new_admin_publication_post_path(@publication)
+							%li
+								-if @publication.posts.count > 0
+									=link_to content_tag(:i,'',:class => 'fontello-icon-eye') + " View Posts #{@publication.posts.count}", admin_publication_posts_path(@publication)
+								%li.divider
+							%li
+								=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') + " Delete #{@publication.title}", admin_publication_path(@publication),:data => {:confirm => 'Are you sure?'}, :method => :delete,:class => "delete"
+				%li.divider-vertical
+				%li
+					= link_to content_tag(:i,'',:class => 'fontello-icon-back') + ' Back to Publications', admin_publications_path
+
+-if @publication.posts.count > 0
+	-span6 = 'span7'
+	-span4 = 'span4'
+
+
+%div{:class => "widget widget-simple #{span6}"}
+	.widget-header
+		%h4
+			%i.fontello-icon-cog-alt
+			=@publication.title
+			%small
+				settings
+	=render "form"
+%div{:class => "#{span4}"}
+	%div{:id => 'publication-post'}
+	%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered"}
+		%caption
+			Publication Posts
+		%thead
+			%th
+				Actions
+			%th{:scope => 'col'}
+				Title
+				%span.column-sorter
+
+		-@publication.posts.each do |p|
+			%tr
+				%td
+					.btn-group
+						=link_to content_tag(:i,'',:class => 'fontello-icon-edit') + " Edit", edit_admin_publication_post_path(@publication, p), :class => 'btn btn-mini btn-primary'
+						=link_to content_tag(:i,'',:class => 'fontello-icon-trash-1') + " Delete", admin_publication_post_path(@publication, p),:data => {:confirm => 'Are you sure?'},:method => :delete , :class => 'btn btn-mini btn-danger'
+				%td
+					=p.title
+	

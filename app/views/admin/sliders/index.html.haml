@@ -1,0 +1,54 @@
+=content_for :page_title do 
+	%h1.page_title
+		Sliders
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i, '', :class => 'fontello-icon-plus-1') + ' New slider',new_admin_slider_path
+
+%div{:id => 'sliders'}
+	%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+		%caption
+			Sliders
+		%thead
+			%th
+				Actions
+			%th{:scope => 'col'}
+				Title
+				%span
+			%th
+				Slides (Click on slide to edit)
+		-@sliders.each do |slider|
+			%tr
+				%td
+					.btn-group
+						=link_to content_tag(:span, '', :class => 'caret') + " Action", '#',:class => "btn dropdown-toggle btn-yellow", 'data-toggle' => "dropdown"
+						%ul.dropdown-menu
+							%li
+								=link_to content_tag(:i,'',:class => 'fontello-icon-cog-alt') + " Edit slider settings",edit_admin_slider_path(slider)
+							%li.divider
+							%li
+								=link_to content_tag(:i,'',:class => 'fontello-icon-plus-1') + " New Slide", new_admin_slider_slide_path(slider)
+							%li
+								=link_to content_tag(:i,'',:class => 'fontello-icon-edit') + " Edit Slides", admin_slider_path(slider)
+							%li.divider
+							%li
+								=link_to content_tag(:i,'',:class => 'fontello-icon-trash-1') + " Delete slider", admin_slider_path(slider),:data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'delete'
+
+				%td
+					=slider.title.capitalize
+				%td
+					-if slider.slides.count > 0
+						-slider.slides.each do |s|
+							-if s.image
+								%span.slider-image
+									=link_to image_tag(s.image.image_url(:small)), edit_admin_slide_path(s)
+							-else
+								slide created, No images choosen.
+								%br
+					-else
+						No slides created.
+

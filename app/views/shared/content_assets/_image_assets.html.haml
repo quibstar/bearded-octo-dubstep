@@ -1,0 +1,81 @@
+:javascript
+  $(document).ready(function() {
+    $('#image-sortable-table').dataTable({
+      iDisplayLength: 10,
+      sDom: "<'row-fluid' <'span4'l> <'span8'pf> > rt <'row-fluid' <'span12'i> >"
+    });
+
+    $('#images').popover({ 
+      selector: '[rel=popover]',
+      html : true,
+      trigger : 'click',
+      content : function() {
+        var popupID = $(this).attr('data-id');
+        return $("#" + popupID).html();
+      }
+    }).click(function(e){
+     
+    });
+
+  });
+
+%div{:id => "images"}
+  %table{:id => 'image-sortable-table',:class => "table table-striped table-hover table-bordered"}
+    %thead
+      %th{:scope => 'col'}
+        Title
+        %span.column-sorter
+      %th
+        Image 
+        %small
+          Thumbnail
+      
+    -Image.all.each_with_index do |image, i|
+      %tr
+        %td.popover-cell
+          -popoverContent = 
+          =link_to image.title, '#', :class => 'btn btn-mini pop', 'data-original-title' => "#{image.title}", 'data-id' => "popup#{image.id}", :rel => 'popover'
+          %div{:id => "popup#{image.id}", :style => 'display:none'}
+            .popover-content.featured-image-controls
+              %label.checkbox.inline
+                =check_box_tag :caption
+                Caption
+
+              %label.checkbox.inline
+                =check_box_tag :description
+                Description
+
+              %label.checkbox.inline
+                =check_box_tag :zoom
+                Zoomable
+              
+              %span.popup-header-title
+                Image Position
+              %label.checkbox.inline
+                =radio_button_tag :float, :left
+                Left
+
+              %label.checkbox.inline
+                =radio_button_tag :float, :center
+                Center
+
+              %label.checkbox.inline
+                =radio_button_tag :float, :right
+                Right
+              %span.popup-header-title
+                Image Size
+              -if image.caption
+                -caption = image.caption.gsub(/'/) {|s| "&#39;"}
+              .btn-group
+                =link_to "Thumb", "#" ,:data => {:image => image.image_url(:thumb), :original => image.image_url(),:caption => caption, :description => image.description,:size => 'thumb'}, :class => 'btn btn-mini'
+
+                =link_to "Small", "#",:data => {:image => image.image_url(:small), :original => image.image_url(),:caption => caption, :description => image.description ,:size => 'small'}, :class => 'btn btn-mini'
+
+                =link_to "Medium", "#",:data => {:image => image.image_url(:medium), :original => image.image_url(),:caption => caption, :description => image.description ,:size => 'medium'}, :class => 'btn btn-mini'
+
+                =link_to "Large", "#",:data => {:image => image.image_url(:large), :original => image.image_url(),:caption => caption, :description => image.description ,:size => 'large'}, :class => 'btn btn-mini'
+
+                =link_to "Original", "#" ,:data => {:image => image.image_url, :original => image.image_url(),:caption => caption, :description => image.description,:size => 'original'}, :class => 'btn btn-mini'
+
+        %td
+          =image_tag(image.image_url(:thumb))

@@ -1,0 +1,18 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+  %li.control-group
+    =f.label "Link title *", :class => "control-label"
+    .controls
+      =f.text_field :link_title, :class => "required"
+  %li.control-group
+    =f.label "Link *", :class => "control-label"
+    .controls
+      =f.text_field :link, :class => "required"
+      .help-block
+        Example: http://www.apple.com
+        %br
+        Example: https://www.facebook.com
+  %li.control-group
+    =f.label "Open in new window", :class => "control-label"
+    =f.check_box :new_window

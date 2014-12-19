@@ -1,0 +1,40 @@
+/ =javascript_include_tag 'form-validation/jquery.validate.min.js'
+/ %div{:class => 'tabbable tabbable-bordered tabs-top'}
+/   %ul.nav.nav-tabs
+/     %li.active
+/       =link_to content_tag(:i, '', :class => 'fontello-icon-picture') + " Image Gallery Settings", '#image-gallery', 'data-toggle' => 'tab'
+/     %li
+/       =link_to content_tag(:i, '', :class => 'fontello-icon-doc-1') + " Document Gallery", '#document-gallery', 'data-toggle' => 'tab'
+/     %li
+/       =link_to content_tag(:i, '', :class => 'fontello-icon-user') + " User Gallery", '#user-gallery', 'data-toggle' => 'tab'
+/     %li
+/       =link_to content_tag(:i, '', :class => 'fontello-icon-music') + " Audio Playlist", '#audio-playlist', 'data-toggle' => 'tab'
+/     %li
+/       =link_to content_tag(:i, '', :class => 'fontello-icon-videocam') + " Video Playlist", '#video-playlist', 'data-toggle' => 'tab'
+
+/   .tab-content
+/     .tab-pane.active#image-gallery
+/       =render "image_gallery"
+
+/     .tab-pane#document-gallery
+/       =render "document_gallery"
+
+/     .tab-pane#user-gallery
+/       =render "user_gallery"
+
+/     .tab-pane#audio-playlist
+/       =render "audio_playlist"     
+
+/     .tab-pane#video-playlist
+/       =render "video_playlist"
+
+/ %ul.form-list.label-left.list-bordered.form-horizontal
+/   %li.control-group
+/     =f.label "Title *", :class => "control-label"
+/     .controls
+/       =f.text_field :title, :class => "required"
+/   %li.control-group
+/     =f.label :collection_for, :class => "control-label"
+/     .controls 
+/       -collection_types = ['Images', 'Documents', 'Videos', 'Audios']
+/       =select("collection", "collection_for", collection_types, {:include_blank => false})

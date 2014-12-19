@@ -1,0 +1,22 @@
+%table{:id => 'sortable-table',:class => "table table-striped table-hover"}
+  %caption
+    Images
+  %thead  
+    %th{:scope => 'col'}
+      Title 
+      %span.column-sorter
+    %th
+      Image
+  -@images.each do |i|
+    %tr
+      %td
+        %div{:class => 'slideshow-featured-image-controls', :data => {:image => i.image_url(), :id => i.id}}
+          -if(@slide.image)
+            =radio_button_tag 'slide[image_id]', i.id, @slide.image.id == i.id
+          -else
+            =radio_button_tag 'slide[image_id]', i.id
+          %label
+            =i.title
+
+      %td
+        =link_to image_tag(i.image_url(:thumb)), '#'

@@ -1,0 +1,17 @@
+:javascript
+  $(document).ready(function() {
+    $('#aud-sortable-table').dataTable({
+      iDisplayLength: 10,
+      sDom: "<'row-fluid' <'span4'l> <'span8'pf> > rt <'row-fluid' <'span12'i> >"
+    });
+  });
+
+%table{:id => 'aud-sortable-table',:class => "table table-striped table-hover table-bordered aud"}
+  %thead
+    %th{:scope => 'col'}
+      Title
+      %span.column-sorter   
+  -Audio.all.each_with_index do |a, i|
+    %tr
+      %td
+        =link_to a.title, "#", :data => {:audio => a.audio.to_s, :playerId => a.id}, :title => a.title

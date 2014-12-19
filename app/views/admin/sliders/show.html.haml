@@ -1,0 +1,59 @@
+=content_for :page_title do 
+	%h1.page-title
+		=@slider.title.capitalize
+
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i,'',:class => 'fontello-icon-back') + " Back to sliders", admin_sliders_path
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i,'',:class => 'fontello-icon-cog-alt') +" #{@slider.title} settings", edit_admin_slider_path(@slider)
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i,'',:class => 'fontello-icon-plus') +" New Slide", new_admin_slider_slide_path(@slider)
+
+=content_for :modal_container do
+	#defaultModal.modal.hide.fade
+		=render  :partial => "admin/sliders/form_remote", :locals => {:slider => @slider}
+
+-@slides.each do |slide|
+	.widget.widget-box
+		.widget-header.no-border
+			%div{:class => 'slider-tool-bar'}
+				.btn-group
+					=link_to content_tag(:i, '', :class => 'fontello-icon-code-1') + " Custom HTML settings", '#', :class => 'custom-html-link btn btn-mini btn-yellow'
+					=link_to content_tag(:i, '', :class => 'fontello-icon-switch') + " Swap Image", edit_admin_slide_path(slide), :class => 'edit btn btn-mini'
+					=link_to content_tag(:i, '', :class => 'fontello-icon-cancel') + " Delete slide", admin_slide_path(slide), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-danger btn-mini'
+
+		.widget-content
+			%div{:class => 'slide-settings'}
+				=form_for [:admin, slide] do |f|
+					=render :partial => 'admin/slides/custom_html', :locals => { :f => f, :slide => slide}	
+					%div.margin-ss				
+					=f.submit :class => 'btn btn-primary btn-mini'
+			.widget-body.slider-image
+				-if @slider.effectType == '3D'
+					%div{:id => "image-placeholder", :style => "overflow:hidden; border: 1px solid #DDD; background: #CCC; width : #{@slider.imageWidth - 50}px; height: #{@slider.imageHeight - 50}px;" }
+						=image_tag slide.image.image_url()
+				-else
+					%div{:id => "image-placeholder", :style => "overflow:hidden; border: 1px solid #DDD; background: #CCC;width : #{@slider.imageWidth}px; height: #{@slider.imageHeight}px;" }
+						=image_tag slide.image.image_url()
+				%div{:class => 'custom-html'}
+					%div{:class => 'header-text', :style => "top : #{slide.header_top}px; left: #{slide.header_left}px;width: #{slide.header_width}px; color: ##{slide.header_color};" }
+						%p{:id => "header_#{slide.id}"}
+							=slide.header
+					%div{:class => 'slider-content', :style => "top : #{slide.content_top}px; left: #{slide.content_left}px; width: #{slide.content_width}px; color: ##{slide.content_color};" }
+						%p{:id => "content_#{slide.id}"}
+							=slide.content
+
+					%div{:class => 'link-one', :style => "top : #{slide.link_1_top}px; left: #{slide.link_1_left}px;" }
+						=link_to slide.link_1_title, "#", :class => 'btn', :id => "link_1_title_#{slide.id}"
+					%div{:class => 'link-two', :style => "top : #{slide.link_2_top}px; left: #{slide.link_2_left}px;" }
+						=link_to slide.link_2_title, "#", :class => 'btn',:id => "link_2_title_#{slide.id}"
+
+
+

@@ -1,0 +1,99 @@
+%div{:class => 'closer'}
+	=content_tag(:i, '',:class => "fontello-icon-cancel" )
+%p
+	Slide Settings
+%div{:class => 'divide'}
+	%div{:class => 'control'}
+		Header
+	%div{:class => "html-content"}
+
+		
+		%lable.checkbox.inline
+			=f.check_box :header_visible
+			Header visible
+			
+		%br
+		Slide header in from:
+		=select(:slide, :header_slide_direction, %w[top right bottom left none], {:selected => slide.header_slide_direction})
+		=f.label 'Header Text'
+		=f.text_field :header, :data => { :input => "header_#{slide.id}"}
+		=f.label :header_color
+		=f.text_field :header_color, :class => "cp-basic", :id => "color_header_#{slide.id}"
+		%label
+			Header container width:
+		%div{:class => "slider-header-slider",:id => "header_width_#{slide.id}"}
+		=f.hidden_field :header_width, :class => "header_width_#{slide.id}"
+		=f.hidden_field :header_top, :id => "header_#{slide.id}_top"
+		=f.hidden_field :header_left, :id => "header_#{slide.id}_left"
+		%br
+%div{:class => 'divide'}
+	%div{:class => 'control'}
+		Content
+	%div{:class => "html-content"}
+			
+		%lable.checkbox.inline
+			=f.check_box :content_visible
+			Content visible
+
+		%br
+		Slide test in from:
+		=select(:slide, :content_slide_direction, %w[top right bottom left none], {:selected => slide.content_slide_direction})
+		=f.label :content
+		=f.text_area :content, :data => { :input => "content_#{slide.id}"}
+		=f.label :content_color
+		=f.text_field :content_color, :class => "cp-basic",:id => "color_content_#{slide.id}"
+		%label 
+			Content container width:
+		%div{:class => "slider-content-slider", :id => "content_width_#{slide.id}"}
+		=f.hidden_field :content_width, :class => "content_width_#{slide.id}"
+		=f.hidden_field :content_top, :id => "content_#{slide.id}_top"
+		=f.hidden_field :content_left, :id => "content_#{slide.id}_left"
+		%br
+%div{:class => 'divide'}
+	%div{:class => 'control'}
+		Button one
+	%div{:class => "html-content"}
+		
+		%lable.checkbox.inline
+			=f.check_box :link_1_visible
+			Button one visible
+			
+		%br
+		Slide button in from:
+		=select(:slide, :link_1_slide_direction, %w[top right bottom left none], {:selected => slide.link_1_slide_direction})
+		=f.label "Link button one title"
+		=f.text_field :link_1_title, :data => { :input => "link_1_title_#{slide.id}"}
+		=f.label "Link button one URL"
+		=f.text_field :link_1_url, :data => { :input => "link_1_url_#{slide.id}"}, :id => "slide_link_1_url_#{slide.id}"
+
+		=link_to content_tag(:i,'',:class => 'fontello-icon-link') + ' Internal links' ,"#internal-links-1-#{slide.id}", :class => 'fboxSmall btn btn-mini btn-yellow int-link-btn'
+
+		%div{:id => "internal-links-1-#{slide.id}", :class => 'internal-links-modal'}
+			=render :partial => "admin/slides/site_pages" , :locals => {:slide_id => "slide_link_1_url_#{slide.id}"}
+
+		=f.hidden_field :link_1_top, :id => "link_1_title_#{slide.id}_top"
+		=f.hidden_field :link_1_left, :id => "link_1_title_#{slide.id}_left"
+%div{:class => 'divide'}
+	%div{:class => 'control'}
+		Button two
+	%div{:class => "html-content"}
+		
+		%lable.checkbox.inline
+			=f.check_box :link_2_visible
+			Button two visibles
+			
+		%br
+		Slide button in from:
+		=select(:slide, :link_2_slide_direction, %w[top right bottom left none], { :selected =>  slide.link_2_slide_direction})
+		=f.label "Link button two title"
+		=f.text_field :link_2_title, :data => { :input => "link_2_title_#{slide.id}"}
+		=f.label "Link button two URL"
+		=f.text_field :link_2_url, :data => { :input => "link_2_url_#{slide.id}"}, :id => "slide_link_2_url_#{slide.id}"
+
+		=link_to content_tag(:i,'',:class => 'fontello-icon-link') + ' Internal links',"#internal-links-2-#{slide.id}", :class => 'fboxSmall btn btn-mini btn-yellow int-link-btn'
+
+		%div{:id => "internal-links-2-#{slide.id}", :class => 'internal-links-modal'}
+			=render :partial => "admin/slides/site_pages", :locals => {:slide_id => "slide_link_2_url_#{slide.id}"}
+
+		=f.hidden_field :link_2_top, :id => "link_2_title_#{slide.id}_top"
+		=f.hidden_field :link_2_left, :id => "link_2_title_#{slide.id}_left"

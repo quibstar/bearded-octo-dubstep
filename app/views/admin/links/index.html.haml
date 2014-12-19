@@ -1,0 +1,13 @@
+=content_for :page_title do
+  %h1.page-title
+    %i.fontello-icon-comment.opaci35
+    Links
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-link') + ' New Link',new_admin_link_path , :class => 'fboxForm fancybox.ajax'
+
+=render 'links'

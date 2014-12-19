@@ -1,0 +1,32 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+=form_for [:admin, @rewrite], :html => {:id => "edit_rewrite"} do |f|
+  .modal-header
+    =link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+    %h4
+      =title
+  .modal-body
+    -if @rewrite
+      =render 'shared/error_messages', :object => @rewrite 
+    %ul.form-list.label-left.list-bordered.form-horizontal
+      %li.control-group
+        =f.label "Request URL *", :class => "control-label"
+        .controls
+          =f.text_field :request_path,:class => 'required'
+      -if @rewrite.page_id
+        %li.control-group
+          =f.label "Page Target Path", :class => "control-label"
+          .controls
+          -navigation_groups = Navigation.all
+          =grouped_collection_select(:rewrite, :page_id, navigation_groups, :pages, :nav_group, :id, :url_path)
+
+      -if @rewrite.post_id
+        %li.control-group#post
+          =f.label "Post Target Path", :class => "control-label"
+          .controls
+          -publications = Publication.all
+          =grouped_collection_select(:rewrite, :post_id, publications, :posts, :title, :id, :title)
+
+      =f.hidden_field :created_by, :value => current_user.id
+  .modal-footer
+    =f.submit "Save", :class =>'btn btn-primary'

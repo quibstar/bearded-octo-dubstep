@@ -1,0 +1,27 @@
+!!! 5 
+%html
+	%head
+		%title
+			= title
+		= stylesheet_link_tag "admin/admin"
+		= yield :js
+		= yield :anything_slider
+		= csrf_meta_tags 
+	                                                                                                  
+	%body{:class => "#{@column_type} #{@body_class} #{controller.controller_name} #{controller.action_name} signin signin-vertical"}
+		.page-container
+			#header-container
+				#header
+				.navbar-inverse.navbar-fixed-top
+					.navbar-inner
+						.container
+			#main-container
+				#main-content.main-content.container
+					.signin-content
+						=yield :page_title
+						.well.well-nice.form-dark
+							.tab-content.overflow
+								-flash.each do |name, msg| 
+									=content_tag :div, msg, :class => "#{name}"
+								= yield
+						=render "sign-up-link"

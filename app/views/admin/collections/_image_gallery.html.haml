@@ -1,0 +1,63 @@
+%ul.form-list.label-left.list-bordered
+  =form_for @collection do |f|
+    %li.control-group
+      =f.label "Title *", :class => "control-label"
+      .controls
+        =f.text_field :title, :class => "required"
+    =f.fields_for :settings do |set|
+      %li.control-group
+        -image_sizes = ['50','75','100','150']
+        %label.control-label
+          Image Size
+        =select("collection[settings]", "image_size", image_sizes)
+        
+      %li.control-group
+        %label.inline.checkbox
+          -if @collection.settings['show_caption'] == '1'
+            -checked = 'checked'
+          =set.check_box :show_caption,:checked => checked
+          Show Caption
+          .help-block
+            Will show up on hover.
+
+      %li.control-group
+        %label.inline.checkbox
+          -if @collection.settings['tiles'] == '1'
+            -checked = 'checked'
+          =set.check_box :tiles,:checked => checked
+          Tiles
+          .help-block
+            Pintrest style. Image placement like a brick wall. Example:  
+            %a{:href => 'http://www.wookmark.com/', :target => "_blank"}
+              Wookmark
+
+      %li.control-group
+        %label.inline.checkbox
+          -if @collection.settings['filter_by_buttons'] == '1'
+            -checked = 'checked'
+          =set.check_box :filter_by_buttons,:checked => checked
+          Filter with Buttons(links)
+          .help-block
+            This wil create a button or list that will filter the images by category. Only available while using categories.
+
+
+      %li.control-group
+        %label.inline.checkbox
+          -if @collection.settings['categories'] == '1'
+            -checked = 'checked'
+          =set.check_box :categories,:checked => checked
+          Use Categories
+          .help-block
+            If checked your gallery will only use images with selected categories.
+
+      %li.control-group
+        =set.text_field :category_ids, :value => @collection.settings['category_ids']
+
+      %li.control-group
+        =set.text_field :asset_ids, :value => @collection.settings['asset_ids']
+        
+
+      =set.hidden_field :collection, :value => "Image"
+
+    %hr
+    =f.submit "Save", :class =>'btn btn-primary'

@@ -1,0 +1,180 @@
+=content_for :custom_js do
+  -if collection.settings['filter_by_buttons'] =='1'
+    :javascript
+      (function ($){
+
+        $("#container-#{collection.id}").imagesLoaded(function() {
+
+        var options = {
+          autoResize: true, // This will auto-update the layout when the browser window is resized.
+          container: $("#container-#{collection.id}"),
+          offset: 2
+        };
+
+        var handler = $("#container-#{collection.id} li"),
+        filters = $("#filter-container-#{collection.id} li");
+
+        // Call the layout function.
+        handler.wookmark(options);
+        var onClickFilter = function(event) {
+          var item = $(event.currentTarget),
+          activeFilters = [];
+          item.toggleClass('active');
+
+          // Collect active filter strings
+          filters.filter('.active').each(function() {
+          activeFilters.push($(this).data('filter'));
+        });
+
+        handler.wookmarkInstance.filter(activeFilters, 'or');
+        }
+
+        // Capture filter click events.
+        filters.click(onClickFilter);
+
+        });
+      })(jQuery);
+
+
+-if collection.settings['tiles'] == '1'
+  -gallery_id = "tiles"
+  -tiles = 'tiles'
+  -thumbnaial_container = ''
+
+-if collection.settings['tiles'] == '0'
+  -if  collection.settings['filter_by_buttons'] =='0'
+    :javascript 
+      jQuery(document).ready(function() {
+            jQuery("#gallery-#{collection.id} .nailthumb-container").nailthumb();
+        });
+  -gallery_id = "gallery-#{collection.id}"
+  -tiles = ''
+  -thumbnail_container = "nailthumb-container"
+
+
+-if collection.settings['categories'] == '1' 
+  -users = Set.new 
+  -cats = Array.new
+  -collection.categories.each do |col_cat|
+    -cats << col_cat.id
+  
+  -if collection.settings['filter_by_buttons'] == '1'
+    %div{:id => "filter-container-#{collection.id}"}
+      %ul#filtersGroup.btn-group
+        -Category.where(:id => cats).each do |cat|
+          %li{"data-filter" => cat.name, :class => 'btn'}
+            =cat.name
+
+  %div{:id => "container-#{collection.id}", :class => "user-gallery"}
+    %ul{:id => gallery_id, :class => "thumbnails #{collection.settings['image_size']} #{tiles}"}
+      -Category.where(:id => cats).each do |cat|
+        -cat.users.each do |user|
+          -users << user
+      -users.each do |asset|
+        -asset_cats = asset.categories.map {|ac| ac.name }
+        %li{:class => "thumbnail #{collection.settings['image_size']}", 'data-filter-class' => asset_cats}
+          %span{:style => 'display:none;'}
+            -# for some reason I neede to have the image load before other wise we'd get no image.js issue
+            =image_tag(asset.image)
+          =link_to(image_tag(asset.image), "#{asset.image}",:class => "fbox-asset #{thumbnail_container}",:rel => "gallery#{collection.id}", :title => "#{asset.full_name}")
+
+          -if collection.settings['full_name'] == '1'
+            %h4{:class => "full_name"}
+              =asset.name
+
+          -if collection.settings['title'] == '1'
+            %small{:class => "title"}
+              =asset.title
+
+          -if collection.settings['email'] == '1'
+            %span{:class => 'email'}
+              %i.fontello-icon-mail
+              =mail_to asset.email
+
+          -if collection.settings['phone'] == '1'
+            -unless asset.phone.blank?
+              %span{:class => "phone"}
+                %i.fontello-icon-phone
+                =asset.phone
+
+          -if collection.settings['twitter'] == '1'
+            -unless asset.twitter.blank?
+              %span{:class => "twitter"}
+                =link_to content_tag(:i,'', :class => 'fontello-icon-twitter') ,asset.twitter,:target => '_blank'  
+
+          -if collection.settings['facebook'] == '1'
+            -unless asset.facebook.blank?
+              %span{:class => "facebook"}
+                =link_to content_tag(:i,'', :class => 'fontello-icon-facebook') ,asset.facebook ,:target => '_blank'
+
+          -if collection.settings['linkedin'] == '1'
+            -unless asset.linkedin.blank?
+              %span{:class => "linkedin"}
+                =link_to content_tag(:i,'', :class => 'fontello-icon-linkedin') ,asset.linkedin ,:target => '_blank'
+
+          -if collection.settings['bio'] == '1'
+            -unless asset.bio.blank?
+              %span{:class => "bio"}
+                =asset.bio.html_safe
+          
+
+
+-if collection.settings['categories'] == '0'
+  =content_for :custom_js do
+    -if collection.settings['tiles'] == '0'
+      :javascript 
+        jQuery(document).ready(function() {
+            jQuery("#gallery-#{collection.id} .nailthumb-container").nailthumb();
+          });
+
+
+
+  %div{:id => "container-#{collection.id}", :class => "user-gallery"}
+    %ul{:id => gallery_id, :class => "thumbnails #{collection.settings['image_size']} #{tiles}"}
+      -assets = collection.settings['asset_ids'].split(",").map { |s| s.to_i }
+      -assets.each do |user|
+        -asset = User.find_by_id(user)
+        -if asset
+          -asset_cats = asset.categories.map {|ac| ac.name }
+          %li
+            =link_to(image_tag(asset.image), "#{asset.image}",:class => "fbox-asset #{thumbnail_container}",:rel => "gallery#{collection.id}", :title => "#{asset.full_name}")
+
+            -if collection.settings['full_name'] == '1'
+              %h4{:class => "full_name"}
+                =asset.name
+
+            -if collection.settings['title'] == '1'
+              %small{:class => "title"}
+                =asset.title
+
+            -if collection.settings['email'] == '1'
+              -unless asset.email.blank?
+                %span{:class => 'email'}
+                  %i.fontello-icon-mail
+                  =mail_to asset.email
+
+            -if collection.settings['phone'] == '1'
+              -unless asset.phone.blank?
+                %span{:class => "phone"}
+                  %i.fontello-icon-phone
+                  =asset.phone
+
+            -if collection.settings['twitter'] == '1'
+              -unless asset.twitter.blank?
+                %span{:class => "twitter"}
+                  =link_to content_tag(:i,'', :class => 'fontello-icon-twitter') ,asset.twitter,:target => '_blank'  
+
+            -if collection.settings['facebook'] == '1'
+              -unless asset.facebook.blank?
+                %span{:class => "facebook"}
+                  =link_to content_tag(:i,'', :class => 'fontello-icon-facebook') ,asset.facebook ,:target => '_blank'
+
+            -if collection.settings['linkedin'] == '1'
+              -unless asset.linkedin.blank?
+                %span{:class => "linkedin"}
+                  =link_to content_tag(:i,'', :class => 'fontello-icon-linkedin') ,asset.linkedin ,:target => '_blank'
+
+            -if collection.settings['bio'] == '1'
+              -unless asset.bio.blank?
+                %span{:class => "bio"}
+                  =asset.bio.html_safe

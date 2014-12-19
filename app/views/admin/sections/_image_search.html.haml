@@ -1,0 +1,40 @@
+%div#image_search
+-if @search_images
+	%ul{:class => 'img'}
+		-@search_images.each do |i|
+			%li
+				%div{:class => 'featured-image search-results'}
+					%div{:class => 'featured-image-holder'}
+						=image_tag(i.image_url(:small))
+					%div{:class => 'featured-image-controls'}
+						Title: 
+						=i.title
+						%br
+						=label_tag "Show Caption"
+						=check_box_tag :caption
+						%br
+						=label_tag "Show Description"
+						=check_box_tag :description
+
+						=label_tag "Zoomable"
+						=check_box_tag :zoom
+						%br
+						%div{:class => ''}
+							Image Position
+							%br
+							=radio_button_tag :float,'left'
+							=label_tag "Left"
+							%br
+							=radio_button_tag :float,'center'
+							=label_tag "Center"
+							%br
+							=radio_button_tag :float, 'right'
+							=label_tag "Right"
+
+						-caption = i.caption.gsub(/'/) {|s| "&#39;"}
+						=link_to "Thumb", "#" ,:data => {:image => i.image_url(:thumb), :original => i.image_url(),:caption => caption, :description => i.description,:size => 'thumb'}
+						=link_to "Small", "#",:data => {:image => i.image_url(:small), :original => i.image_url(),:caption => caption, :description => i.description ,:size => 'small'}
+						=link_to "Medium", "#",:data => {:image => i.image_url(:medium), :original => i.image_url(),:caption => caption, :description => i.description,:size => 'medium'}
+						=link_to "Large", "#" ,:data => {:image => i.image_url(:large), :original => i.image_url(),:caption => caption, :description => i.description,:size => 'large'}
+						=link_to "Original", "#" ,:data => {:image => i.image_url, :original => i.image_url(),:caption => caption, :description => i.description,:size => 'original'}
+						%div{:class => "arrow-down"}

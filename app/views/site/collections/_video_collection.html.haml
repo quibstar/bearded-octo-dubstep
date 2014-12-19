@@ -1,0 +1,23 @@
+%div{:id => "video-gallery-#{collection.id}", :class => "video-playlist"}
+  %ul{ :class => "#{collection.settings['image_size']}"}
+    -if collection.settings['categories'] == '0'
+      -assets = collection.settings['asset_ids'].split(",").map { |s| s.to_i }
+      -assets.each do |vid|
+        -asset = Youtube.find_by_id(vid)
+        -if asset
+          -asset_cats = asset.categories.map {|ac| ac.name }
+          %li{:class => ""}
+            =link_to image_tag("http://i3.ytimg.com/vi/#{asset.youtube_code}/1.jpg?") + content_tag(:span, asset.title), "http://www.youtube.com/embed/#{asset.youtube_code}", :class => 'fbox-asset fancybox.iframe'
+
+    -if collection.settings['categories'] == '1'
+      -vids = Set.new
+      -cats = Array.new
+      -collection.categories.each do |col_cat|
+        -cats << col_cat.id
+      
+      -Category.where(:id => cats).each do |cat|
+        -cat.youtubes.each do |vid|
+          -vids << vid
+      -vids.each do |y|
+        %li{:class => ""}
+          =link_to image_tag("http://i3.ytimg.com/vi/#{y.youtube_code}/1.jpg?") + content_tag(:span, y.title), "http://www.youtube.com/embed/#{y.youtube_code}", :class => 'fbox-asset fancybox.iframe'

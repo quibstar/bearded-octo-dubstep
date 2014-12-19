@@ -1,0 +1,68 @@
+-#set the page template for single posts
+-column_type(@publication, 'post')
+
+-if @publication.template_id == 1
+	-leftClass = ''
+	-mainClass = 'span12'
+	-rightClass = ''
+
+-elsif @publication.template_id == 2
+	-leftClass = 'span3'
+	-mainClass = 'span9'
+	-rightClass = ''
+
+-elsif @publication.template_id == 3
+	-leftClass = ''
+	-mainClass = 'span9'
+	-rightClass = 'span3'
+
+-elsif @publication.template_id == 4
+	-leftClass = 'span2'
+	-mainClass = 'span8'
+	-rightClass = 'span2'
+
+-else @publication.template_id
+	-leftClass = ''
+	-mainClass = 'span12'
+	-rightClass = ''
+
+-if(@publication.template_id == 2 or  @publication.template_id == 4)
+	%aside{:id => 'sidebar-left', :class => leftClass}
+		-@publication.sections.where(:parent_id => 0, :location => 1).order('position ASC').each do |s|
+			=render :partial => 'site/sections', :locals => {:s => s}
+			
+
+=content_for :page_title do 
+	%h1	
+		Category: 
+		=@category.name
+
+%div{:id => "main", :class => mainClass}
+	-for post in @posts
+		-if post.publication_id == @publication.id
+			%h2
+				=post.title
+			-#get image
+			-for image in post.images
+				%section{:class => 'post-image'}
+					-if post.post_images[0].image_size == 'original'
+						=image_tag image.image_url()
+					-else
+						=image_tag image.image_url(post.post_images[0].image_size)
+
+			%section{:class => 'post-content'}
+				=smart_truncate(post.body,:words => 50).html_safe 
+			=link_to 'Read More', "#{request.fullpath.split("/category").first}/#{post.slug}"
+	=paginate @posts
+	
+-if @publication.template_id == 3 || @publication.template_id == 4
+	%aside{:id => 'sidebar-right', :class => rightClass}
+		-@publication.sections.where(:parent_id => 0, :location => 3).order('position ASC').each do |s|
+			=render :partial => 'site/sections', :locals => {:s => s}
+			
+=content_for :footer do 
+	-@footer.where(:parent_id => 0).order('position DESC').each do |s|
+		=render :partial => 'site/sections', :locals => {:s => s}
+
+
+

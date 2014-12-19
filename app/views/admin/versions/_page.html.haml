@@ -1,0 +1,103 @@
+= content_for :page_title do
+  %h1
+    Page
+
+%div{:id => "versions"}
+  %table{:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Content Version
+    %thead
+      %th
+        Attribute
+      %th
+        Current Version
+      %th
+        Previous Version
+        =link_to "Restore", undo_path(:undo => @record.item_type,:vid => @record.id),:class => 'btn btn-envato btn-mini'
+    %tr
+      %td
+        Title
+        =compare_properties(@version.title, @version.previous_version.title)
+      %td
+        =@version.title
+      %td
+        =@version.previous_version.title
+    %tr
+      %td
+        Navigation Text
+        =compare_properties(@version.navigation_text, @version.previous_version.navigation_text)
+      %td
+        =@version.navigation_text
+      %td
+        =@version.previous_version.navigation_text
+    %tr
+      %td
+        URL Path
+        =compare_properties(@version.url_path, @version.previous_version.url_path)
+      %td
+        =@version.url_path
+      %td
+        =@version.previous_version.url_path
+    %tr
+      %td
+        Keywords
+        =compare_properties(@version.keywords, @version.previous_version.keywords)
+      %td
+        =@version.keywords
+      %td
+        =@version.previous_version.keywords
+    %tr
+      %td
+        Description
+        =compare_properties(@version.description, @version.previous_version.description)
+      %td
+        =@version.description
+      %td
+        =@version.previous_version.description
+    %tr
+      %td
+        Show in Navigation
+        =compare_properties(@version.show_in_nav, @version.previous_version.show_in_nav)
+      %td
+        =@version.show_in_nav
+      %td
+        =@version.previous_version.show_in_nav
+    %tr
+      %td
+        Published
+        =compare_properties(@version.published, @version.previous_version.published)
+      %td
+        =@version.published
+      %td
+        =@version.previous_version.published
+    %tr
+      %td
+        Show in Mobile
+        =compare_properties(@version.mobile , @version.previous_version.mobile)
+      %td
+        =@version.mobile
+      %td
+        =@version.previous_version.mobile
+    %tr
+      %td
+        Parent ID
+        =compare_properties(@version.parent_id , @version.previous_version.parent_id)
+      %td
+        -pg = Page.find_by_id @version.parent_id
+        -if pg
+          =pg.title
+      %td
+        -pg = Page.find_by_id @version.previous_version.parent_id
+        -if pg
+          =pg.title
+    %tr
+      %td
+        Footer
+        =compare_properties(@version.footer_id , @version.previous_version.footer_id)
+      %td
+        -footer = Footer.find_by_id @version.footer_id
+        =footer.title
+      %td
+        -footer = Footer.find_by_id @version.previous_version.footer_id
+        =footer.title
+        

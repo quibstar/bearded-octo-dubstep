@@ -1,0 +1,86 @@
+-function = s.asset_by_category.function_id
+-filter = s.asset_by_category.filter
+-image_size = s.asset_by_category.image_size
+
+-assets = Array.new
+-vid = Array.new 
+-ids = Array.new
+-videos = Array.new
+-vids = Array.new
+
+-section = AssetCategory.where(:categorizable_id => s.id)
+-section.each do |s|
+	-assets << s.category_id
+
+-assets.each do |a|
+	-vid += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'Youtube')
+	-debug vid
+-vid.each do |d|
+	-ids << d.categorizable_id	
+
+-if filter == "all"
+	-ids.each {|each| videos << each if ids.count(each) == assets.count}
+
+	-videos.uniq.each do |d|
+		-vids << Youtube.find(d)
+
+	-if ids.empty? || vids.empty?
+		%p{:class => 'error'}
+			No videos match your category choice, Please check you categorization or choose other categories.
+
+-if filter == "any"		
+	-if ids.uniq
+		-ids.uniq.each do |i|
+			-vids << Youtube.find(i)
+	-else
+		-ids.each do |i|
+			-vids << Youtube.find(i)
+
+-if vids
+	%ul{:class => 'asset-list'}
+		-vids.each do |y|
+			%li{:class => ""}
+				=link_to image_tag("http://i3.ytimg.com/vi/#{y.youtube_code}/1.jpg?") + content_tag(:span, y.title), "http://www.youtube.com/embed/#{y.youtube_code}", :class => 'fbox-asset fancybox.iframe'
+-else
+	%p{:class => 'error'}
+		No videos match your category choice, Please check you categorization or choose other categories.
+		
+	
+	
+	
+/ -if filter == "all"
+/ 	-section = AssetCategory.where(:categorizable_id => s.id)
+/ 	-section.each do |s|
+/ 		-assets << s.category_id
+	
+/ 	-assets.each do |a|
+/ 		-vid += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'Video')
+	
+	
+/ 	-vid.each do |d|
+/ 		-ids << d.categorizable_id
+		
+/ 	-ids.each {|each| videos << each if ids.count(each) == assets.count}
+
+/ 	-videos.uniq.each do |d|
+/ 		-vids << Video.find(d)
+
+/ 	-if ids.empty? || vids.empty?
+/ 		%p{:class => 'error'}
+/ 			No videos match your category choice, Please check you categorization or choose other categories.
+				
+/ 	-if vids
+/ 		%ul{:class => 'asset-list'}
+/ 		-vids.each do |d|
+/ 			%li
+/ 				-if d.images 
+/ 					-for image in d.images
+/ 						%span{:class => 'image'}
+/ 							=link_to(image_tag(image.image_url(:thumb)), image.image_url(:large))
+/ 				%span
+/ 					=d.title
+/ 				%span{:class => 'asset-item'}
+/ 					=link_to 'Download', d.video.to_s,:target => "_blank"
+/ 	-else
+/ 		%p{:class => 'error'}
+/ 			No videos match your category choice, Please check you categorization or choose other categories.

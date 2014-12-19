@@ -1,0 +1,18 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%div{:id => "form-remote"}
+  =form_for @publication, :remote => true do |f| 
+    .modal-header
+      =link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+      %h4
+        =title
+    .modal-body
+      -if @publication
+        =render 'shared/error_messages', :object => @publication
+      = render :partial => 'publications/form_fields', :locals => {:f => f, :publication => publication}
+    .modal-footer
+      =f.submit "Save", :class =>'btn btn-primary'
+      -if @publication && @publication.errors.empty?
+        =link_to 'Save and close form', '#', :class => 'btn btn-sky'
+      =link_to 'Close form', '#',:class => 'btn', 'data-dismiss'=> "modal"
+

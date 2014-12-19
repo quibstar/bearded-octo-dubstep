@@ -1,0 +1,44 @@
+%div{:class => "thumbnail media #{i.categories.collect{|c| c.name}.join(' ')}","data-asset" => "#{i.id}", :style => 'list-style:none;'}
+  .pull-left
+    .nailthumb-container.show-loading
+      -if i.image.present?
+        =image_tag(i.image, :class => 'thumbnail-asset')
+      -else
+        =image_tag avatar_url i.email
+  .media-body
+    %h4.media-heading
+      =i.title
+      =i.first_name
+      =i.last_name
+
+  %small
+    -if i.email
+      %i.fontello-icon-mail
+      =i.email
+
+
+    -if i.phone
+      %i.fontello-icon-phone
+      =i.phone
+
+
+    -if i.facebook
+      %i.fontello-icon-facebook
+      =i.facebook
+
+    -if i.twitter
+      %i.fontello-icon-twitter
+      =i.twitter
+
+    -if i.linkedin
+      %i.fontello-icon-linkedin
+      =i.linkedin
+
+    -if i.bio
+      =i.bio.html_safe
+
+  %small
+    Categories: 
+    =i.categories.collect{|c| c.name}.join(', ')
+  %div
+    =link_to content_tag(:i, "", :class => 'fontello-icon-exchange') + " Add to gallery" ,'#', :class => 'asset-transfer-link btn btn-mini btn-yellow'

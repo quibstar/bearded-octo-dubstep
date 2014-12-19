@@ -1,0 +1,33 @@
+:javascript
+  $(document).ready(function() {
+
+    $('#image-table').dataTable({
+      iDisplayLength: 10,
+      sDom: "<'row-fluid' <'span4'l> <'span8'pf> > rt <'row-fluid' <'span12'i> >"
+    });
+      
+    });
+%div{:id => "images"}
+  %table{:id => 'image-table',:class => "table table-striped table-hover table-bordered"}
+    %thead
+      %th{:scope => 'col'}
+        Title
+        %span.column-sorter
+      %th
+        Image 
+        %small
+          Thumbnail
+      
+    -Image.all.each_with_index do |image, i|
+      %tr
+        %td
+          =image.title
+        %td
+          =image_tag(image.image_url(:thumb))
+          %lable
+            -unless @document.document_image.blank?
+              -if @document.document_image.image_id == image.id
+                -selected = true
+              -else
+                -selected = false
+            =radio_button_tag "document[image_id]", image.id, selected, :class => 'radios'

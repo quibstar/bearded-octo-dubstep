@@ -1,0 +1,17 @@
+:javascript
+  $(document).ready(function() {
+    $('#vid-sortable-table').dataTable({
+      iDisplayLength: 10,
+      sDom: "<'row-fluid' <'span4'l> <'span8'pf> > rt <'row-fluid' <'span12'i> >"
+    });
+  });
+
+%table{:id => 'vid-sortable-table',:class => "table table-striped table-hover table-bordered vid"}
+  %thead
+    %th{:scope => 'col'}
+      Title
+      %span.column-sorter   
+  -Youtube.all.each_with_index do |v, i|
+    %tr
+      %td
+        =link_to v.title, "#", :data => {:video => v.youtube_code.to_s}, :title => v.title

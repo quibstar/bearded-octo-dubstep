@@ -1,0 +1,12 @@
+=content_for :page_title do
+  %h1.page-title
+    Notes
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-edit') + ' New Note',new_admin_response_path
+   
+=render 'response'

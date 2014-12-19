@@ -1,0 +1,46 @@
+/ Why first? Publication categories is a radio button so ther is only one publication per section
+-pub = s.publications.first
+-# get publication
+-if(pub)
+	-publication = Publication.find(pub.id)
+
+	-# get posts
+	-posts = publication.posts
+
+	-# get categories
+	-categories = Category.where('post = 1')
+	-assetCategories = ''
+
+	-assets = Array.new
+
+	%h3
+		=publication.title
+		Categories
+	-posts.each do |p|
+		-assetCategories = AssetCategory.where(:categorizable_id => p.id, :categorizable_type => 'Post')
+		-assetCategories.each do |ac|
+			-assets << ac.category_id
+	-if(assets.present?)
+		%ul	
+			-assets.uniq.each do |a|
+				-categories.each do |c|
+					-if a == c.id 
+						%li	
+							-b = Hash.new(0)
+							
+							-assets.each do |v|
+								-b[v] += 1
+							-# and money
+							-b.each do |k, v|
+								-if c.id == k
+									=link_to "#{c.name} (#{v})", post_category_path(publication, c)
+									=#c.id
+	-else 
+		%div{:class => "error"}
+			There are no categories assigned to this publication, Please assign categories or choose another publication.
+-else
+	%div{:class => "error"}
+		There was an error. Did you select a publication?
+					
+
+		

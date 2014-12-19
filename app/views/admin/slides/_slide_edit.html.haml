@@ -1,0 +1,28 @@
+%div{:class => 'data-container-content'}
+	-slides.each do |slide|
+		%div{:class => 'divider'}
+			%div{:class => "slider-image"}
+				%div{:class => 'slider-tool-bar'}
+					%ul
+						%li
+							=link_to "Edit Slide", edit_admin_slider_slide_path(slider, slide)
+						%li
+							=link_to "Use custom HTML", '#', :class => 'custom-html-link'
+
+				=image_tag slide.image.image_url()
+				%div{:class => 'custom-html'}
+
+					%div{:class => 'header-text'}
+						%p
+							header text
+					%div{:class => 'slider-content'}
+						%div{:class => 'slider-container'}
+							%div{:class => "slider-content-slider"}
+						
+						%p
+							Each slide can have a custom html content which you can animate
+
+					%div{:class => 'link-one'}
+						=link_to 'Custom Button one', "#", :class => 'button'
+					%div{:class => 'link-two'}
+						=link_to 'Custom Button two', "#", :class => 'button'

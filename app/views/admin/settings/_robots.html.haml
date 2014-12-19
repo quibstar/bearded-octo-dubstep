@@ -1,0 +1,16 @@
+.form-horizontal
+  .modal-header
+    =link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+    %h4
+      Edit Robots.txt file
+  
+  =form_for [:admin, setting] do |f|
+    .modal-body
+      %ul.form-list.label-left.list-bordered
+        %li.control-group
+          %label.control-label
+            Robots.txt
+          .controls
+            =f.text_area :robots, :rows => 15, :cols => 25, :value => @robots_txt
+    .modal-footer
+      =f.submit "Save",:class =>'btn btn-primary'

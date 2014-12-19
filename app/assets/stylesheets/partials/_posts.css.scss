@@ -1,0 +1,141 @@
+/*----------  topyenoh <- in a mirror ----------*/
+.comment-body {
+	display: none;
+	}
+.facebook-wrap,
+.twitter-wrap,
+.google-wrap,
+.pinterest-wrap,
+.linkedin-wrap {
+	float:left;
+	min-width: 100px;
+	}
+/*----------  End ----------*/
+
+/* ------------------------------------------------------------------------
+	post
+------------------------------------------------------------------------- */
+.post-image.float-left {
+	float: left;
+	margin: 0 10px 0 0;
+}
+
+.post-image.float-right {
+	float: right;
+	margin: 0 0 0 10px;
+}
+
+.post .article-content {
+	
+}
+.comment-wrap {
+	/*margin-bottom: 5px;
+	padding-bottom: 5px;*/
+	margin: 10px 0;
+	padding: 10px 0;
+	border-bottom: 1px solid #DDD;
+}
+
+// ------------------------------------------------------------------------
+//    post author
+// ------------------------------------------------------------------------
+// BEGIN
+
+#post-author {
+	margin-top: 5px;
+	padding: 5px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	.author-image {
+		float: left;
+		margin-right: 10px;
+	}
+	.author-bio {
+		margin-left: 40px;
+		display: none;
+	}
+}
+
+// ----- END --------------------------------------------------------------
+
+// ------------------------------------------------------------------------
+//    social
+// ------------------------------------------------------------------------
+// BEGIN
+// visible so facebook will be seen
+.post-social-networks {
+	overflow: visible;
+}
+.social-icons.post {
+	overflow: auto;
+}
+
+// ----- END --------------------------------------------------------------
+
+// ------------------------------------------------------------------------
+//    comments
+// ------------------------------------------------------------------------
+// BEGIN
+#comments {
+	clear: both;
+}
+.comment-image {
+	margin-right: 10px;
+}
+.comment-content {
+	margin-left: 55px;
+	h4 {
+		border: none;
+	}
+}
+
+
+.level-0 {
+	margin-left: 20px;
+}
+.level-1 {
+	margin-left: 40px;
+}
+.level-2 {
+	margin-left: 60px;
+}
+.level-3 {
+	margin-left: 80px;
+}
+.level-4 {
+	margin-left: 100px;
+}
+
+
+// ----- END --------------------------------------------------------------
+
+// ------------------------------------------------------------------------
+//    categories
+// ------------------------------------------------------------------------
+// BEGIN
+
+.publication-categories {
+	ul {
+		list-style: none;
+	}
+}
+
+// ----- END --------------------------------------------------------------
+
+
+label.error {
+	color: #b94a48;
+}
+
+
+
+
+// ------------------------------------------------------------------------
+//    Theme Customization Below
+// ------------------------------------------------------------------------
+
+
+
+
+
+

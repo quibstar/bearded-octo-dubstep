@@ -1,0 +1,89 @@
+-function = s.asset_by_category.function_id
+-filter = s.asset_by_category.filter
+-image_size = s.asset_by_category.image_size
+
+-assets = Array.new
+-aud = Array.new 
+-ids = Array.new
+-audios = Array.new
+-auds= Array.new
+
+
+-content = AssetCategory.where(:categorizable_id => s.id)
+-content.each do |c|
+	-assets << c.category_id
+
+-assets.each do |a|
+	-aud += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'Audio')
+
+-aud.each do |d|
+	-ids << d.categorizable_id	
+	
+-if filter == "all"
+	-ids.each {|each| audios << each if ids.count(each) == assets.count}
+	
+	-audios.uniq.each do |d|
+		-auds<< Audio.find(d)
+	
+	-if ids.empty? || auds.empty?
+		%p{:class => 'error'}
+			No audios match your category choice, Please check you categorization or choose other categories.
+
+
+-if filter == "any"
+	-if ids.uniq
+		-ids.uniq.each do |i|
+			-auds << Audio.find(i)
+	-else
+		-ids.each do |i|
+			-auds << Audio.find(i)
+
+-if auds
+	%ul{:class => 'asset-list'}
+		-auds.each do |d|
+			%li
+				%span
+					=d.title
+				%span{:class => 'asset-item'}
+					%audio{:id => "player#{d.id}", :src => "#{d.audio.to_s}", :controls => "controls"}
+
+-else
+	%p{:class => 'error'}
+		No audios match your category choice, Please check you categorization or choose other categories.
+		
+	
+	
+	
+
+	
+	/ -content = AssetCategory.where(:categorizable_id => s.id)
+	/ -content.each do |c|
+	/ 	-assets << c.category_id
+	
+	/ -assets.each do |a|
+	/ 	-aud += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'Audio')
+	
+	/ -aud.each do |d|
+	/ 	-ids << d.categorizable_id
+		
+	/ -ids.each {|each| audios << each if ids.count(each) == assets.count}
+	
+	
+	/ -audios.uniq.each do |d|
+	/ 	-auds<< Audio.find(d)
+		
+	/ -if ids.empty? || auds.empty?
+	/ 	%p{:class => 'error'}
+	/ 		No audios match your category choice, Please check you categorization or choose other categories.
+			
+	/ -if auds
+	/ 	%ul{:class => 'asset-list'}
+	/ 		-auds.each do |d|
+	/ 			%li
+	/ 				%span
+	/ 					=d.title
+	/ 				%span{:class => 'asset-item'}
+	/ 					%audio{:id => "player#{d.id}", :src => "#{d.audio.to_s}", :controls => "controls"}
+	/ -else
+	/ 	%p{:class => 'error'}
+	/ 		No audios match your category choice, Please check you categorization or choose other categories.

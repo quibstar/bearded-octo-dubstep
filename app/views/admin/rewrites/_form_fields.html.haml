@@ -1,0 +1,31 @@
+%ul.form-list.label-left.list-bordered.form-horizontal
+  %li.control-group
+    =f.label "Request URL *", :class => "control-label"
+    .controls
+      =f.text_field :request_path,:class => 'required'
+  %li
+    %h4
+      Rewrite for
+    %label.radio.inline
+      .radios
+      =radio_button_tag("rewrite_for", "page")
+      Page Rewrite
+
+    %label.radio.inline
+      .radios
+      =radio_button_tag("rewrite_for", "post")
+      Post Rewrite
+
+  %li.control-group#page.hide
+    =f.label "Page Target Path", :class => "control-label"
+    .controls
+    -navigation_groups = Navigation.all
+    =grouped_collection_select(:rewrite, :page_id, navigation_groups, :pages, :nav_group, :id, :url_path,{include_blank: 'Choose'})
+
+  %li.control-group#post.hide
+    =f.label "Post Target Path", :class => "control-label"
+    .controls
+    -publications = Publication.all
+    =grouped_collection_select(:rewrite, :post_id, publications, :posts, :title, :id, :title,{include_blank: 'Choose'})
+
+  =f.hidden_field :created_by, :value => current_user.id

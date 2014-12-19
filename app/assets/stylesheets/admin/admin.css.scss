@@ -1,0 +1,1119 @@
+@import "../partials/variables.css.scss";
+
+/* ------------------------------------------------------------------------
+	sprites
+------------------------------------------------------------------------- */
+
+.templates-sprite {
+	width: 50px;
+	height: 50px;
+}
+@import "templates/*.png";
+@include all-templates-sprites;
+
+
+
+
+/* ------------------------------------------------------------------------
+	Global Styles
+------------------------------------------------------------------------- */
+
+
+
+.clear-both {
+	clear:both;
+}
+
+.float-left {
+	float:left;
+}
+
+.float-right {
+	float:right;
+}
+
+.status {
+	display:inline-block !important;
+	width: 10px;
+	height: 10px;
+	border: 1px solid #01560c;
+	&.true{
+		@include background(linear-gradient($lightGreen 14%, $darkGreen 57% ));
+		@include box-shadow(inset 0 0 3px #888);
+		@include border-radius(6px); 
+	}
+	&.false {
+		border: 1px solid $darkRed;
+		@include background(linear-gradient($lightRed 14%, $darkRed 57% ));
+		@include box-shadow(inset 0 0 3px #888);
+		@include border-radius(6px);
+	}
+}
+
+.information-critical {
+	font-style: italic;
+	margin: 10px;
+	color: #eb5439;
+}
+h1 span,
+h2 span,
+h3 span {
+	font-size: 12px;
+}
+
+/* ------------------------------------------------------------------------
+	Highlight state
+------------------------------------------------------------------------- */
+.ui-state-highlight { 
+	height: 2em; line-height: 2em; 
+	background: yellow;
+	
+	}
+
+/* ------------------------------------------------------------------------
+	Header admin
+------------------------------------------------------------------------- */
+
+header {
+	position: relative;
+	z-index: 1000;
+	@include background(linear-gradient(#454545, black ));
+	padding: 0 0 0 10px;
+	@include box-shadow( 0 3px 5px black);
+	border-bottom: 1px solid #444;
+	color: #CCC;
+	h2 {
+		color:$fontColor;
+		margin-bottom: 0;
+		span {
+			font-size: 12px;
+			}
+		}
+}
+
+
+/* ------------------------------------------------------------------------
+	Search form
+------------------------------------------------------------------------- */
+header .search-form {
+	position: absolute;
+	top: 10px;
+	right: 200px;
+	input[type='text']{
+		background: #333;
+		@include border-radius(6px);
+		border: 1px solid #0d0d0d;
+		border-bottom: 1px solid #888;
+		color: #aaa;
+		}
+		#go {
+			margin-left: -30px;
+			width: 20px;
+			height: 20px;
+			background: image-url('magnifying-glass.png') left top no-repeat;
+			border: none;
+			text-indent: -999px;
+			position: absolute;
+			top: 9px;
+			right: 6px;
+			}
+	}
+
+/* ------------------------------------------------------------------------
+	Navigation and login admin
+------------------------------------------------------------------------- */
+.login-nav {
+	float:right;
+	ul {
+		li {
+			list-style:none;
+			a {
+				text-decoration:none;
+			}
+		}
+	}
+}
+#main-sidebar {
+	overflow: auto; 
+}
+
+
+/* ------------------------------------------------------------------------
+	Side nav admin
+------------------------------------------------------------------------- */
+#admin-sidebar {
+	&.static {
+		position: fixed;
+		top:0;
+	}
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			position: relative;
+			span {
+				width: 20px;
+				height: 20px;
+				background: image-url('admin-arrows-sprite.png') left top no-repeat;
+				display: block;
+				position: absolute;
+				top: 10px;
+				right: 5px;
+			&:hover {
+				background-position: -21px top;
+				}
+			&:hover.current{
+				background-position: -21px -20px;
+				}
+			&.current {
+				background-position: -21px -20px;
+				} 
+			}
+			
+			a {
+				display: block; 
+				color: #888;
+				text-shadow: 0 1px black;
+				text-decoration: none;
+				padding: 10px 15px 10px 5px;
+				border-top:1px solid #3D4143; /* ie */
+				border-bottom: 1px solid  #131517; /* ie */
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+				border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+				&:hover {
+					color: white;
+					background-color: #121212;
+					background-position: left -40px;
+					}
+				}
+
+				
+			}
+		
+		ul {
+			display: none; 
+			background: #222;
+			/*border-top: 1px solid #1A1A1A;*/
+			a {
+				display: block;
+				padding-left: 5px;
+				border: none;
+				background-image: none;
+				&:hover {
+					background: $midBlue;
+					}
+				}
+			}
+		}
+	}
+/*#admin-sidebar ul li > ul */
+#admin-sidebar ul ul li a { padding-left: 10px;}
+#admin-sidebar ul ul ul li a { padding-left: 15px;}
+#admin-sidebar ul ul ul ul li a { padding-left: 20px;}
+#admin-sidebar ul ul ul ul ul li a { padding-left: 25px;}
+#admin-sidebar ul ul ul ul ul ul li a { padding-left: 30px;}
+#admin-sidebar ul ul ul ul ul  ul ul li a { padding-left: 35px;}
+/*#admin-sidebar ul ul li.root > a {background: #000; color: white}*/
+#admin-sidebar .sub-subnav {@include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-subnav {background: #222; @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-subnav {background: lighten(#222, 2.5%); @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-sub-subnav {background: lighten(#222, 5%); @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-sub-sub-subnav {background: lighten(#222, 7.5%); @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-sub-sub-sub-subnav {background: lighten(#222, 10%); @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-sub-sub-sub-sub-subnav {background: lighten(#222, 12.5%); @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-sub-sub-sub-sub-sub-subnav {background: lighten(#222, 15%); @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-sub-sub-sub-sub-sub-sub-subnav {background: lighten(#222, 17.5%); @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-sub-sub-sub-sub-sub-sub-sub-subnav {background: lighten(#222, 20%); @include box-shadow(inset 0 1px 3px #000)}
+#admin-sidebar .sub-sub-sub-sub-sub-sub-sub-sub-sub-sub-sub-subnav {background: lighten(#222, 22.5%); @include box-shadow(inset 0 1px 3px #000)}
+
+#admin-sidebar ul li.current > a,
+#admin-sidebar ul li.active > a {
+	background-color: #272727;
+	border-top: 1px solid #1a1a1a;
+	border-bottom: 1px solid #1a1a1a;
+	color: white;
+	}
+#admin-sidebar ul ul li.active > a	{
+	color: white;
+	background: $darkBlue;
+}	
+
+
+/* ------------------------------------------------------------------------
+	Page sub nav
+------------------------------------------------------------------------- */
+.page-sub-nav {
+	border: 1px solid #CCC;
+	width: 98%;
+	margin-top: -10px;
+	}
+
+/* ------------------------------------------------------------------------
+	edit structure of columns ( left nav, Main, right nav ) 
+------------------------------------------------------------------------- */
+
+.right-section-2 {
+	float:right;
+	width: 30%;
+	}
+.right-section-3 {
+	float: right;
+	width: 25%;
+	}
+.right-section-4 {
+	float: right;
+	width: 25%;
+	}	
+ 
+.main-2 {
+	width: 70%;
+	float: left;
+	}
+.main-3 {
+	width: 75%;
+	float: left;
+	}
+	
+.main-4 {
+	float: left;
+	width: 50%;
+	}
+	
+.left-section-2 {
+	float: left;
+	width: 30%;
+	}
+.left-section-4 {
+	width: 25%;
+	float: left
+	}
+/* for publication make left and right sidebar 50% for updating */
+
+.post {
+	.right-section-3 {
+		width: 100%;
+		}
+	.right-section-4{
+		float:right;
+		width: 50%;
+		}
+
+	.left-section-3 {
+		width: 100%;
+		}
+	.left-section-4{
+		float:left;
+		width: 50%;
+		}
+	}
+
+
+/* ------------------------------------------------------------------------
+	Content
+------------------------------------------------------------------------- */
+#content {
+	position: relative;
+	padding: 0 20px;
+	}
+
+
+#content-status-modal {
+	display: none;
+}
+
+/* ------------------------------------------------------------------------
+	Main
+------------------------------------------------------------------------- */
+
+#container {
+	float:left;
+	width: 85%;
+	margin-left: 15%;
+	}
+
+
+/* ------------------------------------------------------------------------
+	section toolbar and children
+------------------------------------------------------------------------- */
+
+#image-assets, 
+#document-assets, 
+#audio-assets, 
+#video-assets {
+	max-height: 400px;
+}
+
+#post-assets-selection {
+	#image-assets, 
+	#document-assets, 
+	#audio-assets, 
+	#video-assets {
+		max-height: 600px;
+	}
+}
+
+.tabbed-assets {
+	background: #efefef;
+}
+.popover-cell {
+	position: relative;
+}
+.popover {
+	width: auto;
+}
+.popup-header-title {
+	font-weight: bold;
+	display: block;
+	margin-top: 2px;
+}
+
+.content-container {
+	float: left;
+	width: 550px;
+	margin-bottom: 20px;
+}
+
+.assets-container {
+	float: left;
+	margin-left: 10px;
+	width: 400px;
+}
+
+#asset-selector-container {
+	
+	.pagination {
+		margin:  10px;
+	}
+}
+
+.section-toolbar,
+.move-content-toolbar {
+	clear: both;
+	height: 27px;
+	> ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		>  li {
+			float: left;
+			position: relative;
+			/*/* below allows for ie7 and less to render li as inline 
+			display: inline-block;
+			*display: inline;
+    		zoom: 1;*/
+			 > a {
+				display: block;
+				/*padding: 5px;*/
+				padding: 2px 3px;
+				color: white;
+				text-decoration: none;
+				@include border-radius( 4px);
+				margin: 1px;
+/*			&.round-right {
+				@include border-radius( 4px 0 0 4px);
+					}
+			&.round-left {
+				@include border-radius( 0 4px 4px 0);
+			}
+			&.round-both {
+				@include border-radius( 4px);
+					}*/
+			&:hover {
+				background: #333;
+				}
+				}
+			}
+		}
+	}
+.move-content-toolbar > ul > li {
+	 a {
+		@include background(linear-gradient( lighten($blue, 20%), $blue ));
+		border-left: 1px solid $blue;
+		border-right: 1px solid lighten($blue, 20%);
+		}
+	}
+
+.section-toolbar li.cancel-move-content {
+	display: none;
+	a {
+		@include background(linear-gradient( lighten($blue, 20%), $blue ));
+		&:hover {
+			@include background(linear-gradient( $midBlue, $lightBlue )) ;
+		}
+		
+	}
+}
+
+// hide for jquery had to change because of boo admin
+/*.section-form,*/
+.section-links {
+	display: none;
+	}
+
+.section-links {
+	position: absolute;
+	top: 0px;
+	left: -1px;
+	z-index: 101;
+	@include box-shadow(0 3px 5px black);
+/*	padding-bottom: 2px;*/
+	width: 305px;
+	background: #efefef;
+	.data-container-header {
+		background: #222;
+		color: #BBB;		
+		p {
+			padding: 5px;
+			margin: 0;
+			}
+		.closer {
+			float: right;
+			padding: 0px 6px;
+			margin-top: -1px;
+			background: white;
+			color: black;
+			@include border-radius(12px);
+			}
+		h2 {
+			font-size: 16px;
+			padding: 0 5px;
+			}
+		}
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		li {
+			position: relative;
+			background: none;
+			float: left;
+			width: 50%;
+			margin-bottom: 1px;
+		&.funct-li {
+			width: 100%;
+		}
+			a {
+				display: block;
+				text-decoration: none;
+				padding: 2px 5px;
+				color: #444;
+				background: white;
+				border-bottom: 1px solid #ddd;
+				border-right: 1px solid #ddd;
+			&:hover {	
+				background: $midBlue;
+				color: white;
+				text-shadow: 0 1px black;
+					}
+			&.current {
+				background: #333;
+				color: white;
+				text-shadow: 0 1px black;
+				background: $midBlue;
+				}
+				}
+			}
+		}
+	.section-form {
+		position: absolute;
+		z-index: 100;
+		top: -40px;
+		left: 110%;
+		@include box-shadow(0 2px 1px black);
+		.whtie-arrow {
+			display: block;
+			position: absolute;
+			left: -12px;
+			top: 43px;
+			}
+			h2 {
+				padding: 5px;
+				margin: 0;
+				@include background(linear-gradient( #F9F9F9, #EDEDED ));
+				font-size: 18px;
+				text-shadow: 0 1px white;
+				border: 1px solid #DFDFDF;
+				@include border-radius(4px 4px 0 0);
+				}
+		.form-container {
+			min-width: 410px;
+			padding: 0 10px 10px 10px;
+			background-color: #F5F5F5;
+			border: 1px solid #DFDFDF;
+			border-top: 1px solid #FFF;
+			color: #444;
+			label {
+				display: inline-block;
+				}
+			}
+		}
+		&.wide {
+			width: 415px;
+			}
+	}
+.function-list {
+	clear: both;
+	background: #222;
+	color: #BBB;
+	padding: 3px;
+}
+
+.right-section-3 .section-links {
+	left:-100%;
+}
+
+.dynamic-content {
+	/*display: none;*/
+}
+
+
+.section-form-container {
+	padding: 5px;
+	label {
+		color: #444;
+		}
+	input[type='text'] {
+		width: 90% !important;
+		}
+	}
+
+.top > ul > li > a  {
+	@include background(linear-gradient( lighten(black, 20%), black ));	
+/*	border-left: 1px solid black;
+	border-right: 1px solid lighten(black, 20%);*/
+	@include border-radius(6px);
+	&:hover {
+		@include background(linear-gradient( darken(black, 20%), black ));
+	}
+}
+
+.text > ul > li > a  {
+	@include background(linear-gradient( lighten($green, 20%), $green ));	
+/*	border-left: 1px solid $green;
+	border-right: 1px solid lighten($green, 20%);*/
+	&:hover {
+		@include background(linear-gradient( darken($green, 20%), $green ));
+	}
+}
+.text > ul p {
+	@include background(linear-gradient( lighten($green, 20%), $green ));
+	color: white;
+}
+
+.text .function-list  {
+	@include background(linear-gradient( lighten($green, 20%), $green ));
+}
+.html > ul > li > a  {
+	@include background(linear-gradient( lighten($yellow, 20%), $yellow ));
+/*	border-left: 1px solid $yellow;
+	border-right: 1px solid lighten($yellow, 20%);*/
+	&:hover {
+		@include background(linear-gradient( darken($yellow, 20%), $yellow ));
+	}
+}
+.html > ul p {
+	@include background(linear-gradient( lighten($yellow, 20%), $yellow ));
+	color: white;
+}
+.html .function-list {
+	@include background(linear-gradient( lighten($yellow, 20%), $yellow ));
+}
+
+.tabbed > ul > li > a,
+.tab > ul > li > a  {
+	@include background(linear-gradient( lighten($red, 20%), $red ));
+/*	border-left: 1px solid $red;
+	border-right: 1px solid lighten($red, 20%);*/
+	&:hover {
+		@include background(linear-gradient( darken($red, 20%), $red ));
+	}
+}
+.tab > ul p {
+	@include background(linear-gradient( lighten($red, 20%), $red ));
+	color: white;
+}
+.tab .function-list {
+	@include background(linear-gradient( lighten($red, 20%), $red ));
+}
+
+.accordions > ul > li > a ,
+.accord > ul > li > a  {
+	@include background(linear-gradient( lighten($pink, 20%), $pink ));
+/*	border-left: 1px solid $pink;
+	border-right: 1px solid lighten($pink, 20%);*/
+	&:hover {
+		@include background(linear-gradient( darken($pink, 20%), $pink ));
+	}
+}
+.accord > ul p {
+	@include background(linear-gradient( lighten($pink, 20%), $pink ));
+	color: white;
+}
+.accord .function-list {
+	@include background(linear-gradient( lighten($pink, 20%), $pink ));
+}
+.ui-accordion-content-active {overflow: visible!important;}
+
+.table > ul > li > a  {
+	@include background(linear-gradient( lighten($gray, 20%), $gray ));
+/*	border-left: 1px solid $gray;
+	border-right: 1px solid lighten($gray, 20%);*/
+	&:hover {
+		@include background(linear-gradient( darken($gray, 20%), $gray ));
+	}	
+}
+.table > ul p {
+	@include background(linear-gradient( lighten($gray, 20%), $gray ));
+	color: white;
+}
+.table .function-list {
+	@include background(linear-gradient( lighten($gray, 20%), $gray ));
+}
+
+.columns > ul > li > a  {
+	@include background(linear-gradient( lighten($purple, 20%), $purple ));
+/*	border-left: 1px solid $purple;
+	border-right: 1px solid lighten($purple, 20%);*/
+	&:hover {
+		@include background(linear-gradient( darken($purple, 20%), $purple ));
+	}	
+}
+.columns > ul p {
+	@include background(linear-gradient( lighten($purple, 20%), $purple ));
+	color: white;
+}
+.columns .function-list {
+	@include background(linear-gradient( lighten($purple, 20%), $purple ));
+}
+
+.function > ul > li > a  {
+	@include background(linear-gradient( lighten($blue, 20%), $blue ));
+/*	border-left: 1px solid $blue;
+	border-right: 1px solid lighten($blue, 20%);*/
+	&:hover {
+		@include background(linear-gradient( darken($blue, 20%), $blue ));
+	}
+}
+.function > ul p {
+	@include background(linear-gradient( lighten($blue, 20%), $blue ));
+	color: white;
+}
+
+.slides > ul > li > a  {
+	@include background(linear-gradient( lighten($orange, 20%), $orange ));
+/*	border-left: 1px solid $orange;
+	border-right: 1px solid lighten($orange, 20%);*/
+	&:hover {
+		@include background(linear-gradient( darken($orange, 20%), $orange ));
+	}
+}
+.slides > ul p {
+	@include background(linear-gradient( lighten($orange, 20%), $orange ));
+	color: white;
+}
+.slides .function-list {
+	@include background(linear-gradient( lighten($orange, 20%), $orange ));	
+}
+
+/* ------------------------------------------------------------------------
+	section legend (top of editing page content)
+------------------------------------------------------------------------- */
+.legend {
+	margin-top: -20px;
+
+	border: 1px solid #CCC;
+	@include border-radius(0 0 6px 6px);
+	padding: 5px;
+}
+.legend span {
+	display: inline-block;
+}
+.legend .desc {
+	margin-right: 5px;
+}
+
+
+
+.legend span.text {
+	@include background(linear-gradient( lighten($green, 20%), $green ));
+	width: 20px;
+	height: 20px;
+	
+}
+.legend span.html {
+	@include background(linear-gradient( lighten($yellow, 20%), $yellow ));
+	width: 20px;
+	height: 20px;
+}
+.legend span.leg-table {
+	@include background(linear-gradient( lighten($gray, 20%), $gray ));
+	width: 20px;
+	height: 20px;
+}
+.legend span.tabbed {
+	@include background(linear-gradient( lighten($red, 20%), $red ));
+	width: 20px;
+	height: 20px;
+}
+.legend span.accordions {
+	@include background(linear-gradient( lighten($pink, 20%), $pink ));
+	width: 20px;
+	height: 20px;
+}
+.legend span.column {
+	@include background(linear-gradient( lighten($purple, 20%), $purple ));
+	width: 20px;
+	height: 20px;
+}
+.legend span.function {
+	@include background(linear-gradient( lighten($blue, 20%), $blue ));
+	width: 20px;
+	height: 20px;
+}
+.legend span.slider {
+	@include background(linear-gradient( lighten($orange, 20%), $orange ));
+	width: 20px;
+	height: 20px;
+}	
+
+/* ------------------------------------------------------------------------
+	Slider toolbar
+------------------------------------------------------------------------- */
+.slider-tool-bar ul {
+		margin: 0;
+		padding: 0;
+		overflow: auto;
+		li {
+		float: left;
+		background-color: #272727;
+		a {
+	
+			display: block;
+			color:white;
+			text-decoration: none;
+			padding: 5px;
+			border-right: 1px solid #888;
+			&:hover {
+				@include background(linear-gradient( $darkBlue, $midBlue ));
+			}
+		}
+	}
+}	
+
+
+/* ------------------------------------------------------------------------
+	Links
+------------------------------------------------------------------------- */
+a.right {
+	float:right;
+	margin: 0 0 10px 10px;
+}
+a.left {
+	float:left;
+	margin: 0 10px 10px 0;
+}
+
+
+/* ------------------------------------------------------------------------
+	Footer
+------------------------------------------------------------------------- */
+.footer-container {
+	border-bottom: 1px solid #CCC;
+	margin-top: 5px;
+	}
+.footer-tabbed-content {
+	display: none;
+	}
+
+/* ------------------------------------------------------------------------
+	Publications
+------------------------------------------------------------------------- */
+.publication-container {
+	border: 1px solid #CCC;
+	margin-bottom: 5px;
+	padding: 0 5px; 
+	}
+.like-buttons {
+	label {
+		margin-right: 2%;
+		}
+	}
+.icon-sharing {
+	ul {
+		overflow: auto;
+		li {
+		list-style:none;
+		float:left;	
+		margin-right:5px;
+		width: 150px;
+		}
+	}
+}
+
+/* ------------------------------------------------------------------------
+	Function forms
+------------------------------------------------------------------------- */
+#function-choice {
+	width: 600px;
+	min-height: 200px;
+	}
+
+.form-categories {
+	border-bottom: 1px solid #CCC;
+	padding-bottom: 5px;
+	margin-top: 5px;
+	h3 {
+		margin-bottom: 5px;
+		}
+	span {
+		display: inline-block;
+		margin-right: 10px;
+		}
+	}
+
+
+/* ------------------------------------------------------------------------
+	Columns
+------------------------------------------------------------------------- */
+.col-div {
+	display: none;
+	}
+
+	
+
+/* ------------------------------------------------------------------------
+	featured image
+------------------------------------------------------------------------- */
+
+.slideshow-fields {
+	padding-top: 20px !important;
+	}
+#slideshow_image .featured-image-controls{
+	display: block !important;
+	top: 150px !important;
+}
+#asset-inline #image-assets ul li .featured-image-controls {
+	top: -109px;
+}
+#asset-inline .data-container-header h2 {background-image: none;}
+
+
+/* ------------------------------------------------------------------------
+	Sections
+------------------------------------------------------------------------- */
+section.article > article {
+	/*overflow: auto;*/
+	clear: both; /* to clear tool bars on editing content areas */
+
+}
+
+/* ------------------------------------------------------------------------
+	Copy Move
+------------------------------------------------------------------------- */
+.copy-move {
+	h3 {
+		margin: 5px 5px 3px;
+		}
+	ol {
+		list-style: none;
+		margin: 0 0 0 5px;
+		padding: 0;
+		li {
+			padding: 2px 0;
+			a {
+				display: block;
+				text-align: left !important
+				}
+			}
+		}
+	}
+
+
+/* ------------------------------------------------------------------------
+	Categories
+------------------------------------------------------------------------- */
+#categories .edit_category input[type='submit'] {
+	display: none;
+	}
+	
+/* ------------------------------------------------------------------------
+	Helps
+------------------------------------------------------------------------- */
+.help-list {
+	margin-bottom: 5px;
+	li {
+		overflow: auto;
+		clear:both;
+		padding: 5px;
+		.edit {
+			float: right;
+		}
+	}
+}	
+
+
+
+/* ------------------------------------------------------------------------
+	Comments and dashboard
+------------------------------------------------------------------------- */
+.element-shown {
+	display: none;
+	border: 1px solid #CCC;
+	padding: 5px;
+	margin: 5px 0;
+	background: white;
+}
+
+.dashboard .widget-body {
+	height: 300px;
+	overflow-y: scroll;
+
+}	
+
+/* ------------------------------------------------------------------------
+	ui
+------------------------------------------------------------------------- */
+.ui-draggable {
+	cursor: pointer;
+}
+
+/* ------------------------------------------------------------------------
+	includes
+------------------------------------------------------------------------- */
+
+
+.signin-content {
+  max-width: 360px;
+  margin: 0 auto 20px;
+}
+
+// ------------------------------------------------------------------------
+//    post templates
+// ------------------------------------------------------------------------
+// BEGIN
+
+.img-left {
+	background: image-url('post-template.png');
+	height: 50px;
+	width: 50px;
+}
+.img-center {
+	background: image-url('post-template.png') left -50px;
+	height: 50px;
+	width: 50px;
+}
+.img-right {
+	background: image-url('post-template.png') left -100px;
+	height: 50px;
+	width: 50px;
+}
+
+// ----- END --------------------------------------------------------------
+
+// ------------------------------------------------------------------------
+//    gallery
+// ------------------------------------------------------------------------
+// BEGIN
+
+#gallery-playlist,
+#gallery-content {
+	position: relative;
+}
+.gallery-well .pagination {
+	margin: 0;
+}
+#gallery-content .thumbnail {
+	min-height: 85px;
+	max-height: 115px;
+}
+
+// ----- END --------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------
+//    version
+// ------------------------------------------------------------------------
+// BEGIN
+
+#versions-table .label {
+	white-space: normal;
+}
+
+// ----- END --------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------
+//    notes
+// ------------------------------------------------------------------------
+// BEGIN
+
+#page-notes {
+	position: absolute;
+	top: 46px;
+	right:-390px;
+	width:350px;
+	z-index: 1000;
+	@include transition-property(all);
+	@include transition-duration(.25s);
+	&.show {
+		right: 0;
+	}
+	#note-handle {
+		background-color: #f6f7fe;
+		position: absolute;
+		top: 6px;
+		left:-55px;
+		/*@include transform(rotate(90deg));*/
+		padding: 10px 15px 10px 10px;
+		@include border-radius(6px);
+		&:hover {
+			text-decoration:none;
+		}
+	}
+}
+
+// ----- END --------------------------------------------------------------
+
+// ------------------------------------------------------------------------
+//    sidenav filter
+// ------------------------------------------------------------------------
+// BEGIN
+
+.filter-form {
+	margin: 0 auto;
+	display: block;
+	input[type="text"] {
+		@include border-radius(0);
+		border: none;
+		margin: auto;
+		width: 100%;
+		display: block;
+		background-color: #444;
+		color: white;
+	}
+}
+
+// ----- END --------------------------------------------------------------
+
+
+
+// ------------------------------------------------------------------------
+//    response
+// ------------------------------------------------------------------------
+// BEGIN
+
+ul.response {
+	margin: 0;
+	padding: 0;
+	li {
+		margin: 5px 0;
+		padding: 5px 0;
+		list-style: none;
+		border-bottom: 1px dashed #CCC;
+	}
+}
+
+// ----- END --------------------------------------------------------------
+
+

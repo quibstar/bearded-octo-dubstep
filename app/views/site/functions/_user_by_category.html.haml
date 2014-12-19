@@ -1,0 +1,85 @@
+-function = s.asset_by_category.function_id
+-filter = s.asset_by_category.filter
+-image_size = s.asset_by_category.image_size
+
+-assets = Array.new
+-img = Array.new 
+-ids = Array.new
+-images = Array.new
+-allUsers = Array.new
+-users = Array.new
+	
+	
+-section = AssetCategory.where(:categorizable_id => s.id)
+-section.each do |s|
+	-assets << s.category_id
+
+-assets.each do |a|
+	-img += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'User')
+
+-img.each do |d|
+	-ids << d.categorizable_id	
+
+
+
+-if filter == "all"
+	-ids.each {|each| allUsers << each if ids.count(each) == assets.count}
+		
+	-allUsers.uniq.each do |d|
+		-users << User.find(d)
+
+	-if ids.empty? || users.empty?
+		%p{:class => 'error'}
+			No users match your category choice, Please check you categorization or choose other categories
+		
+-if filter == "any"			
+	-if ids.uniq
+		-ids.uniq.each do |i|
+			-users << User.find(i)
+	-else
+		-ids.each do |i|
+			-users << User.find(i)
+
+
+-if users
+	%ul{:class => 'asset-list users'}
+		-users.each do |u|
+			-user_category = u.categories.map(&:name).join("\t").downcase.gsub(" ", "_")
+			%li{:class => "#{user_category}"}
+				%span{:class => 'image left'}
+					-if(u.image.present?)
+						-if	image_size
+							=link_to(image_tag(u.image_url(image_size.to_sym)), u.image_url(:large), :class => "fbox", :rel =>"gallery-#{s.id}", :title =>u.name)
+						-else
+							=link_to(image_tag(u.image_url(:thumb)), u.image_url(:large), :class => "fbox", :rel =>"gallery-#{s.id}", :title =>u.name)
+				%span
+					-if s.asset_by_category.fullname == '1'
+						%span{:class => "name"}
+							=u.first_name 
+							=u.last_name
+
+					-if s.asset_by_category.title == '1'
+						%span{:class => "title"}
+							=u.title
+
+					-if s.asset_by_category.phone == '1'
+						%span{:class => "phone"}
+							=u.phone
+
+					-if s.asset_by_category.twitter == '1'
+						%span{:class => "twitter"}
+							=link_to u.twitter ,u.twitter,:class => "social-icons-16-sprite social-icons-16-twitter icons" ,:target => '_blank'
+							
+					-if s.asset_by_category.facebook == '1'
+						%span{:class => "facebook"}
+							=link_to u.facebook ,u.facebook,:class => "social-icons-16-sprite social-icons-16-facebook icons" ,:target => '_blank'
+					-if s.asset_by_category.linkedin == '1'
+						%span{:class => "linkedin"}
+							=link_to u.linkedin ,u.linkedin,:class => "social-icons-16-sprite social-icons-16-linkedin icons" ,:target => '_blank'
+					-if s.asset_by_category.bio == '1'
+						%span{:class => "bio"}
+							=smart_truncate(u.bio,:words => 50).html_safe
+
+-else
+	%p{:class => 'error'}
+		No user match your category choice, Please check you categorization or choose other categories.

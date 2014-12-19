@@ -1,0 +1,29 @@
+%div{:class => "to-many-lines alert alert-error"}
+  Too many lines.
+%ul.form-list.label-left.list-bordered.form-horizontal
+  %li.control-group
+    .span5.clear-both
+      =f.text_area :content, :class => "ad-content"
+    .span5.counter
+      .counter-one-container
+        Line one:
+        %span.count-one
+
+      .counter-two-container
+        Line two:
+        %span.count-two
+
+      .counter-three-container
+        Line three:
+        %span.count-three
+  %li.control-group
+    -if @group
+      =f.hidden_field :group_id, :value => @group.id 
+    -else
+      =f.hidden_field :group_id
+  %li
+    -if @alt_copy
+      =f.hidden_field :copy_id, :value => @alt_copy.id 
+  =f.hidden_field :editor ,:value =>  @review.user
+  =hidden_field_tag :url , @review.url
+  =f.hidden_field :selected, :value => false

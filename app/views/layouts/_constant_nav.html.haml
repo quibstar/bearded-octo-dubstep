@@ -1,0 +1,28 @@
+-constant = Page.where(:navigation_id => 2, :show_in_nav => true, :published => true).order(:position)
+
+-if !constant.empty?
+	-content_for :title do
+		-for c in constant
+			=c.title
+	-j = 1
+	-page_count  = constant.count
+	%ul#constant
+		-constant.each do |c|
+			-if c.parent_id == 0
+				-if j == 1
+					-class_name = "first page-#{c.id}"
+				-elsif j == page_count
+					-class_name = "last page-#{c.id}" 
+				-else
+					-class_name = "page-#{c.id}"
+				-j += 1
+			  		
+				%li{:class => "#{class_name}"}
+					-if params[:url_path].nil?
+						-path = ' '
+					-else
+						-path = params[:url_path].split('/').last
+						
+					=link_to c.title, "/#{c.url_path}", :class => public_current_class(path , c.url_path)
+					=sub_nav(constant, c.id,c.url_path,c.navigation_id,1)
+		=render 'layouts/login'

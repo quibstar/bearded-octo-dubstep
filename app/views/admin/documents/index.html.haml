@@ -1,0 +1,12 @@
+=content_for :page_title do
+  %h1.page-title
+    Documents
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-doc-2') +' New Document', new_admin_document_path, :class => 'fboxSmall fancybox.ajax' 
+    
+=render 'documents'

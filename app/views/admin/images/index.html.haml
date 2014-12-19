@@ -1,0 +1,12 @@
+=content_for :page_title do
+  %h1.page-title
+    Images
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-upload') + ' New image',new_admin_image_path, :class => 'fboxForm fancybox.ajax'
+   
+=render 'images'

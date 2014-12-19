@@ -1,0 +1,13 @@
+-if s.navigation_branch
+	-navigation_page = s.navigation_branch.navigation_page
+	-showParent = s.navigation_branch.show_parents
+	-numberOfColumns = s.navigation_branch.number_of_columns
+	-showChildren = s.navigation_branch.show_children
+
+	-# Get page
+	-pages = Page.where(:show_in_nav => true).order(:position)
+	-page = Page.find(navigation_page);
+	-if showParent == 1
+		=link_to page.title, page.url_path
+	=sub_nav(pages, page.id,page.navigation_id,1, numberOfColumns,showChildren)
+		

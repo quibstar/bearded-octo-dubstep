@@ -1,0 +1,107 @@
+
+-function = s.asset_by_category.function_id
+-filter = s.asset_by_category.filter
+-image_size = s.asset_by_category.image_size
+-show_caption = s.asset_by_category.caption
+-show_description = s.asset_by_category.description
+
+-assets = Array.new
+-img = Array.new 
+-ids = Array.new
+-images = Array.new
+-imgs = Array.new
+-image_size ||= "original"
+
+-if filter == "any"	
+	-section = AssetCategory.where(:categorizable_id => s.id)
+	-section.each do |s|
+		-assets << s.category_id
+	
+	-assets.each do |a|
+		-img += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'Image')
+	
+	-img.each do |d|
+		-ids << d.categorizable_id	
+
+	-if ids.empty?
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories.
+		
+	-if ids.uniq
+		-ids.uniq.each do |i|
+			-imgs << Image.find(i)
+	-else
+		-ids.each do |i|
+			-imgs << Image.find(i)
+		
+	-if imgs
+		%ul{:class => "asset-list #{image_size}"}
+			-imgs.each do |d|
+				%li
+					-# show caption
+					-if show_caption == true
+						-caption = content_tag :span, d.caption
+					-else
+						-caption = ''
+
+					/ -# no url of original
+					/ -if(image_size != 'original')
+					/ 	-imageSize = d.image_url(image_size.to_sym)
+					/ -else
+					/ 	-imageSize = d.image_url()
+
+					=link_to(image_tag(d.image_url(image_size.to_sym)) + caption, d.image_url, :class => "fbox", :rel =>"gallery-#{s.id}", :title =>d.caption)
+					-# show description
+					-if show_description == true
+						%div.description
+							=d.description
+
+	-else
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories.
+
+-if filter == "all"	
+	-section = AssetCategory.where(:categorizable_id => s.id)
+	-section.each do |s|
+		-assets << s.category_id
+	
+	-assets.each do |a|
+		-img += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'Image')
+	
+	-img.each do |d|
+		-ids << d.categorizable_id
+	
+	-ids.each {|each| images << each if ids.count(each) == assets.count}
+		
+	-images.uniq.each do |d|
+		-imgs << Image.find(d)
+		
+	-if ids.empty? || imgs.empty?
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories
+			
+	-if imgs
+		%ul{:class => "asset-list #{image_size}"}
+			-imgs.each do |d|
+				%li
+					-# show caption
+					-if show_caption == true
+						-caption = content_tag :span, d.caption
+					-else
+						-caption = ''
+					/ -# no url of original
+					/ -if(image_size != 'original')
+					/ 	-imageSize = d.image_url(image_size.to_sym)
+					/ -else
+					/ 	-imageSize = d.image_url()
+
+					=link_to(image_tag(d.image_url(image_size.to_sym)) + caption, d.image_url , :class => "fbox", :rel =>"gallery-#{s.id}", :title =>d.caption)
+					-# show description
+					-if show_description == true
+						%div.description
+							=d.description
+
+					
+	-else
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories.

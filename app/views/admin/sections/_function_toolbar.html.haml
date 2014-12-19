@@ -1,0 +1,28 @@
+%div{:class => "section-toolbar #{s.section_type.gsub(" ", "-")} function"}
+	%ul			
+		%li
+			=link_to "Edit #{s.section_type.capitalize}" , edit_modal_link(s.section_type ,s.location,s.id), :class => 'fboxForm  fancybox.ajax round-right'			
+		%li{:class => 'move-content'}
+			=link_to "Move" ,"#", :class => 'move-section',:data => {:current => s.id}
+		%li{:class => "cancel-move-content"}
+			=link_to "Cancel","#"
+		-if @page
+			%li
+				=link_to "Transfer", section_cpmv_path(s.id), :class => 'fboxForm fancybox.ajax'
+		%li
+			=link_to 'Delete', set_resource_path(s.id), :confirm => 'Are you sure you want to remove this section?', :method => :delete
+
+		=render :partial => "visibility_form", :locals => {:s => s}
+				
+%div{:class => "move-content-toolbar"}
+	%ul
+		%li
+			=link_to "Above","#", :class => 'move-data round-right', :data => {:stat => "#{s.parent_id}-#{(s.position - 1)}-#{s.parent_id}-#{s.page_id}-#{s.location}"}
+		%li
+			=link_to "In","#", :class => 'move-data', :data => {:stat => "#{s.id}-#{s.position}-#{s.parent_id}-#{s.page_id}-#{s.location}"}
+		%li
+			=link_to "Below","#", :class => 'move-data', :data => {:stat => "#{s.parent_id}-#{(s.position + 1)}-#{s.parent_id}-#{s.page_id}-#{s.location}"}
+		%li{:class => "hide-move-content-toolbar"}
+			=link_to "Cancel", '#',:class => 'round-left'					
+	%div{:class => 'clear-both'}
+				

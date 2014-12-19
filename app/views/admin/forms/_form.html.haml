@@ -1,0 +1,12 @@
+=form_for [:admin, @form], :html => {:id => 'edit_form'} do |f|
+  .widget.widget-simple
+    .widget-header
+      %h4
+        New Form
+    .widget-content
+      .widget-body
+        -if @form
+          =render 'shared/error_messages', :object => @form 
+        =render "admin/forms/form_fields", :f => f
+    .widget-footer
+      =f.submit "Save", :class =>'btn btn-primary'

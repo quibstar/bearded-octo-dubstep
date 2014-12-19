@@ -1,0 +1,99 @@
+@import "compass";
+@import "compass/css3";
+@import "compass/utilities/sprites";
+
+$location : 'private';
+
+$fontColor:#EEE!important;
+
+$lightBlue: #0094ec;
+$midBlue: darken($lightBlue,10%);
+$darkBlue: darken($midBlue,10%);
+
+
+$lightRed: #f40404;
+$midRed: darken($lightRed,10%);
+$darkRed: darken($midRed,10%);
+
+$lightGreen: #62c462;
+$midGreen: darken($lightGreen,10%);
+$darkGreen: darken($midGreen,10%);
+
+$lightGray: #CCC;
+$midGray: darken($lightGray,10%);
+$darkGray: darken($midGray,10%);
+
+$lightYellow: #fbb450;
+$midYellow: darken($lightYellow,10%);
+$darkYellow: darken($midYellow,10%);
+
+$midWhite: darken(white,10%);
+$darkWhite: darken($midWhite,10%);
+
+$darkBlack: #000;
+$midBlack: lighten($darkBlack, 10%);
+$lightBlack: lighten($midBlack, 10%);
+
+
+$blue: 		#049cdb;
+$green:		#46a546;
+$red:		#9d261d;
+$yellow:	#ffc40d;
+$orange:	#f89406;
+$pink:		#c3325f;
+$purple:	#7a43b6;
+$gray:		#555;
+
+
+/* px to em calc */
+@function em($px, $base: $base-font-size) {
+    @return ($px / $base) * 1em;
+}
+
+@function rem($target, $context: $base-font-size) {
+  @return ($target / $context) * 1rem;
+}
+
+
+@mixin breakpoint($point) {
+  @if $point == desktop {
+    @media (min-width: em(767px)) { @content; }
+  }
+  @else if $point == phone {
+    @media (max-width: em(767px))  { @content; }
+  }
+  @else if $point == tablet {
+    @media (min-width: em(480px)) and (max-width: em(767px))  { @content; }
+  }
+    @else if $point == tablet-large {
+    @media (min-width: em(767px)) and (max-width: em(796px))  { @content; }
+  }
+}
+
+
+
+@include breakpoint(desktop) { 
+  .mobile {
+    display: none;
+  }
+}
+
+@include breakpoint(phone) { 
+  .desktop {
+    display: none;
+  }
+}
+
+$rtGreen: #72c02c;
+$rtGreenHover: #5fb611;
+
+$location : 'public';
+
+
+/* mobile */
+
+$mobileConstant : 70%;
+@mixin navTrans {
+  @include transition-property(all);
+  @include transition-duration(.5s);
+}

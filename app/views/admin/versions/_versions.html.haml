@@ -1,0 +1,53 @@
+%div{:id => "pv"}
+  %table{:id => 'versions-table',:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Page Versions
+    %thead  
+      %th
+        Actions
+      %th{:scope => 'col'}
+        ID
+        %span.column-sorter
+      %th{:scope => 'col'}
+        Item Type
+        %span.column-sorter
+      %th{:scope => 'col'}
+        Event
+        %span.column-sorter
+      %th
+        Who?
+      %th
+        What was changed
+      %th
+        version created at
+      
+    -@versions.each do |v|
+      -if v.item_type != 'Section'
+        %tr
+          %td
+
+            -if v.event != 'destroy'
+              =link_to "Review", admin_version_path(v),:class => 'btn btn-yellow btn-mini'
+            -else
+              =link_to "Restore", undo_path(:undo => v.item_type,:vid => v.id),:class => 'btn btn-envato btn-mini'
+          %td
+            =v.id
+          %td
+            =v.item_type
+            - if v.item_type == 'Page' && v.event == 'destroy'
+              %span.label.label-negative
+                Restoring a page will not restore it's content.
+            - if v.item_type == 'Publication' && v.event == 'destroy'
+              %span.label.label-negative
+                Restoring a publication will not restore it on a page.
+          %td
+            =v.event
+          %td
+            -user = User.find_by_id(v.whodunnit)
+            -if user
+              =link_to user.name, edit_admin_user_path(v.whodunnit), :class => 'btn btn-sky btn-mini'
+          %td
+            =v.object
+          %td
+            =v.created_at.to_formatted_s(:long)
+            

@@ -1,0 +1,206 @@
+/passes instant variable to the body tag
+-column_type(@publication, 'post')
+
+
+-if @publication.template_id == 1
+	-leftClass = ''
+	-mainClass = 'span12'
+	-rightClass = ''
+
+-elsif @publication.template_id == 2
+	-leftClass = 'span3'
+	-mainClass = 'span9'
+	-rightClass = ''
+
+-elsif @publication.template_id == 3
+	-leftClass = ''
+	-mainClass = 'span9'
+	-rightClass = 'span3'
+
+-elsif @publication.template_id == 4
+	-leftClass = 'span2'
+	-mainClass = 'span8'
+	-rightClass = 'span2'
+
+-else @publication.template_id
+	-leftClass = ''
+	-mainClass = 'span12'
+	-rightClass = ''
+
+
+-if @publication.facebook 
+	=content_for :facebook do 
+		=render 'shared/facebook_code'
+
+-if @publication.pinterest
+	=content_for :pinterest do 
+		=render 'shared/pinterest_code'
+		
+-if(@publication.template_id == 2 or  @publication.template_id == 4)
+	%aside{:id => 'sidebar-left', :class => leftClass}
+		-@publication.sections.where(:parent_id => 0, :location => 1).order('position ASC').each do |s|
+			=render :partial => 'site/sections', :locals => {:s => s}
+
+=content_for :page_title do
+	%h1
+		=@post.title
+
+%div{:id => "main", :class => mainClass}
+	%article
+		%section{:class => 'post-content'}
+			
+			-#get image
+			-for image in @post.images
+				- if @post.post_images[0].image_size == "original"
+					%section{:class => 'post-image hero'}
+						=image_tag image.image_url
+				-else
+					%section{:class => 'post-image float-left'}
+						=image_tag image.image_url(@post.post_images[0].image_size)
+			%p
+				=@post.body.html_safe
+		%section
+			%span{:class => 'post-date'}
+				Posted:  
+				=distance_of_time_in_words(Time.now, @post.created_at)
+				ago.
+			%section{:class => 'post-author'}
+				-#=image_tag avatar_url(@post.user.email)
+			-if @post.categories.count > 0
+				%section
+					%strong
+						=pluralize_without_count(@post.categories.count, 'Category')
+					-for category in @post.categories
+						=link_to category.name, post_category_path(category, :publication_id => @publication.id)
+		%div{:class =>'post-social-networks'}
+			-if @publication.facebook
+				=render 'shared/facebook'
+			
+			-if	@publication.twitter
+				=render 'shared/twitter'
+				
+			-if	@publication.linkedin
+				=render 'shared/linkedin'
+			
+			-if @publication.pinterest
+				=render 'shared/pinterest'
+				
+			-if	@publication.google
+				=render 'shared/google_plus_one'
+
+			%div.clear-both
+			%div{:class => "social-icons icons-16px post"}
+				%ul
+					-for network in @publication.networks.order(:name)
+						-# rss
+						-if network.id == 34
+							%li
+								=link_to '', publication_post_url(@publication.id,@post.id, :rss), :class => "social-icons-16-sprite social-icons-16-#{network.name.downcase.gsub(' ','')} icons", :target => '_blank'
+						-else
+							%li
+								=link_to '' ,network.share_code += request.url,:class => "social-icons-16-sprite social-icons-16-#{network.name.downcase.gsub(' ','')} icons" ,:target => '_blank' 
+			%div.clear-both
+			-if @post.show_author == true
+				#post-author
+					.post-image
+					-if @post.user.image.present? 
+						%div{:class => "author-image"}
+							=image_tag @post.user.image_url(:thumb)
+					-else
+						%div{:class => "author-image"}
+							=image_tag avatar_url(@post.user.email)
+
+					%div.posted-by
+						Posted by: 
+						-unless @post.user.title.blank?
+							=@post.user.title
+						
+						-unless @post.user.name.blank?
+							=@post.user.name
+
+						-unless @post.user.bio.blank?
+							%div{:class => "author-bio"}
+								=@post.user.bio.html_safe
+					.clear-both
+			
+			-if @publication.allow_comments
+				#comments
+					%h3
+						Comments
+					.comments-section
+						-for comment in @post.comments.where('published = ?', true)
+							-if comment.comment_id == 0
+								.comment-wrap
+									.comment-image.pull-left
+										=image_tag avatar_url_large(comment.email)
+									.comment-content
+										.comment-header
+											%h4
+												=comment.name 
+												%small.pull-right
+													Posted:  
+													=distance_of_time_in_words(Time.now, comment.created_at)
+													ago.
+										.content-body
+											%p{:id => "comment-#{comment.id}"}
+												=comment.comment
+												%br
+
+												-if @publication.nesting
+													%a{:class => 'comment-reply-link btn-u', :data => {:publication => @publication.id, :post => @post.id, :comment => comment.id}} Reply
+								=show_comments(@post.comments, comment.id, @post.id, @publication.nesting_level, @publication.id, 0)
+				
+					-post_creation = (Time.now - @post.created_at) / 86400
+					
+					-# if publication settings is set to a date to close comments
+					-unless post_creation < @publication.duration.to_i || @publication.duration.to_i == 0
+						%div{:class => 'information'}
+							Comment entry date expired.		
+					-else
+						-if @post.comments_open
+							%h3
+								Leave a reply
+							=form_for Comment.new do |f|
+								=render 'shared/error_messages', :object => f.object 
+								=f.hidden_field :post_id, :value => @post.id
+								=f.hidden_field :publication_id, :value => @publication.id
+								.comment-body
+									If you see this, leave this form field blank and invest in CSS support.
+									=f.text_field :body
+								.control-group
+									=f.label :name
+									.controls
+										=f.text_field :name, :placeholder => 'Name'
+								.control-group
+									=f.label :email
+									.controls
+										=f.email_field :email, :placeholder => 'Email'
+								.control-group
+									=f.label "Website"
+									.controls
+										=f.url_field :url, :placeholder => 'Website'
+								.control-group
+									=f.label :comment
+									.controls
+										=f.text_area :comment, :rows => 5, :cols => 400
+								%div
+									=f.submit :class => 'btn-u'
+						-else
+							%div{:class => 'information'}
+								Comment submissions closed.
+								
+							
+						
+	-if @publication.template_id == 3 || @publication.template_id == 4
+		%aside{:id => 'sidebar-right', :class => rightClass}
+			-@publication.sections.where(:parent_id => 0, :location => 3).order('position ASC').each do |s|
+				=render :partial => 'site/sections', :locals => {:s => s}
+			
+=content_for :footer do 
+	-@footer.where(:parent_id => 0).order('position ASC').each do |s|
+		=render :partial => 'site/sections', :locals => {:s => s}
+		
+=javascript_include_tag 'form-validation/jquery.validate.min.js'
+=javascript_include_tag 'form-validation/comment-form-validate'
+
+		

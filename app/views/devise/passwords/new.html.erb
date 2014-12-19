@@ -1,0 +1,21 @@
+<%= content_for :page_title do -%>
+  <h1>Forgot Password</h1>
+<% end %>
+<div class='log-page'>
+	<h3 class="no-margin-top">Forgot your password?</h3>
+	<p class="note">Enter your e-mail address, we will send you an e-mail code for password reset.</p>
+	<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+		<%= devise_error_messages! %>
+		<div class="input-prepend">
+		<span class="add-on"><i class="icon-user"></i></span>
+		   <%= f.email_field :email,:placeholder =>"email", :class => 'input-xlarge' %>
+		</div>
+		<%= f.button "Submit", :class => 'btn-u' %>
+		<hr class="margin-xm">
+		<p>Have you remembered? 
+			<%- if controller_name != 'sessions' %>
+		  		<%= link_to "Try to login again.", new_session_path(resource_name) , :class=> "link pull-right"%>
+			<% end -%>
+		</p>
+		<% end %>
+</div>

@@ -1,0 +1,4 @@
+-@sections.where(:parent_id => s.id).order('position ASC').each do |s|
+	%div{:id => "#{s.section_type}-#{s.id}"}
+		=render 'admin/sections/sub_section_list', :s => s	
+		=render 'admin/sections/sub_section', :s => s

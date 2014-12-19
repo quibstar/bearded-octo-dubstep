@@ -1,0 +1,5 @@
+-@sections.where(:parent_id => s.id).order('position ASC').each do |s|
+	%li
+		%a{:href => "##{s.section_type}-#{s.id}"} 
+			=s.tab
+		

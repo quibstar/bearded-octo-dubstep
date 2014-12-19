@@ -1,0 +1,15 @@
+.form-horizontal
+	=form_for [:admin, setting] do |f|
+		=render 'shared/error_messages', :object => f.object
+		.modal-header
+			=link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+			%h4
+				Edit Analytics
+		.modal-body
+			%ul.form-list.label-left.list-bordered		
+				%li.control-group
+					=f.label :analytics, :class => "control-label"
+					.controls
+						=f.text_area :analytics
+		.modal-footer
+			=f.submit "Save", :class =>'btn btn-primary' 

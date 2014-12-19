@@ -1,0 +1,70 @@
+-posts = @publication.posts.page(params[:page]).order('created_at DESC')
+-for post in posts
+	%h2
+		=post.title
+	-#get image
+	-for image in post.images
+
+		- if post.post_images[0].image_size == "original"
+			-post_image = image_tag image.image_url
+		-else
+			-post_image = image_tag image.image_url(post.post_images[0].image_size)
+
+		-if @publication.post_template == 1
+			%section{:class => 'post-image float-left'}
+				=post_image
+
+		-elsif @publication.post_template == 2
+			%section{:class => 'post-image hero'}
+				=post_image
+
+		-else @publication.post_template == 3	
+			%section{:class => 'post-image float-right'}
+				=post_image
+
+	%section{:class => 'article-content'}
+		=smart_truncate(post.body,:words => 50).html_safe
+	%section
+		-if(post.event)
+			-if(post.show_date)
+				%div{:class => 'start-date'}
+					%span{:class => 'date-start-label'}
+						Start Date: 
+					%span{:class => 'date-start-value'}
+						=post.start_date.to_formatted_s(:long)
+				
+				%div{:class => 'end-date'}
+					%span{:class => 'date-end-label'}
+						End Date:
+					%span{:class => 'date-end-value'} 
+						=post.end_date.to_formatted_s(:long)
+				
+			-if(post.show_time)
+				%div{:class => 'start-time'}
+					%span{:class => 'time-start-label'}
+						Start Time: 
+					%span{:class => 'time-start-value'} 
+						=post.start_time.strftime("at %I:%M%p")
+				
+				%div{:class => 'end-time'}
+					%span{:class => 'time-end-label'}
+						End Date: 
+					%span{:class => 'time-end-value'} 
+						=post.end_time.strftime("at %I:%M%p")
+	%section{:class => 'categories'}
+		=pluralize_without_count(post.categories.count, 'Category')
+		-for category in post.categories
+			=link_to category.name ,  post_category_path(@publication.id, post.id, category.id)
+			
+	%section{:class => 'comments'}
+		-if post.comments.count > 0
+			=post.comments.count
+			=pluralize_without_count(post.comments.count, 'Comment')
+			
+	%p
+		-if current_user
+			=link_to 'Read More', '#'
+		-else
+			=link_to 'Read More', publication_post_path(@publication,post)
+.pagination.pagination-centered
+	=paginate posts

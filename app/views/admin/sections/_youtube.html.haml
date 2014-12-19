@@ -1,0 +1,8 @@
+%li.section-form
+  %h4
+    Choose YouTube video.
+%li.control-group  
+  -for yt in Youtube.all
+    %label.checkbox.inline
+      =check_box_tag "section[youtube_ids][]",yt.id, @section.youtubes.include?(yt), :id => yt.id
+      =yt.title

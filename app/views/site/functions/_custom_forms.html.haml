@@ -1,0 +1,172 @@
+-form = s.forms.first
+-fields = Field.where(:form_id => form.id).order('id')
+
+=javascript_include_tag 'form-validation/jquery.validate.min.js'
+:javascript
+	$(document).ready(function() {
+		$.validator.messages.required = 'Required';
+		$("#customForm#{form.id}").validate({
+				errorPlacement: function (error, element) {
+						console.log(error);
+		        if (element.is("input:radio") || element.is("input:checkbox")) {
+		            element.parents("label:first").before(error);
+		        } else {
+		            element.after(error);
+		        }
+		    }
+			});
+		});
+-if @errors
+	-unless @errors.empty?
+		%div{:id => 'error_explanation'}
+			%h3
+				Your have 
+				=pluralize(@errors.count, 'error')
+			%ul
+				-@errors.each do |e|
+					%li
+						=e.titleize
+						is a required field
+%p
+	=form.description
+%div{:class => 'custom-form form-horizontal'}
+	=form_tag submit_path, :id => "customForm#{form.id}" do |f|
+		-# I dont know what these two are for 8-28-2012 KAU
+		-# trying to make it show up on an external page
+		-if @page
+			=hidden_field_tag :url_path, @page.url_path
+			=hidden_field_tag :form_id, form.id
+
+		-fields.each do |fe|	
+			-if fe.field_type == 'text' || fe.field_type == 'name' || fe.field_type == 'address' || fe.field_type == 'address2' || fe.field_type == 'phone' || fe.field_type == 'city' || fe.field_type == 'zip'|| fe.field_type == 'email' || fe.field_type == 'website'
+			
+				%div{:class => fe.field_name.parameterize + " control-group" }
+					%label.control-label
+						=fe.field_name
+
+						-if fe.required
+							=content_tag :span, '*', :class => 'required'
+							-requiredClass = "required"
+						=hidden_field_tag "required[#{fe.field_name.parameterize}]"  , fe.required
+
+					.controls
+						=text_field_tag "field[#{fe.field_name.parameterize}]", session[fe.field_name], :class => "#{requiredClass}"
+
+						-if fe.instructions.length > 0
+							=link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Instructions", 'data-toggle' => 'popover', 'data-content' => fe.instructions
+					
+					
+			-if fe.field_type == 'textarea'
+				%div{:class => fe.field_name.parameterize  + " control-group" }	
+					%label.control-label
+						=fe.field_name
+
+						-if fe.required
+							=content_tag :span, '*', :class => 'required'
+							-requiredClass = "required"
+						=hidden_field_tag "required[#{fe.field_name.parameterize}]"  , fe.required
+
+					.controls
+						=text_area_tag "field[#{fe.field_name.parameterize}]",session[fe.field_name], :rows => 10,:class => "input-xxlarge #{requiredClass} "
+
+						-if fe.instructions.length > 0
+							=link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Instructions", 'data-toggle' => 'popover', 'data-content' => fe.instructions
+	
+			-if fe.field_type == 'checkbox'
+				%div{:class => fe.field_name.parameterize  + " control-group" }
+					%label.control-label
+						=fe.field_name
+						-if fe.required
+							=content_tag :span, '*', :class => 'required'
+							-requiredClass = "required"
+						=hidden_field_tag "required[#{fe.field_name.parameterize}]"  , fe.required
+
+					.controls
+						-fe.field_options.each do |opt|
+							%label.checkbox
+								-if session[fe.field_name.parameterize]  
+									-if session[fe.field_name.parameterize].include? opt.option
+										-select = true
+									-else
+										-select = false
+								-else
+									-if opt.selected == true
+										-select = true
+									-else
+										-select = false
+								=check_box_tag "field[#{fe.field_name.parameterize}][]",opt.option_value, select, :class => "#{requiredClass}"
+								=label_tag opt.option
+
+						-if fe.instructions.length > 0
+							=link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Instructions", 'data-toggle' => 'popover', 'data-content' => fe.instructions
+			
+			-if fe.field_type == 'radio'
+				%div{:class => fe.field_name.parameterize  + " control-group" }	
+					%label.control-label
+						=fe.field_name 
+						-if fe.required
+							=content_tag :span, '*', :class => 'required'
+							-requiredClass = "required"
+						=hidden_field_tag "required[#{fe.field_name.parameterize}]"  , fe.required
+					.controls
+						-fe.field_options.each do |opt|
+							%label.radio
+								-if session[fe.field_name]
+									-if session[fe.field_name] == opt.option_value
+										-selected =  session[fe.field_name]
+								-else
+									-selected = opt.selected
+
+								=radio_button_tag "field[#{fe.field_name.parameterize}]",opt.option_value, selected, :class => "#{requiredClass}"
+								=opt.option.capitalize
+						-if fe.instructions.length > 0
+							=link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Instructions", 'data-toggle' => 'popover', 'data-content' => fe.instructions
+					
+			-if fe.field_type == 'dropdown'
+				%div{:class => fe.field_name.parameterize  + " control-group" }
+					%label.control-label
+						=fe.field_name
+						-if fe.required
+							=content_tag :span, '*', :class => 'required'
+					.controls
+						%select{:name => "field[#{fe.field_name.parameterize}]"}
+							-fe.field_options.each do |opt|
+								-if opt.selected == true
+									-select = true
+								-else
+									-select = false
+								=content_tag(:option, opt.option, {:value => opt.option_value, :selected => session[fe.field_name] == opt.option_value || opt.selected == true})	
+						-if fe.instructions.length > 0
+							=link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Instructions", 'data-toggle' => 'popover', 'data-content' => fe.instructions	
+							
+			
+			-if fe.field_type == 'state'
+				%div{:class => fe.field_name.parameterize  + " control-group" }	
+					%label.control-label
+						=fe.field_name
+						-if fe.required
+							=content_tag :span, '*', :class => 'required'
+						=hidden_field_tag "required[#{fe.field_name.parameterize}]"  , fe.required
+					.controls
+						=select 'field',fe.field_name ,  State.all.collect {|s| [s.state_name, s.state_prefix]}, {:selected => session[fe.field_name] }
+						-if fe.instructions.length > 0
+							=link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Instructions", 'data-toggle' => 'popover', 'data-content' => fe.instructions
+
+			-if fe.field_type == 'date'
+				%div{:class => fe.field_name.parameterize  + " control-group" }	
+					%label.control-label
+						=fe.field_name
+						-if fe.required
+							=content_tag :span, '*', :class => 'required'	
+					.controls				
+						-if fe.instructions == 'DD/MM/YY'
+							=select_date Date.today , :order => [:day,:month, :year]
+						-else
+							=select_date Date.today , :order => [:month, :day, :year]
+						-if fe.instructions.length > 0
+							=link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Instructions", 'data-toggle' => 'popover', 'data-content' => fe.instructions
+	
+					
+		.control-group
+			.controls
+				=submit_tag 'Submit', :class => 'btn-u', :disabled =>  controller.controller_name == 'site' ? false : true 

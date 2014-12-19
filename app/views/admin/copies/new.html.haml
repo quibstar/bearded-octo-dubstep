@@ -1,0 +1,12 @@
+=form_for [:admin, @copy] do |f|
+  .modal-header
+    =link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+    %h4
+      New Copy
+  .modal-body
+    -if @copy
+      =render 'shared/error_messages', :object => @copy 
+    =render "admin/copies/form", :f => f
+  .modal-footer.submit-copy
+    =f.submit "Save", :class =>'btn btn-primary'
+    =link_to "Cancel", "#",:class =>'btn btn-warning cancel-new'

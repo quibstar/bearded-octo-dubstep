@@ -1,0 +1,20 @@
+:javascript
+  $(document).ready(function() {
+    $('#link-sortable-table').dataTable({
+      iDisplayLength: 10,
+      sDom: "<'row-fluid' <'span4'l> <'span8'pf> > rt <'row-fluid' <'span12'i> >"
+    });
+  });
+
+.help-block
+  Remember to highlight a word before choosing a link.
+
+%table{:id => 'link-sortable-table',:class => "table table-striped table-hover table-bordered ext-link"}
+  %thead
+    %th{:scope => 'col'}
+      Title
+      %span.column-sorter   
+  -Link.all.each_with_index do |l|
+    %tr
+      %td
+        =link_to l.link_title, "#", :data => {:link => l.link.to_s}, :title => l.link_title , :target => l.new_window ? "_blank" : '_self'

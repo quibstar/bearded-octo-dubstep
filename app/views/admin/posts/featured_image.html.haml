@@ -1,0 +1,108 @@
+
+.modal-header
+	=link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+	%h4
+		Post image assets
+		=params[:post_id]
+.modal-body.form-horizontal
+	#featuredImage
+		%div{:class => 'tabbable tabbable-bordered tabs-top'}
+			%ul.nav.nav-tabs
+				%li.active
+					=link_to "Use Existing Image", '#existing-image', 'data-toggle' => 'tab'
+				%li
+					=link_to "Update Featured Image", '#update-featured-image', 'data-toggle' => 'tab'
+				%li
+					=link_to "New Document Image", '#new-post-image', 'data-toggle' => 'tab'
+			.tab-content
+				.tab-pane.active#existing-image
+					=form_for [:admin, @post.publication, @post] do |f|
+						%h4
+							Select an existing image.
+						%div{:class => 'content-input fields'}
+							%div{:id => 'image_select'}
+								=render 'image_select'
+							=label_tag 'Current Image Size:'
+							-if @post.post_images[0]
+								-selected = @post.post_images[0].image_size
+							-else
+								-selected = ' '
+							=selected
+							=collection_select(:post, :image_size, ImageSize.all, :size_value, :size, :selected => selected )
+
+						%hr
+						=f.submit :class => 'btn btn-primary'
+
+				.tab-pane#update-featured-image
+					- image = @post.image ?  [:admin, @post.image] : [:admin, Image.new]
+					=form_for image , :html => {:multipart => true } do |f|
+						%h4
+							Update this image.
+						%div{:class => 'content-input fields'}
+							-if @post.image 
+								%div
+									Current image.
+								%span{:class => 'image'}
+									=image_tag @post.image.image_url(:small)
+
+							=render 'shared/error_messages', :object => f.object 
+							=f.hidden_field :asset , :value => 'post'
+							=f.hidden_field :asset_id , :value => @post.id
+
+							%ul.form-list.label-left.list-bordered.dotted
+								%li.control-group
+									=f.label :title, :class => "control-label"
+									.controls
+										=f.text_field :title
+										.help-box
+											(required)
+								%li.control-group
+									=f.label :description, :class => "control-label"
+									.controls
+										=f.text_area :description, :rows => 3
+								%li.control-group
+									=f.label :image, :class => "control-label"
+									.controls
+										=f.file_field :image, :class => "control-label"
+								%li.control-group
+									=f.label 'Image Size', :class => "control-label"
+									.control
+										=collection_select(:image, :image_size, ImageSize.all, :size_value, :size, :prompt => true)
+								%li.control-group
+									=f.submit :class => 'btn btn-primary'
+
+				.tab-pane#new-post-image
+					=form_for [:admin, Image.new] , :html => {:multipart => true } do |f|
+						%h4
+							Upload a new image.
+						%div{:class => 'content-input fields'}
+
+							=render 'shared/error_messages', :object => f.object 
+							=f.hidden_field :asset , :value => 'post'
+							=f.hidden_field :asset_id , :value => @post.id
+							%ul.form-list.label-left.list-bordered.dotted
+								%li.control-group
+									=f.label :title, :class => "control-label"
+									.controls
+										=f.text_field :title
+										.help-box
+											(required)
+								%li.control-group
+									=f.label :description, :class => "control-label"
+									.controls
+										=f.text_area :description, :rows => 3
+								%li.control-group
+									=f.label :image, :class => "control-label"
+									.controls
+										=f.file_field :image, :class => "control-label"	
+								%li.control-group			
+									=label_tag 'Current Image Size:'
+									-if @post.post_images[0]
+										-selected = @post.post_images[0].image_size
+									-else
+										-selected = ' '
+									=collection_select(:image, :image_size, ImageSize.all, :size_value, :size, :selected => selected )
+								%li.control-group	
+									=f.submit :class => 'btn btn-primary'
+
+

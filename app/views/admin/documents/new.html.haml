@@ -1,0 +1,83 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+:javascript
+  $(document).ready(function() {
+    $('#nav-links li a').click(function(){
+        $.fancybox.update();
+        });
+    });
+
+.form-horizontal
+  =form_for [:admin, @document], :html => {:multipart => true,:id => "wizard-progress" } do |f|
+    =render 'shared/error_messages', :object => f.object 
+    .modal-header
+      =link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+      %h4
+        New Document
+    .modal-body
+      .navbar
+        .navbar-inner
+          .container
+            %ul#nav-links
+              %li
+                =link_to "Categories", '#cat', 'data-toggle' => "tab"
+              %li
+                =link_to "Document Image/Image Size", '#images', 'data-toggle' => "tab"
+              %li
+                =link_to "Required Fields", '#required', 'data-toggle' => "tab"
+      #bar.progress._progress-success.progress-mini.filled3
+        .filler
+          .bar
+      .tab-content
+        .tab-pane#required.active
+          %ul.form-list.label-left.list-bordered.dotted
+            =render 'admin/documents/common_fields', :f => f
+        .tab-pane#cat
+          %ul.form-list.label-left.list-bordered.dotted
+            %li.section-form
+              %h4
+                Categories
+            %li.control-group
+              -categories = Category.where('document = 1') 
+              -if categories.count > 0
+                -categories.each do |cat|
+                  %label.checkbox.inline
+                    =check_box_tag "document[category_ids][]",cat.id, @document.categories.include?(cat), :id => cat.id, :class => 'checkbox'
+                    =cat.name 
+              -else
+                %p
+                  No categories assoicated with Documents.
+                  =link_to 'Go to categories', admin_categories_path,:class => 'btn btn-yellow'
+
+        .tab-pane#images
+          %ul.form-list.label-left.list-bordered.dotted
+            %li.section-form
+              %h4
+                Choose Document Image
+            %li{:class => 'data-container-content image-display control-group'}     
+              %div{:id => 'image_select', :class => 'data-container-content'} 
+                =render "image_select"
+
+            %li.control-group     
+              =label_tag :Image_size
+              =collection_select(:document, :image_size, ImageSize.all, :size_value, :size)
+  
+    .modal-footer
+      %ul.wizard-action.wizard-pager
+        %li
+          %a{:class => "previous first btn", :href => "javascript:void(0);"}
+            First
+        %li
+          %a{:class => "previous btn", :href => "javascript:void(0);"}
+            %i.fontello-icon-left-circle2
+            Previous
+        %li
+          %a{:class => "next last btn", :href => "javascript:void(0);"}
+            Last
+        %li
+          %a{:class => "next btn", :href => "javascript:void(0);"}
+            %i.fontello-icon-right-circle2
+            Next
+        %li
+          =f.submit "Save", :class =>'next finish btn btn-primary'
+

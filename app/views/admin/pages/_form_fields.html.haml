@@ -1,0 +1,118 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.dotted.form-horizontal
+	.tab-content
+		.tab-pane#link-text.active
+			%li.control-group
+				=f.label :navigation_text, :class => "control-label"
+				%div{:class => 'controls'}
+					=f.text_field :navigation_text
+					.help-block
+						Optional: If you would like the link text (navigation text) to be something other than the title. Leave this blank if you want to use the title field.
+
+		.tab-pane#visibility
+			%li.section-form
+				%h4
+					Visibility
+			%li.control-group
+				
+				=f.label :published, :class => "checkbox" do
+					=f.check_box :published, :class => 'checkbox'
+					Published
+				
+				.help-block
+					Published pages are viewable to the public. Unpublished pages can only be viewed by people who are logged into the CMS. Marking a page as unpublished will also remove it from the navigation.
+				.default-tgbtn
+					=f.label 'Show in navigation', :class => "checkbox" do
+						=f.check_box :show_in_nav, :class => 'checkbox'
+						Show in navigation
+					
+				.help-block
+					When checked, this page will have a link in the appropriate navigation bar. When unchecked, there will be no navigation link to this page. NOTE: this is NOT a secure method for hiding information from users; these pages might be found and indexed by search engines even if no navigation link is shown.
+
+			%li.control-group
+				=f.label :mobile, :class => "checkbox" do
+					=f.check_box :mobile, :class => "checkbox"
+					Use in mobile layout
+				.help-block
+					Only pages selected will be seen on mobile devises.
+
+			
+		.tab-pane#seo
+			%li.section-form
+				%h4
+					S.E.O.
+			%li.control-group
+				=f.label :keywords, :class => "control-label"
+				%div{:class => 'controls'}
+					=f.text_area :keywords,:class => "validate input-block-level", :rows => '2'
+
+			%li.control-group	
+				=f.label :description, :class => "control-label"
+				%div{:class => 'controls'}
+					=f.text_area :description,:class => "input-block-level", :rows => '2'
+					
+
+		.tab-pane#sliders
+			%li.control-group 
+				=f.label :slider_id, :class => "control-label"
+				=collection_select(:page, :slider_id, Slider.all, :id, :title,  :include_blank => true)
+			%li.control-group
+				=f.label :multi_navigation, :class => "control-label"
+				=collection_select(:page, :multi_navigation_id, MultiNavigation.all, :id, :title, :include_blank => true)
+			
+
+		.tab-pane#required
+			%li.section-form
+				%h4
+					Required 
+			%li.control-group
+				=f.label "Title *", :class => "control-label"
+				%div{:class => 'controls'}
+					=f.text_field :title,:class => 'required'
+
+			%li.control-group
+				= f.label :navigation_id , :class => "control-label"
+				-if params[:nav_group]
+					-nav_id = params[:nav_group]
+				-elsif @page
+					-nav_id = @page.navigation_id 
+
+				%div{:class => 'controls'}
+					=collection_select(:page, :navigation_id, Navigation.all, :id, :nav_group, :selected => nav_id)
+
+			%li.section-form
+				%h4
+					Page Template
+			%li.control-group
+				%div{:class => 'page-input'}
+				=f.label "Template *", :class => "control-label"
+				%ul.templates
+					-for t in @templates
+						%li
+							%span{:class => "templates-sprite templates-#{t.temp_class}"}
+							%label.radio
+								.radios
+									=radio_button("page", "template_id", t.id,:class => 'radio required')
+								%span.template-title
+									=t.template_name
+
+			%li.control-group  
+				=f.label :footer_id, :class => "control-label"
+				=collection_select(:page, :footer_id, Footer.all, :id, :title)
+			%li.control-group
+				=f.label :redirect, :class => 'control-label'
+				-navigation_groups = Navigation.all
+				=grouped_collection_select(:page, :redirect, navigation_groups, :pages, :nav_group, :id, :url_path,{include_blank: 'Choose'})
+			
+/ hidden fields
+- if params[:parent_id]
+	-parent_id = params[:parent_id]
+-elsif @page.parent_id
+	-parent_id = @page.parent_id
+-else
+	-parent_id = 0
+
+=f.hidden_field :parent_id, :value => parent_id
+-if(params[:sections])
+	=hidden_field_tag :redirect, "sections"

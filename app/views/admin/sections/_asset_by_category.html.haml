@@ -1,0 +1,217 @@
+:javascript
+	$('.asset-cats').hide();
+
+	$(document).ready(function() {
+		var current = "##{@section.asset_by_category.name}";
+		$(current).show();
+		$("#section_asset_by_category_attributes_name").change(function(){
+
+			$(".form-categories").show();
+			$('.asset-cats').hide();
+			value = $(this).val();
+			div = "#" + value;
+
+			$(div).fadeIn();
+			$.fancybox.update();
+		})
+		
+	});
+%div{:class => 'content-input fields'}
+	%div{:class => 'form-filter'}	
+		=f.fields_for :asset_by_category do |abc|
+			%div{:class => 'divider'}
+				%h3
+					Asset by category
+
+				-assets = FunctionName.where(:category => :Assets)
+				=abc.collection_select(:name, assets, :name, :name, :include_blank => true)
+				.help-block
+					Choose asset to select by category or categories.
+			%div{:class => 'divider'}
+				%h3
+				=abc.radio_button :filter , 'all',:checked => true
+				All assets MUST be included in all categories
+				%br
+				=abc.radio_button :filter , 'any'
+				All assets must be included in AT LEAST ONE category or multiple categories.
+			
+			
+	%div.asset-cats#Images
+		%ul.form-list.label-left.list-bordered.form-horizontal.form-categories
+			%li.section-form
+				%h4
+					Image Size
+			%li.control-group
+				=f.fields_for :asset_by_category do |abc|
+					%label.radio.inline
+						=abc.radio_button :image_size , 'thumb', :checked => true
+						Thumb (50x50)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'small'
+						Small (150x150)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'medium'
+						Medium (300x300)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'large'
+						Large (500x500)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'original'
+						Original
+			%li.section-form
+				%h4
+					Image caption and Description
+			%li.control-group
+				=f.fields_for :asset_by_category do |abc|	
+					%label.checkbox
+						=abc.check_box :caption
+						Show caption
+					
+					%label.checkbox
+						=abc.check_box :description
+						Show description
+
+			%li.section-form
+				%h4
+					Choose Categories:
+			-for imageCat in Category.where(:image => 1)
+				%span{:class => "Image-cat cat1"}
+					%label.checkbox.inline
+						=check_box_tag "section[category_ids][]",imageCat.id, @section.categories.include?(imageCat), :id => imageCat.id
+						=imageCat.name
+
+	%div.asset-cats#Audios
+		%ul.form-list.label-left.list-bordered.form-horizontal.form-categories
+			%li.section-form
+				%h4
+					Audios
+			%li.section-form
+				%h4
+					Choose Categories:
+			-for audioCat in Category.where(:audio => 1)
+				%span{:class => "Audio-cat cat3"}
+					%label.checkbox.inline
+						=check_box_tag "section[category_ids][]",audioCat.id, @section.categories.include?(audioCat), :id => audioCat.id
+						=audioCat.name
+
+	%div.asset-cats#Videos
+		%ul.form-list.label-left.list-bordered.form-horizontal.form-categories
+			%li.section-form
+				%h4
+					Videos
+			%li.section-form
+				%h4
+					Choose Categories:
+			-for videoCat in Category.where(:video => 1)
+				%span{:class => "video-cat cat4"}
+					%label.checkbox.inline
+						=check_box_tag "section[category_ids][]",videoCat.id, @section.categories.include?(videoCat), :id => videoCat.id
+						=videoCat.name
+	
+	%div.asset-cats#Documents
+		%ul.form-list.label-left.list-bordered.form-horizontal.form-categories
+			%li.section-form
+				%h4
+					Image Size
+			%li.control-group
+				=f.fields_for :asset_by_category do |abc|
+					%label.radio.inline
+						=abc.radio_button :image_size , 'thumb', :checked => true
+						Thumb (50x50)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'small'
+						Small (150x150)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'medium'
+						Medium (300x300)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'large'
+						Large (500x500)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'original'
+						Original
+			%li.section-form
+				%h4
+					Choose Categories:
+			-for docCat in Category.where(:document => 1)
+				%span{:class => "doc-cat cat2"}
+					%label.checkbox.inline
+						=check_box_tag "section[category_ids][]",docCat.id, @section.categories.include?(docCat), :id => docCat.id
+						=docCat.name
+
+	%div.control-group.asset-cats#Users
+		%ul.form-list.label-left.list-bordered.form-horizontal.form-categories
+			%li.section-form
+				%h4
+					User
+			%li.section-form
+				%h4
+					Image Size
+			%li.control-group
+				=f.fields_for :asset_by_category do |abc|
+					%label.radio.inline
+						=abc.radio_button :image_size , 'thumb', :checked => true
+						Thumb (50x50)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'small'
+						Small (150x150)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'medium'
+						Medium (300x300)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'large'
+						Large (500x500)
+					%label.radio.inline
+						=abc.radio_button :image_size , 'original'
+						Original
+						
+			%li.control-group
+				=f.fields_for :asset_by_category do |abc|
+					%label.checkbox
+						=abc.check_box :fullname
+						Show full name
+					%label.checkbox
+						=abc.check_box :title
+						Show title
+					%label.checkbox
+						=abc.check_box :email
+						Show email
+					%label.checkbox
+						=abc.check_box :phone
+						Show phone
+					%label.checkbox
+						=abc.check_box :twitter
+						Show twitter
+					%label.checkbox
+						=abc.check_box :facebook
+						Show facebook
+					%label.checkbox
+						=abc.check_box :linkedin
+						Show linkedin
+					%label.checkbox
+						=abc.check_box :bio
+						Show bio
+
+
+			%li.section-form
+				%h4
+					Choose Categories:
+			-for userCat in Category.where(:user => 1)
+				%span{:class => "user-cat"}
+					%label.checkbox.inline
+						=check_box_tag "section[category_ids][]",userCat.id, @section.categories.include?(userCat), :id => userCat.id
+						=userCat.name
+
+	%div.control-group.asset-cats#Links
+		%ul.form-list.label-left.list-bordered.form-horizontal.form-categories
+			%li.section-form
+				%h4
+					Links
+			%li.section-form
+				%h4
+					Choose Categories:
+		-for linkCats in Category.where(:link => 1)
+			%span{:class => "link-cat"}
+				%label.checkbox.inline
+					=check_box_tag "section[category_ids][]",linkCats.id, @section.categories.include?(linkCats), :id => linkCats.id
+					=linkCats.name

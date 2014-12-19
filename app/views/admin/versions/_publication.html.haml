@@ -1,0 +1,188 @@
+= content_for :page_title do
+  %h1
+    Publication
+
+%div{:id => "versions"}
+  %table{:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Post Version
+    %thead
+      %th
+        Attribute
+      %th
+        Current Version
+      %th
+        Previous Version
+        =link_to "Restore", undo_path(:undo => @record.item_type,:vid => @record.id),:class => 'btn btn-envato btn-mini'
+    %tr
+      %td
+        Slug
+        =compare_properties(@version.slug, @version.previous_version.slug)
+      %td
+        =@version.slug
+      %td
+        =@version.previous_version.slug
+
+    %tr
+      %td
+        Title
+        =compare_properties(@version.title, @version.previous_version.title)
+      %td
+        =@version.title
+      %td
+        =@version.previous_version.title
+
+    %tr
+      %td
+        Post Template
+        =compare_properties(@version.post_template, @version.previous_version.post_template)
+      %td
+        -template = get_template(@version.post_template).first
+        -if template
+          =template.template_name
+      %td
+        -template = get_template(@version.previous_version.post_template).first
+        -if template
+          =template.template_name
+
+    %tr
+      %td
+        Allow Comments
+        =compare_properties(@version.allow_comments, @version.previous_version.allow_comments)
+      %td
+        =@version.allow_comments
+      %td
+        =@version.allow_comments
+
+    %tr
+      %td
+        Comment Status
+        =compare_properties(@version.comment_status , @version.previous_version.comment_status)
+      %td
+        =@version.comment_status
+      %td
+        =@version.previous_version.comment_status
+
+    %tr
+      %td
+        Duration
+        =compare_properties(@version.duration , @version.previous_version.duration)
+      %td
+        =@version.duration
+      %td
+        =@version.previous_version.duration
+
+    %tr
+      %td
+        Nesting
+        =compare_properties(@version.nesting , @version.previous_version.nesting)
+      %td
+        =@version.nesting
+      %td
+        =@version.previous_version.nesting
+
+    %tr
+      %td
+        Nesting Level 
+        =compare_properties(@version.nesting_level, @version.previous_version.nesting_level)
+      %td
+        =@version.nesting_level
+      %td
+        =@version.previous_version.nesting_level
+
+    %tr
+      %td
+        Show Author
+        =compare_properties(@version.show_author, @version.previous_version.show_author)
+      %td
+        =@version.show_author
+      %td
+        =@version.previous_version.show_author
+
+    %tr
+      %td
+        Notify Author
+        =compare_properties(@version.notify_author , @version.previous_version.notify_author)
+      %td
+        =@version.notify_author
+      %td
+        =@version.previous_version.notify_author
+
+    %tr
+      %td
+        Show Categories
+        =compare_properties(@version.show_categories , @version.previous_version.show_categories)
+      %td
+        =@version.show_categories
+      %td
+        =@version.previous_version.show_categories
+
+    %tr
+      %td
+        Footer
+        =compare_properties(@version.footer_id, @version.previous_version.footer_id)
+      %td
+        -footer = Footer.find_by_id @version.footer_id
+        -if footer
+          =footer.title
+      %td
+        -footer = Footer.find_by_id @version.previous_version.footer_id
+        -if footer
+          =footer.title
+
+    %tr
+      %td
+        Template
+      %td
+        -template = get_template(@version.template_id).first
+        -if template
+          =template.template_name
+      %td
+        -template = get_template(@version.previous_version.template_id).first
+        -if template
+          =template.template_name
+
+    %tr
+      %td
+        Show Facebook
+        =compare_properties(@version.facebook , @version.previous_version.facebook)
+      %td
+        =@version.facebook
+      %td
+        =@version.previous_version.facebook
+
+    %tr
+      %td
+        Show Twitter
+        =compare_properties(@version.twitter , @version.previous_version.twitter)
+      %td
+        =@version.twitter
+      %td
+        =@version.previous_version.twitter
+
+    %tr
+      %td
+        Show Google
+        =compare_properties(@version.google , @version.previous_version.google)
+      %td
+        =@version.google
+      %td
+        =@version.previous_version.google
+
+    %tr
+      %td
+        Show LinkedIn
+        =compare_properties(@version.linkedin , @version.previous_version.linkedin)
+      %td
+        =@version.linkedin
+      %td
+        =@version.previous_version.linkedin
+
+    %tr
+      %td
+        Show Pinterest
+        =compare_properties(@version.pinterest , @version.previous_version.pinterest)
+      %td
+        =@version.pinterest
+      %td
+        =@version.previous_version.pinterest

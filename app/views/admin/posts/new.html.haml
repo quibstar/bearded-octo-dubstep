@@ -1,0 +1,16 @@
+=content_for :page_title do 
+  %h1.page-title
+    New post for 
+    =@publication.title
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-docs') + " Back to #{@publication.title}", admin_publications_path
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-doc-1') + " #{@publication.title} posts", admin_publication_posts_path(@publication)
+	
+=render 'form'

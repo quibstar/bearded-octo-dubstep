@@ -1,0 +1,19 @@
+=content_for :page_title do 
+  %h1.page-title
+    Edit
+    =@publication.title
+    \-
+    =@post.title
+
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-back') + " Back to #{@publication.title} posts", admin_publication_posts_path(@publication)
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-trash-1') + " Delete", admin_publication_post_path(@publication, @post), :comfirm => "Are you sure?", :method => :delete ,:class => 'delete'
+
+=render 'form'

@@ -1,0 +1,32 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+  %li.control-group
+    =f.label "Title *", :class => "control-label"
+    .controls
+      =f.text_field :title,:class => 'required'
+      .help-block
+        Title will be used for identification when inserting into slideshows or content areas.
+  %li.control-group
+    =f.label :youtube_code, :class => "control-label"
+    .controls
+      =f.text_field :youtube_code
+      .help-block
+        Should be only 11 characers long and NOT include 'http://youtu.be/'.
+%ul.form-list.label-left.list-bordered
+  %li.section-form
+    %h4
+      Categories
+  %li.control-group
+    -categories = Category.where('video = 1') 
+    -if categories.count > 0
+      -categories.each do |cat| 
+        %label.checkbox.inline
+          =check_box_tag "youtube[category_ids][]",cat.id, @youtube.categories.include?(cat), :id => cat.id, :class => 'checkbox'
+          =cat.name   
+      .help-block
+        Check category to update asset.
+    -else
+      %p
+        No categories associated with YouTube videos.
+        =link_to 'Go to categories', admin_categories_path,:class => 'btn btn-yellow'

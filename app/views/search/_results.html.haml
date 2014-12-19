@@ -1,0 +1,32 @@
+%ol{:id => 'results'}
+	Search results count: 
+	-if @results.present? 
+		-@results.each do |s|				
+			-if s.searchable_type == "Content"
+				-content = Content.find_by_id(s.searchable_id)
+				-if content
+					-section = Section.find_by_id(content.section_id)
+					-if section
+						-page = Page.find_by_id(section.page_id)
+						-if page
+							%li
+								=link_to page.title, "/#{page.url_path}"
+								-exec = excerpt(s.content, params[:search], :radius => 500)
+								-if exec !=nil 
+									=highlight(excerpt(s.content, params[:search], :radius => 500),params[:search])
+				
+			-if s.searchable_type == "Post"
+				-post = Post.find_by_id(s.searchable_id)
+				-publication = Publication.find_by_id(post.publication_id)
+				-unless publication.nil?
+					%li
+						=link_to post.title, post_show_path(publication.id, post.slug)
+						%br
+						-exec = excerpt(s.content, params[:search], :radius => 500)
+						-if exec !=nil 
+							=highlight(excerpt(s.content, params[:search], :radius => 500),params[:search])
+	-else
+		Empty search results.
+	=paginate @results
+
+

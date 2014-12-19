@@ -1,0 +1,21 @@
+%div{:class => "thumbnail media #{i.categories.collect{|c| c.name}.join(' ')}","data-asset" => "#{i.id}", :style => 'list-style:none;'}
+  .pull-left
+    .nailthumb-container.show-loading
+      -if i.image
+        =image_tag(i.image.image, :class => 'thumbnail-asset')
+      -else
+        %div{:id => "doc-#{i.document.file.extension.downcase}"}
+          =i.document.file.extension.downcase
+
+  .media-body
+    %h4.media-heading
+      =i.title
+    -if i.description.length
+      %small
+        Description: 
+        =i.description
+  %small
+    Categories: 
+    =i.categories.collect{|c| c.name}.join(', ')
+  %div
+    =link_to content_tag(:i, "", :class => 'fontello-icon-exchange') + " Add to gallery" ,'#', :class => 'asset-transfer-link btn btn-mini btn-yellow'

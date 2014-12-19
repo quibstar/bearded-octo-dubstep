@@ -1,0 +1,12 @@
+=form_for [:admin, @note], :html => {:id => "edit_note"} do |f|
+  .widget.widget-simple
+    .widget-header
+      %h4
+        %i.fontello-icon-edit
+        =@note.title
+    .widget-content
+      -if @note
+        =render 'shared/error_messages', :object => @note 
+      =render "admin/notes/form_fields", :f => f
+    
+    =f.submit "Save", :class =>'btn btn-primary'

@@ -1,0 +1,29 @@
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'', :class => 'fontello-icon-back') + " Back", admin_versions_path
+          
+%div{:class => "widget widget-simple"}
+  .widget-header
+    %h4
+      %i.fontello-icon-cog-alt
+      
+      %small
+        Version
+  .widget-content
+    .widget-body
+      -if @version.instance_of? Page
+        =render 'page'
+      -if @version.instance_of? User
+        =render 'user'
+      -if @version.instance_of? Content
+        =render 'content'
+      -if @version.instance_of? Publication
+        =render 'publication'
+      -if @version.instance_of? Post
+        =render 'post'
+  .widget-footer
+    

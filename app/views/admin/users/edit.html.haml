@@ -1,0 +1,84 @@
+=content_for :custom_js do
+	=javascript_include_tag 'form-validation/jquery.validate.min.js'
+	=javascript_include_tag 'form-validation/users-form-validate.js'
+
+=content_for :page_title do
+	%h1.page-title
+		Edit
+		-if @user.name
+			=@user.name
+		-else
+			User
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i,'',:class => 'fontello-icon-back') + ' Back to Users',admin_users_path
+
+				
+		
+
+.widget.widget-simple
+	.widget-header
+		%h4
+			%i.fontello-icon-user
+			-if @user.name
+				=@user.name
+			-else
+				User
+			%small
+				settings
+
+		=form_tag(admin_user_generate_new_password_email_path(@user)) do 
+			=submit_tag 'Send Reset Password', {:class => 'btn btn-sky btn-mini pull-right', :confirm => 'Are you sure you want to email reset password instructions?'}
+	=form_for [:admin, @user], :html => {:multipart => true, :id => 'edit_user' } do |f|
+		.widget-content.form-horizontal	
+			.widget-body
+				.control-group.no-margin-bootom
+					%label.control-label.label-left
+						-if @user.image.present?
+							= image_tag(@user.image_url(),:class => 'thumbnail')
+						-else
+							No image available.
+					.controls
+						%address
+							%h2 
+								-if @user.name
+									=@user.name
+								-elsif @user.email
+									=@user.email
+								-else
+									User
+							%abbr{:title => "Work email"}
+								%strong
+									%i.fontello-icon-mail
+									Email: 
+								=mail_to @user.email, @user.email, :encode => "hex"
+							%br
+							%abbr{:title => "Work phone"}
+								%strong
+									%i.fontello-icon-phone
+									Phone: 
+								=@user.phone
+							%br
+							%strong
+								Access:
+							=current_user.roles.map(&:name).join(", ")
+							%br
+							%strong
+								Department:
+							=current_user.categories.map(&:name).join(", ")
+							%br
+							%strong
+								Last Access: 
+							=current_user.current_sign_in_at.to_formatted_s(:short)
+
+					
+			
+			=render 'shared/error_messages', :object => f.object
+			%ul.form-list.label-left.list-bordered.dotted
+				=render :partial => 'user_fields', :locals => { :f => f }
+		.widget-footer
+			=f.submit "Save", :class =>'btn btn-primary'

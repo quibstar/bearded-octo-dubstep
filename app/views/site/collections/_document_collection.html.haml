@@ -1,0 +1,43 @@
+:javascript 
+  jQuery(document).ready(function() {
+        jQuery("#document-gallery-#{collection.id} .nailthumb-container").nailthumb();
+    });
+
+%div{:id => "document-gallery-#{collection.id}", :class => "document-gallery"}
+  %ul{ :class => "#{collection.settings['image_size']}"}
+
+    -if collection.settings['categories'] == '0'
+      -assets = collection.settings['asset_ids'].split(",").map { |s| s.to_i }
+      -assets.each do |doc|
+        -asset = Document.find_by_id(doc)
+        -if asset
+          -asset_cats = asset.categories.map {|ac| ac.name }
+          %li{:class => "#{collection.settings['image_size']}", 'data-filter-class' => asset_cats}
+            -if collection.settings['icons'] == '0'
+              .document-image
+                =image_tag(asset.image.image, :class => 'nailthumb-container')
+                =link_to(content_tag(:i, '', :class => 'fontello-icon-download') + " #{asset.title}", asset.document.to_s, :target => '_blank')
+            -if collection.settings['icons'] == '1'
+              -icon_class = "document-gallery"
+              .document-title
+                =link_to(content_tag(:i, '', :class => 'fontello-icon-download') + " #{asset.title}", asset.document.to_s, :class => "#{asset.document.file.extension.downcase}", :target => '_blank')
+
+    -if collection.settings['categories'] == '1'
+      -docs = Set.new 
+      -cats = Array.new
+      -collection.categories.each do |col_cat|
+        -cats << col_cat.id
+      
+      -Category.where(:id => cats).each do |cat|
+        -cat.documents.each do |doc|
+          -docs << doc
+      -docs.each do |asset|
+        %li{:class => "#{collection.settings['image_size']}", 'data-filter-class' => 'test'}
+          -if collection.settings['icons'] == '0'
+            .document-image
+              =image_tag(asset.image.image, :class => 'nailthumb-container')
+              =link_to(content_tag(:i, '', :class => 'fontello-icon-download') + " #{asset.title}", asset.document.to_s, :target => '_blank')
+          -if collection.settings['icons'] == '1'
+            -icon_class = "document-gallery"
+            .document-title
+              =link_to(content_tag(:i, '', :class => 'fontello-icon-download') + " #{asset.title}", asset.document.to_s, :class => "#{asset.document.file.extension.downcase}", :target => '_blank')

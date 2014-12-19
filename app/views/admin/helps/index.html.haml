@@ -1,0 +1,50 @@
+=content_for :page_title do
+	%h1.page-title
+		Help and Instructions.
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				-if can? :create, Help
+					%li.divider-vertical
+					%li
+						=link_to content_tag(:i,'',:class => 'fontello-icon-plus-1') + ' New Instruction',new_admin_help_path, :class=> "fboxForm fancybox.ajax"
+
+
+		
+
+/ =render 'helps'
+%div{:id => 'helps'}
+	-@help_categories.each_with_index do |hc, i|
+		-if i % 2 == 0
+			.row-fluid
+		.span5
+			.widget.widget-box
+				.widget-header
+					%h4
+						=hc.title
+				.widget-content
+					.widget-body
+						%ul{:class => 'help-list'}
+							-help = Help.where(:help_category_id => hc.id).order(:title)
+							-help.each do |h|
+								%li
+									.btn-group
+										=link_to h.title, "#content-#{i}", :class => 'fbox btn btn-mini'
+										-if h.video.present?
+											=link_to content_tag(:i, '',:class => 'fontello-icon-youtube') + ' Video', "http://www.youtube.com/embed/#{h.video}", :class => 'fbox-asset fancybox.iframe btn btn-mini'
+										-if can? :create, Help
+											=link_to "Edit", edit_admin_help_path(h), :class => 'btn btn-mini btn-yellow pull- fboxForm fancybox.ajax'
+
+											=link_to "Delete", edit_admin_help_path(h), :class => 'btn btn-mini btn-danger pull-'
+									
+									%div{:id => "content-#{i}", :class => 'hide'}
+										.modal-header
+											=link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+											%h4
+												=h.title
+										.modal-body
+											=h.content.html_safe
+										.modal-footer
+
+				

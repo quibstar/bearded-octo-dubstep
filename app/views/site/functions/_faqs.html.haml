@@ -1,0 +1,16 @@
+-if s.settings['in_accordion'] == '1'
+  %section{:class => "accordion sec-#{s.id}"}
+    -s.faqs.each do |faq| 
+      %h3
+        %a{:href => "#"} 
+          =faq.question
+    
+      %section{:class => ""}
+        =faq.answer.html_safe
+-else
+  %div{:class => 'faqs'}
+    -s.faqs.each do |faq|
+      %div{:class => 'faq-question'}
+        =faq.question
+      %div{:class => 'faq-answer'}
+        =faq.answer.html_safe

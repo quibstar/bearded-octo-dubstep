@@ -1,0 +1,15 @@
+%div{:class => 'section-toolbar slides'}
+	%ul
+		%li
+			=link_to "Edit" , edit_modal_link(s.section_type ,s.location,s.id), :class => 'fboxForm  fancybox.ajax round-right'
+					
+		%li
+			=link_to 'Delete', set_resource_path(s.id), :confirm => 'Are you sure you want to remove this section?', :method => :delete
+
+		%li
+			=link_to status_tag(s.visible), '#',:class => 'round-left'
+						
+					
+	%div{:class => 'clear-both'}
+	
+	

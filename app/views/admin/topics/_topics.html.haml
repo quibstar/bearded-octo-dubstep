@@ -1,0 +1,20 @@
+%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+	%caption
+		Groups
+	%thead
+		%th
+			Action
+		%th{:scope => 'col'}
+			Campaign
+			%span.column-sorter
+
+	-@topics.each do |topic|
+		%tr
+			%td
+				.btn-group
+					=link_to content_tag(:i,'',:class => 'fontello-icon-edit') +' Edit', edit_admin_topic_path(topic) , :class => 'btn btn-mini btn-green fboxForm fancybox.ajax'
+					=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Show', admin_topic_path(topic) , :class => 'btn btn-mini btn-yellow'
+					=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_topic_path(topic), :comfirm => "Are you sure?", :method => :delete, :class => "btn btn-mini btn-danger"
+
+			%td
+				=topic.name

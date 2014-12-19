@@ -1,0 +1,13 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+  %li.control-group
+    =f.label "Navigation Group *", :class => "control-label"
+    %div{:class => 'controls'}
+      =f.text_field :nav_group, :class => "require"
+  %li.control-group
+    =f.label :description, :class => "control-label"
+    %div{:class => 'controls'}
+      =f.text_area :description, :rows => 4
+      .help-block
+        Description is for documentation.

@@ -1,0 +1,20 @@
+.modal-header
+  =link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+  %h4
+    Choose Internal links
+.modal-body
+  %p
+    Click on button to choose internal link. Hover to see sub-pages.
+  -Navigation.order(:id).each do |navigation|
+    %h6
+      =navigation.nav_group
+    #internal-links-list
+      %ol
+        -navigation.pages.order('position').each do |p|
+          -if p.parent_id == 0
+            %li
+              =link_to p.title, "#", :data => {:page => p.url_path, :slide => slide_id}, :class => ''
+              =internal_links(navigation.pages.order('position'),p.id,0, slide_id)
+
+
+.modal-footer

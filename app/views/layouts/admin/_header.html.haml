@@ -1,0 +1,49 @@
+.navbar.navbar-inverse.navbar-fixed-top
+	.navbar-inner
+		.container-fluid
+			%button.btn.btn-navbar.fontello-icon-menu{"data-target" => ".nav-collapse", "data-toggle" => "collapse", :type => "button"}
+				
+			%a.brand{:href => "javascript:void(0);"}
+				=settings 'site'
+			.nav-collapse.collapse
+				%ul.nav
+					-if can?  :update, Setting
+						%li
+							=link_to content_tag(:i,'',:class => 'fontello-icon-equalizer') +" Settings", admin_settings_path
+					
+					-if can?  :update, Note
+						%li
+							=link_to content_tag(:i, '', :class => 'fontello-icon-doc-1') + ' Page Content Status', admin_pages_path
+					
+					-if can? :create, Note
+						%li
+							=link_to content_tag(:i, '', :class => 'fontello-icon-edit') + ' Notes', admin_notes_path
+
+					-if can? :create, Help
+						-if current_user.notes.count > 0
+							%li.dropdown
+								%a{:href => '#', :class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+									%span.fontello-icon-list-1
+										Your Notes
+									%b.caret
+								
+								%ul{:class => "dropdown-menu"}
+									-current_user.notes.each do |note|
+										%li
+											=link_to note.title, edit_admin_note_path(note)
+										-if note.pages.count > 0
+											%li.dropdown-submenu
+												%a{:href => '#'}
+													Page Reference
+													%ul.dropdown-menu
+														%li
+															=note.pages.map{ |p| link_to p.title, admin_page_sections_path(p.id)}.join(' ').html_safe
+										%li.divider
+					
+					-if can? :read, Help
+						%li
+							=link_to content_tag(:i, '', :class => 'fontello-icon-help') + ' Help', admin_helps_path, :class => 'help'
+					
+					-if can?  :update, Setting
+						%li
+							=link_to content_tag(:i, '', :class => 'fontello-icon-code') + ' Design', admin_css_index_path, :class => 'design'

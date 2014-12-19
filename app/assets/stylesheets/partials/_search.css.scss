@@ -1,0 +1,13 @@
+@import "variables";
+#search-container {
+	@include breakpoint(desktop) {
+		float: right;
+	}
+	@include breakpoint(phone) {
+		margin:10px;
+	}
+	#search {
+		margin: 0;
+		padding: 0;
+	}
+}

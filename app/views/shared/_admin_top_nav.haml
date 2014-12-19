@@ -1,0 +1,7 @@
+%nav{:id => 'admin-primary-nav'}
+	%ul
+		%li
+			=link_to 'Logout', destroy_user_session_path, :method => :delete		
+		%li{:class => 'gravitar'}
+			-unless current_user == nil
+				=image_tag avatar_url current_user.email

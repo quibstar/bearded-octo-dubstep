@@ -1,0 +1,46 @@
+-# default size
+-icon_size = "32px"  
+
+-# set default icon size and icon class class
+-icon_class = ''
+-icon_for_class = ''
+
+-icon_for_class = s.social_network.icon_size
+
+
+-# set class for css
+-if icon_for_class == '16px'
+	-icon_class = 'social-icons-16-sprite social-icons-16-'
+-if icon_for_class == '24px'
+	-icon_class = 'social-icons-24-sprite social-icons-24-'
+-if icon_for_class == '32px'
+	-icon_class = 'social-icons-32-sprite social-icons-32-'
+
+-#finishe below for css anchor hover, nothing is done yet 5-14-2012	
+%div{:class => "social-icons icons-#{icon_for_class}"}
+	%ul
+		-if s.social_network.facebook.present?
+			%li
+				=link_to '', sanitize_links(s.social_network.facebook),:class => "#{icon_class}facebook", :target => '_blank'
+
+		-if s.social_network.twitter.present?
+			%li
+				=link_to '', sanitize_links(s.social_network.twitter),:class => "#{icon_class}twitter", :target => '_blank'
+
+		-if s.social_network.youtube.present?
+			%li
+				=link_to '', sanitize_links(s.social_network.youtube),:class => "#{icon_class}youtube", :target => '_blank'
+
+		-if s.social_network.linkedin.present?
+			%li
+				=link_to '', sanitize_links(s.social_network.linkedin),:class => "#{icon_class}linkedin", :target => '_blank'
+
+		-if s.social_network.pinterest.present?
+			%li
+				=link_to '', sanitize_links(s.social_network.pinterest),:class => "#{icon_class}pinterest", :target => '_blank'
+
+		-if s.social_network.rss
+			-if s.social_network.rss != '0'
+				-Publication.find_by_id(s.social_network.rss)
+				%li
+					=link_to '', admin_publication_url(s.social_network.rss, :rss),:class => "#{icon_class}rss", :target => '_blank'

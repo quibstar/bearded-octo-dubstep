@@ -1,0 +1,20 @@
+:javascript
+  $(document).ready(function() {
+      $('#doc-sortable-table').dataTable({
+          iDisplayLength: 10,
+          sDom: "<'row-fluid' <'span4'l> <'span8'pf> > rt <'row-fluid' <'span12'i> >"
+      });
+    });
+
+.help-block
+  Remember to highlight a word before choosing a document.
+
+%table{:id => 'doc-sortable-table',:class => "table table-striped table-hover table-bordered doc"}
+  %thead
+    %th{:scope => 'col'}
+      Title
+      %span.column-sorter   
+  -Document.all.each_with_index do |d, i|
+    %tr
+      %td
+        =link_to d.title, "#",:data => {:document => d.document.to_s}, :title => d.title, :class => d

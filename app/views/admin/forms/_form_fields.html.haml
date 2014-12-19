@@ -1,0 +1,74 @@
+=content_for :custom_js do 
+	=javascript_include_tag 'admin/modal_links.js'
+
+%div{:class => 'tabbable tabbable-bordered tabs-top'}
+%ul.nav.nav-tabs
+	%li.active
+		=link_to "Form Settings","#tab1", 'data-toggle' => 'tab'
+	%li
+		=link_to "Add Field","#tab2", 'data-toggle' => 'tab'
+
+
+.tab-content
+	.tab-pane.active#tab1
+		%ul.form-list.label-left.list-bordered.form-horizontal
+			%li.control-group
+				=f.label "Title *", :class => "control-label"
+				.controls
+					=f.text_field :title, :class => "required"
+			%li.control-group
+				=f.label "Recipient *", :class => "control-label"
+				.controls
+					=f.text_field :recipient, :class => "required"
+			%li.control-group
+				=f.label "Description *", :class => "control-label"
+				.controls
+					=f.text_area :description, :rows => 4, :class => "required"
+			%li.control-group
+				=f.label "Confirmation *", :class => "control-label"
+				.controls
+					=f.text_area :confirmation, :rows => 4, :class => "required"
+			%li.control-group
+				%label.check_box.inline
+					=f.check_box :horizontal
+					Horizontal label and input
+					
+	.tab-pane#tab2
+		%div{:class => 'form-col-left'}
+			%div{:id => 'field-selector'}
+				Most common used.
+				%ul{:class => 'add-fields'}
+					%li
+						=link_to "Name","#", :data =>{:type => 'name'}
+					%li
+						=link_to "Address","#", :data =>{:type => 'address'}
+					%li
+						=link_to "Email","#", :data =>{:type => 'email'}
+					%li
+						=link_to "Phone","#", :data =>{:type => 'phone'}
+					%li
+						=link_to "Date","#", :data =>{:type => 'date'}
+					%li
+						=link_to "Website","#", :data =>{:type => 'website'}
+						
+				Standard Blank fields.
+				%ul{:class => 'add-fields'}
+					%li
+						=link_to "Single line Text","#", :data =>{:type => 'text'}
+					%li
+						=link_to "Paragraph Text","#", :data =>{:type => 'textarea'}
+					%li
+						=link_to "Multiple Choice","#", :data =>{:type => 'radio'}
+					%li
+						=link_to "Checkboxes","#", :data =>{:type => 'checkbox'}
+					%li
+						=link_to "Dropdown","#", :data =>{:type => 'dropdown'}
+					%li
+						=link_to "Divider line",'#', :data =>{:type => 'dividerline'}
+		%div{:class => 'form-col-right'}
+			%div{:id => 'form-builder'}
+				%ul
+					-if controller.action_name == "edit" 
+						-@form.fields.order('created_at ASC').each do |fe|
+							=render 'admin/forms/edit_fields/fields', :fe => fe		
+	.clear-both

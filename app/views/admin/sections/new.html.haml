@@ -1,0 +1,9 @@
+.modal-header
+	=link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+	%h4
+		New
+		=params[:section_type].capitalize
+		Section for 
+		=set_resource.title.capitalize
+
+= render :partial => "form_remote"

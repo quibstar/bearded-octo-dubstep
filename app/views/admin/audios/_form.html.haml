@@ -1,0 +1,47 @@
+=form_for [:admin, @audio], :html => {:multipart => true } do |f|
+	=render 'shared/error_messages', :object => f.object
+	%div{:class => 'data-container full form-container form-horizontal'}
+		%div{:class => 'data-container-header'}
+			%h2
+				Audio
+		%div{:class => 'data-container-content'}
+			%div{:class => 'asset-input-fields'}
+				%ul
+					%li
+						=f.label :artist
+						=content_tag :span, '*', :class => 'required'
+						%div{:class => 'controls'}
+							=f.text_field :artist
+
+					%li
+						=f.label :title
+						=content_tag :span, '*', :class => 'required'
+						%div{:class => 'controls'}
+							=f.text_field :title
+
+					%li
+						=f.label :description
+						=content_tag :span, '*', :class => 'required'
+						%div{:class => 'controls'}
+							=f.text_area :description
+					%li
+						=f.label :audio
+						=content_tag :span, '*', :class => 'required'
+						%div{:class => 'controls'}
+							=f.file_field :audio
+	%div{:class => 'data-container full'}
+		%div{:class => 'data-container-header'}
+			%h2
+				Categories
+		%div{:class => 'data-container-content'}
+			%p
+				Check category to update asset.
+			%ul
+				-for cat in Category.where('audio = 1') 
+					%li
+						=check_box_tag "audio[category_ids][]",cat.id, @audio.categories.include?(cat), :id => cat.id
+						%label
+							=cat.name 
+	%br
+	=f.submit
+%div.clear-both

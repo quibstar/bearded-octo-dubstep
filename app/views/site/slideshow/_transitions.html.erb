@@ -1,0 +1,109 @@
+<%# h3 %>
+<% if slide.header_slide_direction == 'top' %>
+	children.filter('h3').css({'top': '-100', 'left': <%=slide.header_left.to_i%>});
+	children.filter('h3').animate({ <%=slide.header_slide_direction%>: <%=slide.header_top.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.header_slide_direction == 'right' %>
+	children.filter('h3').css({'top':<%=slide.header_top.to_i%>,'left':300});
+	children.filter('h3').animate({ left: <%=slide.header_left.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.header_slide_direction == 'bottom' %>
+	children.filter('h3').css({'top':500, 'left': <%=slide.content_left.to_i%>});
+	children.filter('h3').animate({ top: <%=slide.header_top.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.header_slide_direction == 'left' %>
+	children.filter('h3').css({'top':<%=slide.header_top.to_i%>,'left':-300});
+	children.filter('h3').animate({ left: <%=slide.header_left.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.header_slide_direction == 'none' %>
+	children.filter('h3').css({'top':<%=slide.header_top.to_i%>,'left': <%=slide.header_left.to_i%>});
+	children.filter('h3').animate({ opacity: 'toggle'}, 600);
+<% end %>
+
+
+
+<%# p %>
+<% if slide.content_slide_direction == 'top' %>
+	children.filter('p').css({'top': '-100','left': <%=slide.content_left.to_i%>});
+	children.filter('p').eq(0).delay(100).animate({ <%=slide.content_slide_direction%>: <%=slide.content_top.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.content_slide_direction == 'right' %>
+	children.filter('p').css({'top':<%=slide.content_top.to_i%>,'left':300});
+	children.filter('p').eq(0).delay(100).animate({ left: <%=slide.content_left.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.content_slide_direction == 'bottom' %>
+	children.filter('p').css({'top':500, 'left': <%=slide.content_left.to_i%>});
+	children.filter('p').eq(0).delay(100).animate({ top: <%=slide.content_top.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.content_slide_direction == 'left' %>
+	children.filter('p').css({'top':<%=slide.content_top.to_i%>,'left':-300});
+	children.filter('p').eq(0).delay(100).animate({ left: <%=slide.content_left.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.content_slide_direction == 'none' %>
+	children.filter('p').css({'top':<%=slide.content_top.to_i%>,'left':<%=slide.content_left.to_i%>});
+	children.filter('p').eq(0).delay(100).animate({ opacity: 'toggle'}, 600);
+<% end %>
+
+
+<% # links %>
+<% if slide.link_1_slide_direction == "top" %>
+	children.filter('a').eq(0).css({'top': '-100','left': <%=slide.link_1_left.to_i%>});
+	children.filter('a').eq(0).delay(200).animate({ <%=slide.link_1_slide_direction%>: <%=slide.link_1_top.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.link_1_slide_direction == 'right' %>
+	children.filter('a').eq(0).css({'top':<%=slide.link_1_top.to_i%>,'left':300});
+	children.filter('a').eq(0).delay(200).animate({ left: <%=slide.link_1_left.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.link_1_slide_direction == 'bottom' %>
+	children.filter('a').eq(0).css({'top':500, 'left':<%=slide.link_1_left.to_i%>});
+	children.filter('a').eq(0).delay(200).animate({ top: <%=slide.link_1_top.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.link_1_slide_direction == 'left' %>
+	children.filter('a').eq(0).css({'top':<%=slide.link_1_top.to_i%>,'left':-300});
+	children.filter('a').eq(0).delay(200).animate({ left: <%=slide.link_1_left.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.link_1_slide_direction == 'none' %>
+	children.filter('a').eq(0).css({'top':<%=slide.link_1_top.to_i%>,'left': <%=slide.link_1_left.to_i%>});
+	children.filter('a').eq(0).delay(200).animate({ opacity: 'toggle'}, 600);
+<% end %>
+
+
+<% # links %>
+<% if slide.link_2_slide_direction == "top" %>
+	children.filter('a').eq(1).css({'top': '-100','left': <%=slide.link_2_left.to_i%>});
+	children.filter('a').eq(1).delay(200).animate({ <%=slide.link_2_slide_direction%>: <%=slide.link_2_top.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.link_2_slide_direction == 'right' %>
+	children.filter('a').eq(1).css({'top':<%=slide.link_2_top.to_i%>,'left':300});
+	children.filter('a').eq(1).delay(200).animate({ left: <%=slide.link_2_left.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.link_2_slide_direction == 'bottom' %>
+	children.filter('a').eq(1).css({'top':500, 'left': <%=slide.link_2_left.to_i%>});
+	children.filter('a').eq(1).delay(200).animate({ top: <%=slide.link_2_top.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.link_2_slide_direction == 'left' %>
+	children.filter('a').eq(1).css({'top':<%=slide.link_2_top.to_i%>,'left':-300});
+	children.filter('a').eq(1).delay(200).animate({ left: <%=slide.link_2_left.to_i%>, opacity: 'toggle'}, 600);
+<% end %>
+
+<% if slide.link_2_slide_direction == 'none' %>
+	children.filter('a').eq(1).css({'top':<%=slide.link_2_top.to_i%>,'left':<%=slide.link_2_left.to_i%>});
+	children.filter('a').eq(1).delay(200).animate({opacity: 'toggle'}, 600);
+<% end %>
+
+

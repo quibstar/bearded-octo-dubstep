@@ -1,0 +1,14 @@
+.form-horizontal	
+	=form_for [:admin, @slider] do |f|
+		.widget.widget-simple
+			.widget-header
+				%h4
+					%i.fontello-icon-cog-alt
+					Slider
+					%small
+						settings
+			.widget-content
+				.widget-body
+					=render :partial => 'admin/sliders/form_fields', :locals => { :f => f}
+				.widget-footer
+					=f.submit "Save", :class=>'btn btn-primary'

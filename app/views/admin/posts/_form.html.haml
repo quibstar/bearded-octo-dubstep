@@ -1,0 +1,161 @@
+.form-horizontal	
+	=form_for [:admin, @publication, @post] do |f|
+		=render 'shared/error_messages', :object => f.object 
+		=f.hidden_field :user_id , :value => current_user.id
+		=f.hidden_field :publication_id, :value => @publication.id
+		.widget.widget-simple
+			.widget-header
+				%h4
+					%i.fontello-icon-cog-alt
+					=@publication.title
+					\-
+					=@post.title
+					%small
+						settings
+			.widget-content
+				.widget-body
+					%ul.form-list.label-left.list-bordered
+						%li.control-group
+							=f.label "Title *" , :class => "control-label"
+							.control
+								=f.text_field :title
+						%li.control-group
+							=f.label "Body *"
+							.span6
+								=f.text_area :body, :class => 'mceEditor', :id => 'textareaTinyMce' ,:cols => 20
+							.span5#post-assets-selection
+								=render 'shared/content_assets/form_assets'
+
+				%fieldset
+					%ul.form-list.label-left.list-bordered
+						%li.section-form
+							%h4
+								%icon.fontello-icon-cog
+								Post Settings
+					
+						%li.control-group
+							=f.label :published, :class => "control-label"
+							.control
+								=f.check_box :published
+						%li.control-group
+							=f.label :comments_open, :class => "control-label"
+							.control
+								=f.check_box :comments_open
+						
+						%li.control-group
+							=f.label :external_link, :class => "control-label"
+							.control
+								=f.text_field :external_link
+						%li.control-group
+							=f.label :source, :class => "control-label"
+							.control
+								=f.text_field :source
+						%li.control-group
+							=f.label :show_author, :class => "control-label"
+							.control
+								=f.check_box :show_author	
+							.help-block
+								This will show your gravitar at the end of a post along with your user bio summary.	
+				%fieldset
+					%ul.form-list.label-left.list-bordered
+						%li.section-form
+							%h4
+								%icon.fontello-icon-cog
+								Post as an event settings.
+				
+						%li.control-group
+							=f.label :event, :class => "control-label"
+							.control
+								=f.check_box :event	
+							.help-block
+								This will classify the post as an event
+						%li.control-group
+							=f.label :show_date, :class => "control-label"
+							.control
+								=f.check_box :show_date	
+							.help-block
+								Check to to make the event date visible on the front end.
+						%li.control-group
+							=f.label :start_date, :class => "control-label"
+							.control
+								=f.date_select :start_date
+								
+						%li.control-group
+							=f.label :end_date, :class => "control-label"
+							.control
+								=f.date_select :end_date
+						%li
+							=f.label :show_time, :class => "control-label"
+							.control
+								=f.check_box :show_time	
+								.help-block
+									Check to to make the event time visible on the front end.
+						%li.control-group
+							=f.label :start_time, :class => "control-label"
+							.control
+								=f.time_select :start_time, {:ampm => true}
+						%li.control-group
+							=f.label :end_time, :class => "control-label"
+							.control
+								=f.time_select :end_time, {:ampm => true}
+
+
+				%fieldset
+					%ul.form-list.label-left.list-bordered
+						%li.section-form
+							%h4
+								%icon.fontello-icon-cog
+								Post Categories
+						-categories = Category.where(:post => 1).order(:name)
+						%li.control-group
+							-if categories.count > 0
+								-categories.each do |c| 
+									%label.checkbox.inline
+										=check_box_tag "post[category_ids][]",c.id, @post.categories.include?(c), :id => @post.id 
+										=c.name
+							-else
+								%p
+									No categories assoicated with images.
+									=link_to 'Go to categories', admin_categories_path,:class => 'btn btn-yellow',:class => 'btn btn-yellow'
+					
+				-unless @post.post_images[0].blank?
+					%fieldset
+						%ul.form-list.label-left.list-bordered
+							%li.section-form
+								%h4
+									%icon.fontello-icon-cog
+									Post Image.
+							%li
+								Current image.
+								-for image in @post.images
+									%p{:class => 'image'}
+
+										- if @post.post_images[0].image_size == "original" || @post.post_images[0].image_size.nil?
+											=image_tag image.image_url
+										-else
+											=image_tag image.image_url(@post.post_images[0].image_size)
+									%p
+										%strong
+											Title: 
+										=image.title
+									=link_to 'Edit Featured Image', post_image_path(@post,:post_id => @post.id),:class => "btn btn-mini btn-yellow fboxForm fancybox.ajax" 
+									%p	
+										=label_tag 'Current Image Size:'
+										=collection_select(:post, :image_size, ImageSize.all, :size_value, :size, :selected => @post.post_images[0].image_size)
+
+				-if action_name == "new" || action_name == "create" || @post.post_images[0].blank?
+					%fieldset
+						%ul.form-list.label-left.list-bordered
+							%li.section-form
+								%h4
+									%icon.fontello-icon-cog
+									Post Image.
+							%li	
+								%div{:id => 'image_select'} 
+									=render "image_select"
+													
+									=label_tag :Image_size
+									=collection_select(:post, :image_size, ImageSize.all, :size_value, :size)
+				%hr	
+				=f.submit "Save", :class =>'btn btn-primary'
+

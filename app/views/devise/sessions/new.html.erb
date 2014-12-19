@@ -1,0 +1,36 @@
+<%= content_for :page_title do -%>
+  <h1>Login</h1>
+<% end %>
+
+<div class='log-page'>
+  <h3 >Login to your account</h3>
+
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-tied margin-00"}) do |f| %>
+    <div class="input-prepend">
+      <span class="add-on"><i class="icon-user"></i></span>
+  	   <%= f.email_field :email,:placeholder =>"email", :class => 'input-xlarge' %>
+    </div>
+    <div class="input-prepend">
+      <span class="add-on"><i class="icon-lock"></i></span>
+ 	 	  <%= f.password_field :password , :placeholder =>"password", :class => 'input-xlarge'%>
+    </div>
+    <div class="controls form-inline">
+      <% if devise_mapping.rememberable? -%>
+        <%= f.label :remember_me, :class => 'checkbox pull-left' do %>
+          <%= f.check_box :remember_me %>
+          Remember Me
+        <% end -%>
+      <% end -%>
+
+      <%= f.button "Login", :class=> "btn-u pull-right" %>
+    </div>
+    <div class='clear-both'></div>
+    <hr>
+    
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+          <h4>Forget your Password ?</h4>
+          <p>no worries, <%= link_to "click here", new_password_path(resource_name) , :class=> "color-green"%> to reset your password.
+        <% end -%>
+    </p>
+  <% end %>
+</div>

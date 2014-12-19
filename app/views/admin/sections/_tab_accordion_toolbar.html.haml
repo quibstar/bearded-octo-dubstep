@@ -1,0 +1,79 @@
+-if s.section_type == 'tabbed'
+	-type = 'tab'
+
+-if s.section_type == 'accordions'
+	-type = 'accordion'
+	
+%div{:class => "section-toolbar #{s.section_type}"}
+	%ul
+		%li
+			=link_to "Add #{type.capitalize}", '#',:class => 'round-right'
+			%div{:class => 'section-links'}
+				%div{:class => 'data-container-header'}	
+					%p
+						Add
+				%div{:class => 'section-form-container'}
+					=form_for [:admin,set_resource, @section] do |f|
+						=f.hidden_field :page_id, :value => s.page_id
+						=f.hidden_field :section_type, :value => type
+						=f.hidden_field :parent_id, :value => s.id
+						=f.hidden_field :footer_id, :value => s.footer_id
+						=f.hidden_field :location, :value => s.location
+						=hidden_field_tag :route, set_resource_route
+						
+						=f.label type
+						=f.text_field :tab
+						=f.submit
+			
+		%li
+			=link_to "#{s.section_type.capitalize} Setting"
+			%div{:class => 'section-links'}
+				%div{:class => 'data-container-header'}	
+					%p
+						Add Section Class
+				%div{:class => 'section-form-container'}
+					=form_for [:admin, set_resource, s] do |f|
+						%ul	
+							%li
+								=hidden_field_tag :route, set_resource_route
+								=f.label :section_class
+								=select 'section', 'section_class',  CssClasses.all.collect {|c| [c.css_class, c.css_class]},:include_blank => true, :selected => s.section_class
+							%li
+								=f.label :extra_class
+								=f.text_field :extra_class, :value => s.extra_class
+								=f.check_box :visible
+								=f.label "Visible"
+								
+							=f.submit :class => 'btn btn-yellow'
+			%li{:class => 'move-content'}
+				=link_to "Move" ,"#", :class => 'move-section',:data => {:current => s.id}
+			-if @page
+				%li
+					=link_to "Transfer", section_cpmv_path(s.id), :class => 'fboxForm fancybox.ajax'
+		%li
+			=link_to 'Delete', set_resource_path(s), :confirm => 'Are you sure you want to remove this section?', :method => :delete
+			%li{:class => "visible-form"}
+				-if s.visible == true
+					-selectTrue = false
+					-selectFalse = true
+					-linkTitle = "Visible"
+				-else 
+					-selectTrue = true
+					-selectFalse = false
+					-linkTitle = "Hidden"
+				=link_to status_tag(s.visible), '#',:class => 'round-left visible-link', :title => "Visibility"
+				=form_for [:admin, s] do |f|
+					=radio_button_tag 'section[visible]', 'true', selectTrue
+					=radio_button_tag 'section[visible]', 'false', selectFalse
+					=hidden_field_tag :route, set_resource_route
+					=f.submit ""
+
+%div{:class => "move-content-toolbar"}
+	%ul
+		%li
+			=link_to "Above","#", :class => 'move-data round-right', :data => {:stat => "#{s.parent_id}-#{(s.position - 1)}-#{s.parent_id}-#{s.page_id}-#{s.location}"}
+		%li
+			=link_to "Below","#", :class => 'move-data', :data => {:stat => "#{s.parent_id}-#{(s.position + 1)}-#{s.parent_id}-#{s.page_id}-#{s.location}"}
+		%li{:class => "hide-move-content-toolbar"}
+			=link_to "Cancel","#",:class => 'round-left'		
+%div{:class => 'clear-both'}

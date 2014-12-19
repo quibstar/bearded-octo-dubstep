@@ -1,0 +1,61 @@
+%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+	%caption
+		Collections
+	%thead
+		%th
+			Action
+		
+		%th{:scope => 'col'}
+			Type
+			%span.column-sorter
+		%th{:scope => 'col'}
+			collection Title
+			%span.column-sorter
+
+		%th
+			Settings:
+		%th
+			Categories
+
+	-@collections.each do |collection|
+		%tr
+			%td
+				.btn-group
+					-collection.settings.each do |k,v|
+						-if v == 'Image'
+							=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit', edit_admin_collection_path(collection, :asset => 'ic' ) , :class => 'btn btn-mini btn-yellow'
+						-if v == 'Document'
+							=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit', edit_admin_collection_path(collection, :asset => 'dc' ) , :class => 'btn btn-mini btn-yellow'
+						-if v == 'Audio'
+							=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit', edit_admin_collection_path(collection, :asset => 'ac' ) , :class => 'btn btn-mini btn-yellow'
+						-if v == 'Video'
+							=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit', edit_admin_collection_path(collection, :asset => 'vc' ) , :class => 'btn btn-mini btn-yellow'
+						-if v == 'User'
+							=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit', edit_admin_collection_path(collection, :asset => 'uc' ) , :class => 'btn btn-mini btn-yellow'
+
+
+					
+					=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_collection_path(collection), :comfirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger'
+
+			%td
+				-collection.settings.each do |k,v|
+					-if k == 'collection'
+						=v
+			%td
+				=collection.title
+			%td
+				-collection.settings.each do |k,v|
+					-unless k == 'asset_ids'
+						%strong
+							=k.gsub('_', ' ')
+						\:
+						-if v == '1'
+							Yes
+						-elsif v == '0'
+							No
+						-else
+							=v
+				%td
+					-collection.categories.each do |cat|
+						.label.label-success
+							=cat.name

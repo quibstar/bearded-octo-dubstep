@@ -1,0 +1,10 @@
+%li.section-form
+  %h4
+    Choose a slider.
+  .help-block
+    Choose shared content to place in section:
+%li.control-group
+  -for shared_content in SharedContent.all
+    %label.checkbox.inline
+      =check_box_tag "section[shared_content_ids][]",shared_content.id, @section.shared_contents.include?(shared_content), :id => shared_content.id
+      =shared_content.title

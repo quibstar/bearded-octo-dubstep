@@ -1,0 +1,29 @@
+%div{:id => "notes"}
+  %table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Helps &amp; Instructions
+    %thead
+      %th
+        Actions
+      %th
+        Category
+      %th{:scope => 'col'}
+        Title
+        %span.column-sorter
+      %th
+        Resource
+    -@helps.each do |help|
+      %tr
+        %td
+          .btn-group
+            =link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') + ' Edit',edit_admin_help_path(help), :class => 'fboxForm fancybox.ajax btn btn-mini btn-yellow'
+            =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_help_path(help),:data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'
+        %td
+          -cat = HelpCategory.find_by_id(help.help_category_id)
+          =cat.title
+        %td
+          =help.title
+        %td
+          =help.content
+          =help.video
+

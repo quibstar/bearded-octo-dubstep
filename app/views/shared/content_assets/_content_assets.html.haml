@@ -1,0 +1,40 @@
+%div{:class => 'tabbable tabbable-bordered tabs-top tabbed-assets'}
+  %ul.nav.nav-tabs#asset-links
+    %li.active
+      =link_to "Images", "#image_assets", 'data-toggle' => 'tab'
+    %li
+      =link_to "Documents", "#document_assets", 'data-toggle' => 'tab'
+    %li
+      =link_to "Audio", "#audio_assets", 'data-toggle' => 'tab'
+    %li
+      =link_to "Video", "#video_assets", 'data-toggle' => 'tab'
+    %li
+      =link_to "Links", "#link_assets", 'data-toggle' => 'tab'
+
+  .tab-content  
+    .tab-pane.active#image_assets
+      =render 'shared/content_assets/image_assets'
+
+    .tab-pane#document_assets
+      =render 'shared/content_assets/document_assets'
+        
+    .tab-pane#audio_assets
+      =render 'shared/content_assets/audio_assets'
+
+    .tab-pane#video_assets
+      =render 'shared/content_assets/video_assets'
+
+    .tab-pane#link_assets
+
+      %div{:class => 'tabbable tabbable-bordered tabs-top tabbed-links'}
+        %ul.nav.nav-tabs#link-links
+          %li.active
+            =link_to "External Links", "#ext-links", 'data-toggle' => 'tab'
+          %li
+            =link_to "Internal Links", "#internal-links", 'data-toggle' => 'tab'
+        
+        .tab-content  
+          .tab-pane.active#ext-links
+            =render 'shared/content_assets/link_assets'
+          .tab-pane#internal-links
+            =render 'shared/content_assets/internal_link_assets'

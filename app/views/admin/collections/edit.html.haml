@@ -1,0 +1,130 @@
+=javascript_include_tag 'admin/modal_links.js'
+= content_for :page_title do
+  %h1
+    Edit
+    =@collection.title
+
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav
+        %li
+          .btn-group.bootstrap-select#showItem
+            %button{:class =>"btn dropdown-toggle clearfix", 'data-toggle'=>"dropdown", :id=>""}
+              %span.filter-option-pull-left#drop-down-label
+                12 
+              %span
+                &nbsp;
+              %span.caret
+            %div{:class => "dropdown-menu", :role => "menu"}
+              %ul{:style => "max-height: none; overflow-y: auto;"}
+                %li{:rel => "0"}
+                  %a{:tabindex => "-1", :href =>"#", "data-page" => '12'}
+                    12
+                %li{:rel => "1"}
+                  %a{:tabindex => "-1", :href =>"#", "data-page" => '24'}
+                    24
+                %li{:rel => "2"}
+                  %a{:tabindex => "-1", :href =>"#", "data-page" => '48'}
+                    48
+                %li{:rel => "3"}
+                  %a{:tabindex => "-1", :href =>"#", "data-page" => '96'}
+                    96
+        %li.divider-vertical
+        %li
+          .pagination.pagination-btn
+            %ul.holder
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-back') + ' Back',admin_collections_path , :class => ''
+        %li.divider-vertical
+
+
+
+.span3
+  %h4.simple-header
+    %i.fontello-icon-cog-alt
+    Settings
+  .widget.widget-simple
+    -if @image
+      =render "admin/collections/images/settings"
+    -if @document
+      =render "admin/collections/documents/settings"
+    -if @user
+      =render "admin/collections/users/settings"
+    -if @audio
+      =render "admin/collections/audios/settings"
+    -if @video
+      =render "admin/collections/videos/settings"
+
+.span4.gallery-well
+  %h4.simple-header
+    %i.fontello-icon-picture
+    Gallery
+  .gallery.media-list.horizontal100#gallery-content
+    -if @image
+      -catetory_ids('image').each do|asset|
+        -i = Image.find_by_id(asset)
+        -if i
+          = render "admin/collections/images/thumb", :i => i
+
+    -if @document
+      -catetory_ids('document').each do|asset|
+        -i = Document.find_by_id(asset)
+        -if i
+          =render "admin/collections/documents/thumb", :i => i
+
+    -if @user
+      -catetory_ids('user').each do|asset|
+        -i = User.find_by_id(asset)
+        -if i
+          = render "admin/collections/users/thumb", :i => i
+
+    -if @audio
+      -catetory_ids('audio').each do|asset|
+        -i = Audio.find_by_id(asset)
+        -if i 
+          = render "admin/collections/audios/thumb", :i => i
+
+    -if @video
+      -catetory_ids('youtube').each do|asset|
+        -i = Youtube.find_by_id(asset)
+        -if i
+          = render "admin/collections/videos/thumb", :i => i
+    
+  
+
+.span4.gallery-well
+  
+  %h4.simple-header
+    %i.fontello-icon-picture
+    Assets
+  
+  #legend
+
+  .scrollBox
+    .gallery.media-list.horizontal100#gallery-playlist
+      -if @image
+        -Image.all.each do |i|
+          -unless catetory_ids('image').include?(i.id)
+            = render "admin/collections/images/thumb", :i => i
+
+      -if @document
+        -Document.all.each do |i|
+          -unless catetory_ids('document').include?(i.id)
+            =render "admin/collections/documents/thumb", :i => i
+
+      -if @user
+        -User.all.each do |i|
+          -unless catetory_ids('user').include?(i.id)
+            = render "admin/collections/users/thumb", :i => i
+
+      -if @audio
+        -Audio.all.each do |i|
+          -unless catetory_ids('audio').include?(i.id)
+            = render "admin/collections/audios/thumb", :i => i
+
+      -if @video
+        -Youtube.all.each do |i|
+          -unless catetory_ids('youtube').include?(i.id)
+            = render "admin/collections/videos/thumb", :i => i

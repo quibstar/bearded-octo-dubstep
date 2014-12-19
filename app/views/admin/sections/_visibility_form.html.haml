@@ -1,0 +1,15 @@
+%li{:class => "visible-form"}
+	-if s.visible == true
+		-selectTrue = false
+		-selectFalse = true
+		-linkTitle = "Visible"
+	-else 
+		-selectTrue = true
+		-selectFalse = false
+		-linkTitle = "Hidden"
+	=link_to status_tag(s.visible), '#',:class => 'round-left visible-link', :title => "Visibility"
+	=form_for [:admin, s] do |f|
+		=radio_button_tag 'section[visible]', 'true', selectTrue
+		=radio_button_tag 'section[visible]', 'false', selectFalse
+		=hidden_field_tag :route, set_resource_route
+		=f.submit ""

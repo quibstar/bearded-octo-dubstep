@@ -1,0 +1,17 @@
+:javascript
+  $(document).ready(function() {  
+    $(".close-form").click(function(){
+      $.fancybox.close();
+    });
+  });
+
+.clear-both
+=form_for @copy do |f|
+  .modal-header
+    =link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'#', :class=> "close close-form", 'aria-hidden' => "true", :data => {:dismiss => "modal"}
+    %h4.modal-title
+      Add Your alternate copy.
+  .modal-body
+    =render "copies/form", :f => f
+  .modal-footer
+    =f.submit "Save", :class =>'btn btn-primary'

@@ -1,0 +1,73 @@
+%ul.form-list.label-left.list-bordered
+  =form_for [:admin, @collection], :html => {:id => "asset-settings-form"}  do |f|
+    %li.control-group
+      =f.label "Title *", :class => "control-label"
+      .controls
+        =f.text_field :title, :class => "required"
+    =f.fields_for :settings do |set|
+      %li.control-group
+        -image_sizes = ['square75','square100','square150', 'square260','horizontal75','horizontal100', 'horizontal150', 'horizontal200', 'horizontal260','vertical75','vertical100','vertical150','vertical200', 'vertical260']
+        %label.control-label
+          Image Size
+        =select("collection[settings]", "image_size", image_sizes,{:selected =>  @collection.settings ? @collection.settings["image_size"] : 0})
+        =link_to content_tag(:i, '',:class => 'icon-question-sign'), '#', 'data-original-title' => "Image Sizes", 'data-toggle' => 'popover', 'data-content' => "#{render 'image_sizes'}"
+        .help-block.text-error
+          Will not be set if you use tiles. Image size is set in the CSS file.
+        
+      %li.control-group
+        %label.inline.checkbox
+          =set.check_box :show_caption, :checked => checked(@collection.settings ?  @collection.settings['show_caption'] : 0)
+          Show Caption
+          .help-block
+            Will show up on hover.
+
+      %li.control-group
+        %label.inline.checkbox
+          =set.check_box :tiles, :checked => checked( @collection.settings ? @collection.settings['tiles'] : 0)
+          Tiles
+          .help-block
+            Pintrest style. Image placement like a brick wall. Example:  
+            %a{:href => 'http://www.wookmark.com/', :target => "_blank"}
+              Wookmark
+
+    
+      %li.control-group
+        %label.inline.checkbox
+          =set.check_box :categories,:checked => checked(@collection.settings ?  @collection.settings['categories'] : 0)
+          Use Categories
+          .help-block
+            If checked your gallery will only use images with selected categories.
+
+      %li.control-group#filter-by-buttons
+        %label.inline.checkbox
+          =set.check_box :filter_by_buttons,:checked => checked(@collection.settings ?  @collection.settings['filter_by_buttons'] : 0)
+          Filter with Buttons(links)
+          .help-block
+            This wil create a button or list that will filter the images by category. 
+            %span.text-error
+              Only available while using categories.
+
+
+      %li.control-group#category-filter
+        %label
+          Add to gallery by category.
+        -categories = Category.where(:image => 1) 
+        -if categories.count > 0
+          -categories.each do |cat| 
+            %label.checkbox.inline
+              -if @collection.categories.include?(cat)
+                -active = 'active'
+              =check_box_tag "collection[category_ids][]",cat.id, @collection.categories.include?(cat), :id => cat.id, :class => "checkbox #{active}",'data-filter' => "#{cat.name}", 'data-categoryId' => "#{cat.id}"
+              =cat.name 
+
+
+      %li.control-group
+        %label
+          Asset ID's and order
+        =set.text_field :asset_ids, :value => @collection.settings ? @collection.settings['asset_ids'] : ''
+        
+
+      =set.hidden_field :collection, :value => "Image"
+
+    %hr
+    =f.submit "Save", :class =>'btn btn-primary'

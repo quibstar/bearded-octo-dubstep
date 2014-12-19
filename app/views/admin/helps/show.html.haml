@@ -1,0 +1,26 @@
+=content_for :page_title do 
+	%h1.page-title
+		=@help.title
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i, '', :class => 'fontello-icon-edit') + " Edit #{@help.title}", edit_admin_help_path(@help), :class => 'fboxForm fancybox.ajax'
+
+
+%div{:class => 'tabbable tabbable-bordered tabs-top'}
+%ul.nav.nav-tabs
+	%li.active
+		=link_to "Documentation","#tab1", 'data-toggle' => 'tab'
+	%li
+		=link_to "Video","#tab2", 'data-toggle' => 'tab'
+
+
+.tab-content
+	.tab-pane.active#tab1
+		=@help.content.html_safe
+	.tab-pane#tab2
+		=@help.video.html_safe
+	

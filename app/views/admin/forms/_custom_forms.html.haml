@@ -1,0 +1,19 @@
+%div{:id => "custom-forms"}
+  %table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Custom Forms
+    %thead
+      %th
+        Actions
+      %th{:scope => 'col'}
+        Title
+        %span.column-sorter
+      
+    -@forms.each_with_index do |form, i|
+      %tr
+        %td
+          .btn-group
+            =link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') + ' Edit',edit_admin_form_path(form), :class => 'btn btn-mini btn-yellow'
+            =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_form_path(form),:data => {:data => {:confirm => 'Are you sure?'}}, :method => :delete, :class => 'btn btn-mini btn-danger'
+        %td
+          =form.title

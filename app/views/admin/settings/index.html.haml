@@ -1,0 +1,92 @@
+=content_for :page_title do 
+	%h1.page-title
+		Site Settings
+
+.navbar.navbar-page
+	.navbar-inner
+		.container
+
+.span4	
+	.widget.widget-simple
+		-for setting in @settings
+			.widget-header.header-small
+				=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit Settings',"#defaultModal", :class => 'btn btn-sky btn-mini pull-right fboxForm'
+				
+				#defaultModal.hide
+					=render :partial => "admin/settings/form", :locals => {:setting => setting}
+				%h6
+					=setting.site_title
+			%ul
+				%li
+					%strong
+						Tag Line: 
+					=setting.tag_line
+				%li
+					%strong
+						URL: 
+					=setting.url
+				%li
+					%strong
+						Email: 
+					=setting.email
+				%li
+					%strong
+						Address: 
+					=setting.address
+				%li
+					%strong
+						State:
+					=setting.state
+				%li
+					%strong
+						Zip: 
+					=setting.zip 
+				%li
+					%strong
+						Phone:
+					=setting.phone
+				%li
+					%strong
+						Fax:
+					=setting.fax
+				
+.span4				
+	.widget.widget-simple
+		.widget-header.header-small
+			=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit Logo',"#logo", :class => 'btn btn-sky btn-mini pull-right fboxForm'
+			#logo.hide
+				=render :partial => "admin/settings/logo", :locals => {:setting => setting}
+			%h6
+				Logo.
+		=image_tag setting.logo_url
+.span4
+	.widget.widget-simple
+		.widget-header.header-small
+			=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit Analytics',"#analytics",:class => 'btn btn-sky btn-mini pull-right fboxForm'
+
+			#analytics.hide
+				=render :partial => "admin/settings/analytics", :locals => {:setting => setting}
+			%h6
+				Google Analytics
+		%ul
+			%li
+				%strong
+					Google Analytics
+				-if setting.analytics.blank?
+					%br
+					Google analytics have not been set up.
+				-else
+					=setting.analytics
+
+.span4
+	.widget.widget-simple
+		.widget-header.header-small
+			=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit robots.txt',"#robots",:class => 'btn btn-sky btn-mini pull-right fboxForm'
+			%h6
+				Edit robots.txt file
+			#robots.hide
+				=render :partial => "admin/settings/robots", :locals => {:setting => setting}
+		
+		=simple_format @robots_txt
+
+

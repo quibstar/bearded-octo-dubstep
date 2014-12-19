@@ -1,0 +1,46 @@
+@import "social-icons-16/*.png";
+@import "social-icons-24/*.png";
+@import "social-icons-32/*.png";
+@include all-social-icons-16-sprites;
+@include all-social-icons-24-sprites;
+@include all-social-icons-32-sprites;
+.social-icons ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	li {
+		float: left;
+		a {
+			display: block;
+			margin-right: 5px;
+		}
+	}
+}
+.social-icons-16-sprite  {
+	width:16px;
+	height: 16px;
+}
+.social-icons-24-sprite  {
+	width:24px;
+	height: 24px;
+}
+.social-icons-32-sprite {
+	width:32px;
+	height: 32px;
+}
+
+
+/* ------------------------------------------------------------------------
+	publications
+------------------------------------------------------------------------- */
+.sharing-icons ul li span.icons {
+	display: inline-block;
+}
+
+.publications .social-icons ul li {
+	width: 140px;
+	margin-bottom: -5px;
+}
+.publications .sharing-icons ul li span.icons {
+	margin-bottom: -5px;
+}

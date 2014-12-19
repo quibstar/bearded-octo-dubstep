@@ -1,0 +1,182 @@
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li.divider-vertical
+				-if @page
+					%li
+						=link_to content_tag(:i,'',:class => 'fontello-icon-edit') + ' Content Status',"#content-status-modal", :class => 'fboxPages'
+					%li.divider-vertical
+					%li
+						=link_to content_tag(:i,'',:class => 'fontello-icon-cog-alt') + ' Page settings',edit_admin_page_path(@page,:sections => 1), :class => 'fboxPages fancybox.ajax'
+					%li.divider-vertical
+					%li
+						=link_to content_tag(:i,'',:class=> 'fontello-icon-popup-3') + " Create subpage", new_admin_page_path(:parent_id => @page.id, :nav_group => @page.navigation_id,:sections => 1), :class => 'fboxPages fancybox.ajax'
+
+				-if @footer
+					%li
+						=link_to content_tag(:i,'',:class => 'fontello-icon-cog-alt') + ' Footer settings',edit_admin_footer_path(@footer,:sections => 1), :class => 'fboxForm fancybox.ajax'
+				-if @multi_navigation
+					%li
+						=link_to content_tag(:i,'',:class => 'fontello-icon-cog-alt') + " Multi-navigation settings", edit_admin_multi_navigation_path(@multi_navigation,:sections => 1),:class => 'fboxForm fancybox.ajax'
+				-if @shared_content
+					%li
+						=link_to content_tag(:i,'',:class => 'fontello-icon-cog-alt') + " Shared contents settings", edit_admin_shared_content_path(@shared_content,:sections => 1),:class => 'fboxForm fancybox.ajax'
+				-if @publication
+					%li
+						=link_to content_tag(:i,'',:class => 'fontello-icon-cog-alt') + " #{@publication.title} settings", edit_admin_publication_path(@publication,:sections => 1),:class => ''
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i,'',:class => 'fontello-icon-back') + " Back", goto_resource_path
+				%li.divider-vertical
+				%li
+					=link_to "Hide Toolbars", "#", :id => "show-hide-toolbar"
+
+-if @page
+	#content-status-modal
+		=form_for [:admin, @page] do |f|
+			.modal-header
+				=link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+				%h4
+					Content Status
+
+			.modal-body		
+				=f.hidden_field :parent_id, :value => @page.parent_id
+				=f.hidden_field :navigation_id, :value => @page.navigation_id
+				=hidden_field_tag :redirect, "sections"
+				%label.checkbox
+					=f.radio_button :content_status, 1
+					Content needs to be added
+				%label.checkbox
+					=f.radio_button :content_status, 2
+					Content added needs review
+				%label.checkbox
+					=f.radio_button :content_status, 3
+					Content presentation needs review
+				%label.checkbox
+					=f.radio_button :content_status, 4
+					Content reviewed and approved
+			.modal-footer
+				=f.submit 'submit', :class => 'btn btn-primary'
+
+	
+
+	-if @page.notes.count > 0
+		#page-notes.well
+			%a{:id => 'note-handle', :href => '#'}
+				Notes
+			-@page.notes.each do |note|
+				%h5.simple-header
+					=link_to note.title, edit_admin_note_path(note)
+				.help-block
+					Posted on:
+					=note.created_at.to_formatted_s(:short)
+					By:
+					-user = User.find_by_id(note.user_id)
+					=user.name
+				=note.content.html_safe
+		.clear-both
+					
+	=content_for :page_title do
+		%h1.page-title
+			Content for: 
+			=@page.title.capitalize
+			=render 'shared/content_status'
+					
+
+		
+	-if(@page.template_id == 2 or  @page.template_id == 4)
+		%div{:class => "left-section-#{@page.template_id}"}	
+			%h3.page-header
+				Left sidebar	
+			=render :partial => 'admin/sections/section_list',:locals => {:location => 1}
+			-@page.sections.where(:parent_id => 0, :location => 1).order('position ASC').each do |s|
+				=render :partial => 'admin/sections/sections', :locals => {:s => s}
+	
+	
+	%div{:class => "main-#{@page.template_id}"}
+		%h3.page-header
+			Main
+		=render :partial => 'admin/sections/section_list',:locals => {:location => 2}
+		-@page.sections.where(:parent_id => 0, :location => 2).order('position ASC').each do |s|
+			=render :partial => 'admin/sections/sections', :locals => {:s => s}
+	
+				
+				
+	-if(@page.template_id == 3 or @page.template_id == 4)
+		%div{:class => "right-section-#{@page.template_id}"}
+			%h3.page-header
+				Right sidebar
+			=render :partial => 'admin/sections/section_list',:locals => {:location => 3}
+			-@page.sections.where(:parent_id => 0, :location => 3).order('position ASC').each do |s|
+				=render :partial => 'admin/sections/sections', :locals => {:s => s}
+	%div{:class => 'clear-both'}
+
+-#
+-# footer
+
+-if @footer
+	=content_for :page_title do
+		%h1.page-title
+			Content for: 
+			=@footer.title.capitalize
+	=render :partial => 'admin/sections/section_list',:locals => {:location => 4}
+	%div{:class => "span12"}
+		%section
+			.row-fluid
+				-@footer.sections.where(:parent_id => 0, :location => 4).order('position ASC').each do |s|
+					=render :partial => 'admin/sections/sections', :locals => {:s => s}
+
+-#
+-# publications
+
+-if @publication
+	/ passes instant variable to the body tag
+	-column_type(@publication, 'post')
+
+	=content_for :page_title do
+		%h1.page-title
+			Content for: 
+			=@publication.title.capitalize
+	-if(@publication.template_id == 2 or  @publication.template_id == 4)
+		%div{:class => "left-section-#{@publication.template_id}"}	
+			%h3.page-header
+				Left sidebar	
+			=render :partial => 'admin/sections/section_list',:locals => {:location => 1}
+			-@publication.sections.where(:parent_id => 0, :location => 1).order('position ASC').each do |s|
+				=render :partial => 'admin/sections/sections', :locals => {:s => s}
+	%div{:class => "main-#{@publication.template_id}"}	
+		%h3.page-header
+			Main
+		=render :partial => 'publication_post', :locals => {:p => p}
+		
+				
+	-if(@publication.template_id == 3 or @publication.template_id == 4)
+		%div{:class => "right-section-#{@publication.template_id}"}
+			%h3.page-header
+				Right sidebar
+			=render :partial => 'admin/sections/section_list',:locals => {:location => 3}
+			-@publication.sections.where(:parent_id => 0, :location => 3).order('position ASC').each do |s|
+				=render :partial => 'admin/sections/sections', :locals => {:s => s}
+	%div{:class => 'clear-both'}
+
+
+-if @multi_navigation
+	=content_for :page_title do
+		%h1.page-title
+			Multi-navigation: 
+			=@multi_navigation.title.capitalize
+	%div{:class => "main"}
+		=render :partial => 'admin/sections/section_list',:locals => {:location => 5}
+		-@multi_navigation.sections.where(:parent_id => 0, :location => 5).order('position ASC').each do |s|
+			=render :partial => 'admin/sections/sections', :locals => {:s => s}
+
+-if @shared_content
+	=content_for :page_title do
+		%h1.page-title
+			Shared Content: 
+			=@shared_content.title.capitalize
+	%div{:class => "main"}
+		=render :partial => 'admin/sections/section_list',:locals => {:location => 6}
+		-@shared_content.sections.where(:parent_id => 0, :location => 6).order('position ASC').each do |s|
+			=render :partial => 'admin/sections/sections', :locals => {:s => s}

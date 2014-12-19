@@ -1,0 +1,17 @@
+@import "../partials/variables.css.scss";
+
+.sessions #content,
+.passwords #content,
+.registrations #content {
+	width: 500px;
+	margin: 20px auto;
+	@include box-shadow(0 0 10px black);
+	.center img {
+		display: block;
+		margin: auto;
+	}
+	input[type='email'],
+	input[type='password'] {
+		width: 98%;
+	}
+}

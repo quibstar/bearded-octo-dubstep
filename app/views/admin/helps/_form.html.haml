@@ -1,0 +1,25 @@
+%div{:class => 'form-container form-horizontal'}
+	=form_for [:admin, @help] do |f|
+		=render 'shared/error_messages', :object => f.object 
+			%ul
+				%li
+					=f.label :help_category_id
+					=content_tag :span, '*', :class => 'required'
+					%div{:class => "controls"}
+						=select("help", 'help_category_id', HelpCategory.all.collect{|h| [h.title, h.id]})
+				%li
+					=f.label :title
+					=content_tag :span, '*', :class => 'required'
+					%div{:class => "controls"}
+						=f.text_field :title
+				%li
+					=f.label :content
+					=content_tag :span, '*', :class => 'required'
+					%div{:class => "controls"}
+						=f.text_area :content, :class => 'mceEditor', :id => 'textareaTinyMce'
+				%li
+					=f.label "YouTube video code"
+					%div{:class => "controls"}
+						=f.text_area :video
+				%li
+					=f.submit "Submit", :class =>'button btn-primary'

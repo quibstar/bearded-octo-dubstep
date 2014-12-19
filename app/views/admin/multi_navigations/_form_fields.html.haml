@@ -1,0 +1,41 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+	%li.control-group	
+		=f.label "Title *", :class => "control-label"
+		.controls
+			=f.text_field :title, :class => 'required'
+	%li.control-group
+		=f.label :sub_nav_width, :class => "control-label"
+		.controls
+			=f.text_field :sub_nav_width
+			%span
+				px
+			.help-block
+				Width of sub-navigation links if you choose to show them.
+	%li.control-group
+		=f.label "Dynamic Content Width *", :class => "control-label"
+		.controls
+			=f.text_field :dynamic_content_width, :class => 'required'
+			%span
+				px
+			.help-block
+				Width of the content you will or have created.
+
+	%li.control-group
+		=f.label :show_sub_pages, :class => "control-label"	
+		.control
+			=f.check_box :show_sub_pages
+			.help-block
+				If unchecked dynamic content width will be used for multi-navigation container width.
+
+	%li.control-group	
+		.help-block
+			If you are using sub-navigation links do you want the links
+		%label.radio
+			=f.radio_button :sub_pages_location, 1
+			Before mulit-navigation content
+
+		%label.radio	
+			=f.radio_button	:sub_pages_location, 2
+			After mulit-navigation content

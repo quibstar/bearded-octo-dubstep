@@ -1,0 +1,12 @@
+=content_for :page_title do 
+	%h2
+		Audios
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li.divider-vertical
+				%li
+					=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') + ' New Audio',new_admin_audio_path, :class => 'fboxForm fancybox.ajax'
+
+=render 'audios'

@@ -1,0 +1,10 @@
+-collection = s.collections.first
+-if(collection)
+  -['Image', 'User','Audio','Video','Document'].each do |c|
+    -if(collection.settings['collection']==c)
+      %h3
+        =collection.title
+      =render "site/collections/#{c.downcase}_collection", :collection => collection
+-if(!collection && current_user)
+  .text-error
+    Collection removed.

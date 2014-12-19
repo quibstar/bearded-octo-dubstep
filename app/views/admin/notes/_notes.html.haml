@@ -1,0 +1,74 @@
+%div{:id => "notes"}
+  %table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Notes
+    %thead
+      %th
+        Actions
+      %th{:scope => 'col'}
+        Title
+        %span.column-sorter
+
+      %th
+        Note
+
+      %th
+        Referencing Page
+        %span.column-sorter
+
+      %th
+        Assigned User
+        %span.column-sorter
+
+      %th{:scope => 'col'}
+        Reference Topic
+        %span.column-sorter
+
+      %th
+        Created By
+
+      %th
+        Created at
+
+    -@notes.each_with_index do |note, i|
+      %tr
+        %td
+          .btn-group
+            =link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') + ' Edit',edit_admin_note_path(note), :class => 'btn btn-mini btn-yellow'
+            =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_note_path(note),:data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'
+        %td
+          =note.title
+        %td
+          =note.content.html_safe
+          -if note.responses
+            %ul.response
+              -note.responses.each do |r|
+                %li
+                  %div
+                    %strong
+                      =r.user.name
+                  %div 
+                    =r.response.html_safe
+                  %div
+                    .btn-group
+                      =link_to "Edit", edit_admin_response_path(r), :class => "fboxForm fancybox.ajax btn btn-mini btn-yellow"
+                      =link_to "Delete", admin_response_path(r),:data => {:confirm => 'Are you sure?'}, :method => :delete, :class => ' btn btn-mini btn-danger'
+
+          =link_to "Add Response", new_admin_response_path(:note => note.id), :class => 'fboxForm fancybox.ajax btn btn-mini btn-danger'
+        %td
+          =note.pages.map{ |p| link_to p.title, admin_page_sections_path(p.id)}.join(' ').html_safe
+        %td
+          =note.users.map{ |u| link_to u.full_name, edit_admin_user_path(u.id)}.join(', ').html_safe
+        %td
+          =note.reference
+
+
+        %td
+          =note.user.name
+          %br
+          =note.user.title
+          %br
+          =note.user.email
+          =link_to 'Profile', edit_admin_user_path(note.user), :class => 'btn btn-mini btn-yellow'
+        %td
+          =note.created_at.to_formatted_s(:long)

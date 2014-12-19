@@ -1,0 +1,76 @@
+
+/**
+ * Grid container
+ */
+
+.user-gallery ul {
+  list-style-type: none;
+  position: relative; /** Needed to ensure items are laid out relative to this container **/
+  margin: 0;
+  min-height: 200px;
+}
+
+/**
+ * Grid items
+ */
+ // IF YOU ARE USING MASONRY THIS IS THE DEFAULT SETTING, CHANGING THIS WILL MAKE THE LIST ITME SMALLER
+.user-gallery .tiles li {
+  width: 200px;
+}
+
+.gallery-no-categories {
+  width: 200px;
+}
+.user-gallery li {
+  width: 200px;
+/*  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;*/
+  /*display: none; * Hide items initially to avoid a flicker effect **/
+  cursor: pointer;
+  padding: 4px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  img {
+    text-align: center
+  }
+}
+
+.user-gallery li.inactive {
+  opacity: 0;
+  /*filter: alpha (opacity = 0);*/
+}
+
+.user-gallery li span {
+  display: block;
+  &.twitter,
+  &.facebook,
+  &.linkedin {
+    display: inline-block;
+    font-size: 20px;
+  }
+
+}
+
+
+// ------------------------------------------------------------------------
+//    collection-image-gallery
+// ------------------------------------------------------------------------
+// BEGIN
+
+.collection-image-gallery {
+  width: 900px;
+  position: relative;
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      float: left;
+    }
+  }
+}
+
+// ----- END --------------------------------------------------------------

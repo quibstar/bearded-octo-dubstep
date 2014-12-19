@@ -1,0 +1,11 @@
+=form_for [:admin, @link] do |f|
+  .modal-header
+    =link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+    %h4
+      New Link
+  .modal-body
+    -if @link
+      =render 'shared/error_messages', :object => @link 
+    =render "admin/links/form_fields", :f => f
+  .modal-footer.submit-group
+    =f.submit "Save", :class =>'btn btn-primary'

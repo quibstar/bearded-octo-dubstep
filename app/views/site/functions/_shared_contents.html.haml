@@ -1,0 +1,12 @@
+-sharedContents = s.shared_contents
+-# if in sections_shared content ther was section => 36 and shared_content_id => 1
+
+-sharedContents.each do |sc|
+	=#sc.id
+	-section = Section.where(:shared_content_id => sc.id, :visible => true).order("position")
+	-section.each do |sec|
+		-if sec.parent_id == 0
+			=render 'site/sections', :s => sec
+
+
+

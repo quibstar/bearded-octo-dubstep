@@ -1,0 +1,61 @@
+=javascript_include_tag 'admin/modal_links.js'
+.form-horizontal
+	=form_for [:admin, setting] do |f|
+		=render 'shared/error_messages', :object => f.object
+		.modal-header
+			=link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+			%h4
+				Site Settings
+		.modal-body
+			%ul.form-list.label-left.list-bordered
+				%li.control-group
+					=f.label :site_title, :class => "control-label"
+					.controls
+						=f.text_field :site_title, :class => "validate"
+
+				%li.control-group
+					=f.label :tag_line, :class => "control-label"
+					.controls
+						=f.text_field :tag_line
+
+				%li.control-group
+					=f.label :url, :class => "control-label"
+					.controls
+						=f.text_field :url, :class => "validate"
+
+				%li.control-group	
+					=f.label :street, :class => "control-label"
+					.controls
+						=f.text_field :street, :class => "validate"
+
+				%li.control-group
+					=f.label :city, :class => "control-label"
+					.controls
+						=f.text_field :city, :class => "validate"
+
+				%li.control-group		
+					=f.label :state, :class => "control-label"
+					.controls
+						=select_tag "setting[state]", options_from_collection_for_select(@states, "state_name", "state_name",:selected => @setting.state)
+
+				%li.control-group
+					=f.label :zip, :class => "control-label"
+					.controls
+						=f.text_field :zip
+
+				%li.control-group	
+					=f.label :email, :class => "control-label"
+					.controls
+						=f.text_field :email, :class => "validate"
+
+				%li.control-group
+					=f.label :phone, :class => "control-label"
+					.controls
+						=f.text_field :phone
+
+				%li.control-group
+					=f.label :fax, :class => "control-label"
+					.controls
+						=f.text_field :fax
+		.modal-footer
+			=f.submit "Save", :class =>'btn btn-primary' 

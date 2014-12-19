@@ -1,0 +1,12 @@
+#form-remote.form-horizontal
+  =form_for [:admin, @audio] do |f|
+    .modal-header
+      =link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+      %h4
+        New Audio
+    .modal-body
+      -if @audio
+        =render 'shared/error_messages', :object => @audio 
+      =render "admin/audios/form_fields", :f => f
+    .modal-footer.submit-group
+      =f.submit "Save", :class =>'btn btn-primary'

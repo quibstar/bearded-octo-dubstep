@@ -1,0 +1,140 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+-if @section.section_type
+	-section_type = @section.section_type
+-else
+	-section_type = params[:section_type]
+
+%div{:class => "form_remote form-horizontal "}
+	=form_for [:admin, @section], :remote => true do |f|
+		.modal-body
+
+			-if action_name == "new"
+				=f.hidden_field set_resource_symbol, :value => set_resource_id
+				=f.hidden_field :section_type, :value => params[:section_type]
+				=f.hidden_field :location, :value => params[:location]
+				-if params[:sid]
+					=f.hidden_field :parent_id, :value => set_parent_id(params[:sid])
+			=hidden_field_tag :route, set_resource_route
+
+			%div{:class => 'tabbable tabbable-bordered tabs-top tabbed-assets'}
+				%ul.nav.nav-tabs#asset-link
+					%li.active
+						=link_to "Content", "#section-content-tab", 'data-toggle' => 'tab'
+					%li
+						=link_to "Extras", "#section-extras-tab", 'data-toggle' => 'tab'
+
+				.tab-content	
+					.tab-pane#section-extras-tab
+
+						%ul.form-list.label-left.form-horizontal
+							%li.control-group
+								=f.label :extra_class, :class => "control-label"
+								.controls
+									=f.text_field :extra_class, :value => @section.extra_class
+							%li.control-group
+								=f.label :section_class, :class => "control-label"
+								.controls
+									=select 'section', 'section_class',  CssClasses.all.collect {|c| [c.css_class, c.css_class]},:include_blank => true, :selected => @section.section_class
+							%li.control-group
+								=f.label "Visible", :class => "control-label"
+								.controls
+									=f.check_box :visible
+								
+					.tab-pane.active#section-content-tab
+						%ul.form-list.label-left.form-horizontal
+							%li.control-group
+							-if @section.section_type == 'tab' or @section.section_type == 'accordion'
+								=f.label :tab, :class => "control-label"
+								.controls
+									=f.text_field :tab
+
+							-if(section_type == "tabbed")
+								%label.control-label
+									How many tabs would you like to create?
+								.controls
+									-num = [1,2,3,4,5,6,7,8,9,10]
+									=select 'section', 'tabs',  num,{}
+													
+							-elsif (section_type == "accordions")
+								%lable.control-label
+									How many accordions would you like to create?
+								.controls
+									-num = [1,2,3,4,5,6,7,8,9,10]
+									=select 'section', 'accordions',  num,{}					
+							-elsif section_type == 'columns'
+
+								%div{:class => 'content-input fields'}
+									=render :partial => 'admin/sections/columns/columns', :locals => {:f => f}
+
+							-elsif section_type == "asset by category"
+								=render :partial => 'asset_by_category', :locals => {:f => f}
+
+							-elsif section_type ==  "shared content"
+								=render :partial => 'shared_content', :locals => {:f => f}
+
+							-if section_type == "publications"
+								=render :partial => 'publications', :locals => {:f => f}
+
+							-elsif section_type == "publication categories"
+								=render :partial => 'publication_categories', :locals => {:f => f}
+								
+							-elsif section_type == 'publication archives'
+								=render :partial => 'publication_archives', :locals => {:f => f}
+
+							-elsif section_type == "testimonials"
+								=render :partial => 'testimonials', :locals => {:f => f}
+
+							-elsif section_type == "faqs"
+								=render :partial => 'faqs', :locals => {:f => f}
+
+							-elsif section_type == "custom forms"
+								=render :partial => 'custom_forms', :locals => {:f => f}
+
+							-elsif section_type == "social rss"
+								=render :partial => 'social_networks', :locals => {:f => f}
+
+							-elsif section_type == "nav group"
+								=render :partial => 'nav_group', :locals => {:f => f}
+
+							-elsif section_type == "nav branch"
+								=render :partial => 'nav_branch', :locals => {:f => f}
+
+							-elsif section_type == "youtube"
+								=render :partial => 'youtube', :locals => {:f => f}
+
+							-elsif section_type == "collections"
+								=render :partial => 'collections', :locals => {:f => f}
+
+
+							-elsif section_type == "slideshow"
+								%div{:class => 'content-input fields'}
+									=render :partial => 'sliders', :locals => {:f => f}
+
+							-elsif section_type == "text" || section_type == "html" || section_type == "table"
+								=f.fields_for :content do |c|
+
+									%li.control-group
+										-if section_type == "html" || section_type == "table"
+											.content-container
+												-if section_type == "table"
+													-table_classes = ['table-striped','table-bordered','table-hover','table-condensed','table-striped table-bordered','table-striped table-bordered table-hover']
+													%label
+														Table Class
+													=select("section", "table_class", table_classes, {:include_blank => true})
+												=c.label :content
+												=c.text_area :content,:rows => 10, :style => "width:97%;"
+
+										-if section_type == 'text'
+											.content-container
+												=c.label :content
+												=c.text_area :content, :class => "mceEditor", :id => 'textareaTinyMce'
+											.assets-container
+												=render 'shared/content_assets/form_assets'
+
+
+		.modal-footer	
+			=f.submit "Save", :class => 'btn btn-primary'
+			=link_to 'Save and close form', '#', :class => 'remote-form btn btn-success'
+
+

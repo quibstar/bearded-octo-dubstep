@@ -1,0 +1,18 @@
+=f.fields_for :navigation_group do |ng|
+	%li.section-form
+		%h4
+			Navigation group
+	%li.control-group 	
+		=ng.label :navigation_id, :class => "control-label"
+		.controls
+			=ng.collection_select(:navigation_id, Navigation.all, :id, :nav_group)
+	%li.section-form
+		%h4
+			Orientation
+	%li.control-group 
+		%label.radio.inline
+			=ng.radio_button :orientation, :horizontal
+			Horizontal
+		%label.radio.inline	
+			=ng.radio_button :orientation, :vertical
+			Verticle

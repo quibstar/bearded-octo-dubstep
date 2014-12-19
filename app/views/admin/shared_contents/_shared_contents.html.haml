@@ -1,0 +1,61 @@
+%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+  %caption
+    Shared Content
+  %thead
+    %th
+      Actions
+    %th{:scope => 'col'}
+      Title
+      %span.column-sorter
+    %th
+      Public facing pages where content is being used.
+    %th
+      Where shared content is being used.
+    
+  -@shared_contents.each_with_index do |shared_content , i|
+    %tr
+      %td
+        .btn-group
+          =link_to content_tag(:span, '', :class => 'caret') + " Action", '#',:class => "btn dropdown-toggle btn-yellow", 'data-toggle' => "dropdown"
+          %ul.dropdown-menu
+            %li
+              =link_to content_tag(:i,'',:class => 'fontello-icon-article') + " Edit shared content",admin_shared_content_sections_path(shared_content)
+              
+            %li.divider
+            %li
+              =link_to content_tag(:i,'',:class => 'fontello-icon-edit') + " Edit title", edit_admin_shared_content_path(shared_content),:class => 'fboxForm fancybox.ajax'
+            %li.divider
+            %li
+              =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') + " Delete shared contents", admin_shared_content_path(shared_content),:data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'delete'
+
+      %td
+        =shared_content.title.capitalize
+        -# where is the shared content being used?
+        
+      %td
+        -@sections.each do |section|
+          -section.shared_contents.each do |sc|
+            -if sc.id == shared_content.id
+              -if section.page
+                =link_to content_tag(:i,'',:class => 'fontello-icon-link-1') + " Public view of #{section.page.title} page", '/' + section.page.url_path, :target => "_blank", :class => 'btn btn-mini btn-sky btn-block'
+
+
+
+      %td
+        -@sections.each do |section|
+          -section.shared_contents.each do |sc|
+            -if sc.id == shared_content.id
+              -if section.page
+                =link_to content_tag(:i,'',:class => 'fontello-icon-doc-1') + " #{section.page.title} page", admin_page_sections_path(section.page.id), :class => 'btn btn-mini btn-sky btn-block'
+
+        -@footers.each do |foot|
+          -foot.sections.each do |fs|
+            -fs.shared_contents.each do |sc|
+              -if sc.id == shared_content.id 
+                =link_to content_tag(:i,'',:class => 'fontello-icon-arrow-curved') + " #{foot.title}", admin_footer_sections_path(foot.id), :class => 'btn btn-mini btn-sky btn-block'
+        
+        -@publications.each do |pub|
+          -pub.sections.each do |ps|
+            -ps.shared_contents.each do |sc|
+              -if sc.id == shared_content.id 
+                =link_to content_tag(:i,'',:class => 'fontello-icon-doc-1') + " #{pub.title}", admin_publication_sections_path(pub.id), :class => 'btn btn-mini btn-sky btn-block'

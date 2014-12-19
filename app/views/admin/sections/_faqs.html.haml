@@ -1,0 +1,12 @@
+%li
+  Do you want the FAQ's in Accordions?
+  =f.fields_for :settings do |set|
+    =set.check_box :in_accordion,:checked => checked(@section.settings ? @section.settings['in_accordion'] : '')
+%li.section-form
+  %h4
+    Choose FAQ(S):
+%li.control-group 
+  -for faq in Faq.all
+    %label.checkbox.inline
+      =check_box_tag "section[faq_ids][]",faq.id, @section.faqs.include?(faq), :id => faq.id
+      =faq.question

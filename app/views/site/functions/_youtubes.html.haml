@@ -1,0 +1,4 @@
+-s.youtubes.each do |y|
+	%div{:class => "youtube-video"}
+		
+		=link_to image_tag("http://i3.ytimg.com/vi/#{y.youtube_code}/1.jpg?") + content_tag(:span, y.title), "http://www.youtube.com/embed/#{y.youtube_code}", :class => 'fbox fancybox.iframe'

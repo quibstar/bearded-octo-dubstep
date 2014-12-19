@@ -1,0 +1,108 @@
+
+/**
+ * Grid container
+ */
+
+.image-gallery ul {
+  list-style-type: none;
+  position: relative; /** Needed to ensure items are laid out relative to this container **/
+  margin: 0;
+  min-height: 200px;
+}
+
+/**
+ * Grid items
+ */
+ // IF YOU ARE USING MASONRY THIS IS THE DEFAULT SETTING, CHANGING THIS WILL MAKE THE LIST ITME SMALLER
+.image-gallery .tiles li {
+  width: 200px;
+}
+
+.gallery-no-categories {
+  width: 200px;
+}
+.image-gallery li {
+  /*width: 200px;*/
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  /*display: none; * Hide items initially to avoid a flicker effect **/
+  cursor: pointer;
+  padding: 4px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.image-gallery li img {
+  display: block;
+  width: 100%;
+}
+
+.image-gallery li .thumb-title {
+  margin: 5px 0;
+}
+
+.image-gallery li p {
+  color: #666;
+  font-size: 12px;
+  line-height: 16px;
+  margin: 5px;
+}
+
+.image-gallery .imgshare {
+  padding-right: 9px;
+  padding-left: 9px;
+}
+
+.image-gallery .imgshare a {
+  text-decoration: none;
+  opacity: 0.6;
+  /*filter: alpha (opacity = 60);  */
+}
+
+.image-gallery .imgshare a:hover {
+  opacity: 0.9;
+  /*filter: alpha (opacity = 90);  */
+}
+
+.image-gallery li.inactive {
+  opacity: 0;
+  /*filter: alpha (opacity = 0);*/
+}
+
+/** Loader **/
+
+#loader {
+  height: 16px;
+  text-align: center;
+  padding: 25px 0 25px 0;
+}
+
+#loaderCircle {
+  width: 16px;
+  height: 16px;
+  margin: 0 auto;
+  background-image: image-url('loader.gif');
+}
+
+// ------------------------------------------------------------------------
+//    collection-image-gallery
+// ------------------------------------------------------------------------
+// BEGIN
+
+.collection-image-gallery {
+  width: 900px;
+  position: relative;
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      float: left;
+    }
+  }
+}
+
+// ----- END --------------------------------------------------------------

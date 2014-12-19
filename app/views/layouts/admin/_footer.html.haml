@@ -1,0 +1,26 @@
+%footer#footer-fix
+  #footer-sidebar.footer-sidebar
+    .navbar
+      .btn-toolbar
+        %a#btnSideScrollup.btn.btn-glyph.btn-link{:href => "javascript:void(0);"}
+          %i.fontello-icon-up-open-1
+  / // footer sidebar
+  #footer-content.footer-content
+    .navbar.navbar-inverse
+      .navbar-inner
+        %ul.nav.pull-left
+          %li.divider-vertical.hidden-phone
+          %li
+            %a#btnToggleSidebar.btn-glyph.fontello-icon-resize-full-2.tip.hidden-phone{:href => "javascript:void(0);", :title => "show hide sidebar"}
+          %li.divider-vertical
+          %li
+            =link_to "", admin_navigations_path, :class => "fontello-icon-home-3"
+          %li.divider-vertical
+        %ul.nav.pull-right
+          %li.divider-vertical
+          %li
+            =link_to '', destroy_user_session_path, :class => 'btn-glyph fontello-icon-logout-1 tip',:method => :delete
+          %li.divider-vertical
+          %li
+            %a#btnScrollup.scrollup.btn-glyph.fontello-icon-up-open-1{:href => "javascript:void(0);", :style => "display: none;"}
+              %span.hidden-phone Scroll

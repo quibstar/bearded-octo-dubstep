@@ -1,0 +1,101 @@
+=content_for :page_title do
+	%h1
+		Assets 
+%br
+.span4
+	.widget.widget-box
+		.widget-header
+			%h4
+				Images
+		.widget-content
+			.widget-body
+				%p
+					Upload images for content areas, sliders and functions.
+		.widget-footer
+			=link_to content_tag(:i, '', :class => 'fontello-icon-picture') + " View Images", admin_images_path, :class => 'btn btn-yellow'
+
+			
+.span4
+	.widget.widget-box
+		.widget-header
+			%h4
+				Documents
+		.widget-content
+			.widget-body
+				%p
+					Upload documents for content areas and asset libraries.
+		.widget-footer
+			=link_to content_tag(:i, '', :class => 'fontello-icon-docs') + "View Documents", admin_documents_path, :class => 'btn btn-yellow'
+			
+		
+.span4
+	.widget.widget-box
+		.widget-header
+			%h4
+				Audios
+		.widget-content
+			.widget-body
+				%p
+					Upload audio clips for content areas and asset libraries.
+		.widget-footer
+			=link_to content_tag(:i, '', :class => 'fontello-icon-music') + "View Audio Clips", admin_audios_path, :class => 'btn btn-yellow'
+
+.span4
+	.widget.widget-box
+		.widget-header
+			%h4
+				YouTube Videos
+		.widget-content
+			.widget-body
+				%p
+					Show YouTube clips in content areas and asset libraries.
+		.widget-footer
+			=link_to content_tag(:i, '', :class => 'fontello-icon-youtube') + " View YouTube collectons", admin_youtubes_path, :class => 'btn btn-yellow'		
+.span4
+	.widget.widget-box
+		.widget-header
+			%h4
+				Shared Content
+		.widget-content
+			.widget-body
+				%p
+					Create shared content to share across multiple pages.
+		.widget-footer
+			=link_to content_tag(:i, '', :class => 'fontello-icon-share') + " See Shared Content", admin_shared_contents_path, :class => 'btn btn-yellow'
+					
+.span4
+	.widget.widget-box
+		.widget-header
+			%h4
+				Frequently Asked Questions
+		.widget-content
+			.widget-body
+				%p
+					List faq's for content areas, sliders and functions.
+		.widget-footer
+			=link_to content_tag(:i, '', :class => 'fontello-icon-info') + ' Frequently Asked Questions', admin_faqs_path, :class => 'btn btn-yellow'
+			
+%div{:class => 'clear-both'}		
+.span4
+	.widget.widget-box
+		.widget-header
+			%h4
+				Testimonials
+		.widget-content
+			.widget-body
+				%p
+					Create testimonials for content areas, sliders and functions.
+		.widget-footer
+			=link_to content_tag(:i, '', :class => 'fontello-icon-comment') + ' Testimonials', admin_testimonials_path, :class => 'btn btn-yellow'
+
+.span4
+	.widget.widget-box
+		.widget-header
+			%h4
+				Links
+		.widget-content
+			.widget-body
+				%p
+					Create Links for content areas, sliders and functions.
+		.widget-footer
+			=link_to content_tag(:i, '', :class => 'fontello-icon-link') + ' Links', admin_links_path, :class => 'btn btn-yellow'

@@ -1,0 +1,40 @@
+%div{:class => 'action-nav-top '}
+	%ul
+		%li
+			=link_to "Back to #{@publication.title} posts", admin_publication_posts_path(@publication,@post)
+		%li
+			=link_to "Back to #{@publication.title} ", admin_publication_path(@publication)
+		%li
+			=link_to "Back to Publications", admin_publications_path
+
+%div{:class => 'data-container full'}
+	%div{:class => 'data-container-header'}
+		%h2
+			Edit
+			=@post.title
+			comment.
+	%div{:class => 'data-container-content'}
+		%div{:class => 'divider'}
+			%p
+				Commenter:
+				=@comment.name
+			%p
+				Email:
+				=@comment.email
+			%p
+				URL:
+				=@comment.url
+			%p
+				comment:
+				=@comment.comment
+				
+		=form_for [:admin, @publication, @post, @comment] do |f|
+			=f.hidden_field :publication_id, :value => @publication.id
+			=f.hidden_field :post_id, :value => @post.id	
+			
+			=f.check_box :published 
+			=f.label "Check to publish comment"
+			%br
+			=f.submit 'Approve Comment'
+%div{:class => 'clear-both'}
+	

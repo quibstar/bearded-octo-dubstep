@@ -1,0 +1,9 @@
+%li.section-form
+  %h4
+    Choose a slider.
+%li.control-group 
+  -Slider.all.each do |slider|
+    %label{:class => "checkbox inline"}
+      =radio_button_tag "section[slider_ids][]",slider.id, @section.sliders.include?(slider), :id => slider.id
+      =slider.title
+

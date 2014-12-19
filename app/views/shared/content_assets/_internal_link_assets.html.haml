@@ -1,0 +1,21 @@
+:javascript
+  $(document).ready(function() {
+    $('#int-link-sortable-table').dataTable({
+      iDisplayLength: 10,
+      "bSort": false
+    });
+  });
+
+.help-block
+  Remember to highlight a word before choosing a document.
+
+%table{:id => 'int-link-sortable-table',:class => "table table-striped table-hover table-bordered int-link"}
+  %thead
+    %th{:scope => 'col'}
+      Title
+      %span.column-sorter   
+  -Page.where('published = true').order('url_path').each do |p|
+    %tr
+      %td
+        =link_to p.url_path, "#", :data => {:link => p.url_path.to_s}, :title => p.title, :class => 'i-link'
+          

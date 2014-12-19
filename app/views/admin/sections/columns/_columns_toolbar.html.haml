@@ -1,0 +1,93 @@
+-if s.section_type == 'columns'
+	%div{:class => 'section-toolbar columns'}
+		%ul			
+			%li
+				=link_to "Edit Columns" , edit_modal_link(s.section_type ,s.location,s.id), :class => 'fboxForm  fancybox.ajax round-right'
+			
+			%li
+				=link_to 'Delete', set_resource_path(s.id), :confirm => 'Are you sure you want to remove this section? This will remove all columns and associated content.', :method => :delete
+ 
+			%li{:class => 'move-content'}
+				=link_to "Move" ,"#", :class => 'move-section',:data => {:current => s.id}
+			=render :partial => "visibility_form", :locals => {:s => s}
+
+	%div{:class => "move-content-toolbar"}
+		%ul
+			%li
+				=link_to "Above","#", :class => 'move-data round-right', :data => {:stat => "#{s.parent_id}-#{(s.position - 1)}-#{s.parent_id}-#{s.page_id}-#{s.location}"}
+			%li
+				=link_to "Below","#", :class => 'move-data', :data => {:stat => "#{s.parent_id}-#{(s.position + 1)}-#{s.parent_id}-#{s.page_id}-#{s.location}"}
+			%li{:class => "hide-move-content-toolbar"}	
+				=link_to "Cancel", '#',:class => 'round-left'
+							
+	%div{:class => 'clear-both'}
+		
+-if s.section_type == 'column'
+	%div{:class => 'section-toolbar columns'}
+		%ul
+			%li
+				=link_to 'Add', '#',:class => 'round-right'
+				%div{:class => 'section-links'}
+					%div{:class => 'data-container-header'}	
+						%p
+							Choose section to create.
+					%div{:class => 'section-tabs'}
+						%ul
+							%li
+								=link_to 'Text', modal_link('text',s.location,s.id), :class => 'fbox  fancybox.ajax'
+							%li
+								=link_to 'HTML', modal_link('html',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to 'Tabbed', modal_link('tabbed',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to 'Accordion', modal_link('accordions',s.location,s.id), :class => 'fboxForm  fancybox.ajax'				
+							%li
+								=link_to 'Table', modal_link('table',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to 'Columns', modal_link('columns',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to 'Slide Show', modal_link('slideshow',s.location, s.id), :class => 'fboxForm  fancybox.ajax'
+						%div{:class => 'function-list'}
+							%span
+							Functions
+						%ul{:class => "dynamic-content"}
+							%li
+								=link_to "Galleries/Playlist", modal_link('collections',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Asset by category", modal_link('asset by category',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Publications", modal_link('publications',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Publication Categories", modal_link('publication categories',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Publication Archives", modal_link('publication archives',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Shared Content", modal_link('shared content',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Testimonials", modal_link('testimonials',s.location,s.id), :class => 'fboxTop  fancybox.ajax'
+							%li
+								=link_to "Faqs", modal_link('faqs',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Custom Forms", modal_link('custom forms',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Social & Rss", modal_link('social rss',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Navigation Group", modal_link('nav group',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "Navigation Branch", modal_link('nav branch',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+							%li
+								=link_to "YouTube", modal_link('youtube',s.location,s.id), :class => 'fboxForm  fancybox.ajax'
+	
+			%li
+				=link_to "Column Settings" , edit_modal_link(s.section_type ,s.location, s.id), :class => 'fboxForm  fancybox.ajax' 
+			 
+			%li
+				=link_to(s.column_class.split[0].gsub(/[col-]/, '') + "%")
+			=render :partial => "visibility_form", :locals => {:s => s}
+							
+	%div{:class => "move-content-toolbar"}
+		%ul
+			%li
+				=link_to "Move in #{s.section_type}","#", :class => 'move-data round-both', :data => {:stat => "#{s.id}-#{s.position}-#{s.parent_id}-#{s.page_id}-#{s.location}-#{s.publication_id}"}	
+		%div{:class => 'clear-both'}
+		

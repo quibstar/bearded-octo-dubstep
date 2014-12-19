@@ -1,0 +1,10 @@
+=form_for @user, :html => {:multipart => true } do |f|
+	%div{:class => 'data-container full form-container form-horizontal'}
+		%div{:class => 'data-container-header'}
+			%h2
+				User Information
+		%div{:class => 'data-container-content'}
+			=# error_messages(@user,"Could not update user")
+			=render 'shared/error_messages', :object => f.object 
+			%div{:class => 'divider'}
+				%ul

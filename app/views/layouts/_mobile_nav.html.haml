@@ -1,0 +1,56 @@
+-mobile = Page.where(:mobile => true, :show_in_nav => true).order(:navigation_id).order(:position)
+-j = 1
+
+%nav{:id => 'mobile-nav', :class => 'm-nav'}
+	%ul
+		-page_count = 0
+		-mobile.each do |p|
+			-if p.parent_id == 0
+				-page_count = page_count + 1
+				
+		-mobile.each do |p|
+			-if p.parent_id == 0
+				-if j == 1
+					-class_name = "first page-#{p.id}"
+				-elsif j == page_count
+					-class_name = "last page-#{p.id}" 
+				-else
+					-class_name = "page-#{p.id}"
+				-j += 1
+			  		
+				%li{:class => "#{class_name}"}
+					-if params[:url_path].nil?
+						-path = ' '
+					-else
+						-path = params[:url_path].split('/').last
+					-if p.navigation_text.present?
+						=link_to p.navigation_text, "/#{p.url_path}", :class => public_current_class(path , p.url_path)
+					-else	
+						=link_to p.title, "/#{p.url_path}", :class => public_current_class(path , p.url_path)
+
+					-# if there is a drop down nav
+					-if p.multi_navigation_id
+						-multi_nav = MultiNavigation.find(p.multi_navigation_id)
+						-if multi_nav.show_sub_pages == true
+							%div{:class => 'multi-nav', :style=> "width:#{multi_nav.sub_nav_width.to_i + multi_nav.dynamic_content_width.to_i}px;"}
+								-if multi_nav.sub_pages_location == 1
+									%div{:class => 'before', :style=> "width:#{multi_nav.sub_nav_width}px;"}
+										=sub_nav(mobile, p.id,p.url_path,p.navigation_id,1)
+
+									%div{:class => 'after',:style=> "width:#{multi_nav.dynamic_content_width}px;"}
+										-multi_navigation  = Section.where(:multi_navigation_id => p.multi_navigation_id,:parent_id => 0, :visible => 1).order('position ASC').each do |s|
+											=render :partial => 'site/sections', :locals => {:s => s}
+								-else
+									%div{:class => 'before',:style=> "width:#{multi_nav.dynamic_content_width}px;"}
+										-multi_navigation  = Section.where(:multi_navigation_id => p.multi_navigation_id,:parent_id => 0, :visible => 1).order('position ASC').each do |s|
+											=render :partial => 'site/sections', :locals => {:s => s}
+									%div{:class => 'after', :style=> "width:#{multi_nav.sub_nav_width}px;"}
+										=sub_nav(mobile, p.id,p.url_path,p.navigation_id,1)
+						-else
+							%div{:class => 'multi-nav', :style=> "width:#{multi_nav.dynamic_content_width.to_i}px;"}
+								-multi_navigation  = Section.where(:multi_navigation_id => p.multi_navigation_id,:parent_id => 0, :visible => 1).order('position ASC').each do |s|
+									=render :partial => 'site/sections', :locals => {:s => s}
+					-else
+						=sub_nav(mobile, p.id,p.url_path,p.navigation_id,1)
+		=render 'layouts/login'
+		=render "shared/front_end_search"

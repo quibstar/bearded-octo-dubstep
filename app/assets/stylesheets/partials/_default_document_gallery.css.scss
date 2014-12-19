@@ -1,0 +1,38 @@
+
+@mixin doc_block {
+	display: inline-block;
+	padding-left: 40px;
+	padding-top: 25px;
+}
+
+.document-gallery {
+	overflow: auto;
+	margin-bottom: 10px;
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			float: left;
+			margin-right: 10px;
+			a {
+				&.xls {
+					@include doc_block;
+					background: image-url("file-types-small.png") left -52px no-repeat;
+				}
+				&.doc {
+					@include doc_block;
+					background: image-url("file-types-small.png") left top no-repeat;
+				}
+				&.pdf {
+					@include doc_block;
+					background: image-url("file-types-small.png") left -156px no-repeat;
+				}
+				&.ppt {
+					@include doc_block;
+					background: image-url("file-types-small.png") left -104px no-repeat;
+				}
+			}
+		}
+	}
+}

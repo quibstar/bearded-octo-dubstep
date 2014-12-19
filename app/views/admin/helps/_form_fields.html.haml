@@ -1,0 +1,19 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+  %li.control-group
+    =f.label "Help category *", :class => "control-label"
+    .controls
+      =select("help", 'help_category_id', HelpCategory.all.collect{|h| [h.title, h.id]})
+  %li.control-group
+    =f.label "Title *", :class => "control-label"
+    .controls
+      =f.text_field :title, :class => 'required'
+  %li.control-group
+    =f.label :content, :class => "control-label"
+    .controls
+      =f.text_area :content, :class => 'mceEditor required', :id => 'textareaTinyMce', :rows => 4
+  %li.control-group
+    =f.label "YouTube video code", :class => "control-label"
+    .controls
+      =f.text_area :video, :rows => 4

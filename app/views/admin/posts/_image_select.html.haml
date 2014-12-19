@@ -1,0 +1,21 @@
+-images = Image.page(params[:post_image]).per(12)
+-if images.count > 0
+	%ul.thumbnails.thumbnails-inline
+		-images.each do |i|
+			%li.thumbnail.well-nice.square100
+				-unless @post.images.blank?
+					-if @post.images[0].id == i.id
+						-selected = true
+					-else
+						-selected = false
+				%a{:class => 'nailthumb-container'}
+					=image_tag i.image_url(:small)
+				%lable
+					=radio_button_tag "post[image_ids]", i.id,selected
+					%span
+						=i.title
+	.pagination.pagination-centered
+		=paginate images, :left => 1, :right => 1, :param_name => :post_image
+-else
+	You currently don't have any images uploaded. 
+	=link_to 'Images', admin_images_path, :class => 'btn btn-yellow'

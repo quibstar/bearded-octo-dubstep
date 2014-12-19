@@ -1,0 +1,104 @@
+:javascript
+	$('.icon_16px, .icon_24px').hide();
+	$(document).ready(function() {
+		$("#icon_size input").click(function(){
+			$('.icons').hide();
+			value = $(this).val();
+			div = ".icon_" + value
+			$(div).fadeIn();
+		});
+		
+		$('.icons').hide();
+		$(".icon_#{@section.social_network.icon_size}").show();
+
+	});
+
+
+%div{:class => 'content-input fields'}
+	%div{:class => 'form-filter'}	
+		=f.fields_for :social_network do |sn|
+			%ul.form-list.label-left.form-horizontal
+				%li.control-group
+					%label.control-label
+						Image Sizes
+					%div{:id => 'icon_size', :class => 'controls'}
+						%label.radio.inline
+							=sn.radio_button :icon_size , '16px', :checked => true
+							16px
+						%label.radio.inline
+							=sn.radio_button :icon_size , '24px'
+							24px
+						%label.radio.inline
+							=sn.radio_button :icon_size , '32px'
+							32px
+
+				%li.control-group
+					=sn.label :facebook, :class => "control-label"
+					%div{:class => "controls"}
+						=sn.text_field :facebook
+						%span{:class => 'icon_16px icons'}
+							=image_tag('/social_icons/16px/facebook.png')
+						%span{:class => 'icon_24px icons'}
+							=image_tag('/social_icons/24px/facebook.png')
+						%span{:class => 'icon_32px icons'}
+							=image_tag('/social_icons/32px/facebook.png')
+
+
+					=sn.label :twitter, :class => "control-label"
+					%div{:class => "controls"}
+						=sn.text_field :twitter
+						%span{:class => 'icon_16px icons'}
+							=image_tag('/social_icons/16px/twitter.png')
+						%span{:class => 'icon_24px icons'}
+							=image_tag('/social_icons/24px/twitter.png')
+						%span{:class => 'icon_32px icons'}
+							=image_tag('/social_icons/32px/twitter.png')
+
+
+					=sn.label :youtube, :class => "control-label"
+					%div{:class => "controls"}
+						=sn.text_field :youtube
+						%span{:class => 'icon_16px icons'}
+							=image_tag('/social_icons/16px/youtube.png')
+						%span{:class => 'icon_24px icons'}
+							=image_tag('/social_icons/24px/youtube.png')
+						%span{:class => 'icon_32px icons'}
+							=image_tag('/social_icons/32px/youtube.png') 
+
+
+					=sn.label :linkedin, :class => "control-label"
+					%div{:class => "controls"}
+						=sn.text_field :linkedin
+						%span{:class => 'icon_16px icons'}
+							=image_tag('/social_icons/16px/linkedin.png')
+						%span{:class => 'icon_24px icons'}
+							=image_tag('/social_icons/24px/linkedin.png')
+						%span{:class => 'icon_32px icons'}
+							=image_tag('/social_icons/32px/linkedin.png')
+
+
+					=sn.label :pinterest, :class => "control-label"
+					%div{:class => "controls"}
+						=sn.text_field :pinterest
+						%span{:class => 'icon_16px icons'}
+							=image_tag('/social_icons/16px/pinterest.png')
+						%span{:class => 'icon_24px icons'}
+							=image_tag('/social_icons/24px/pinterest.png')
+						%span{:class => 'icon_32px icons'}
+							=image_tag('/social_icons/32px/pinterest.png') 
+
+					=sn.label :rss, :class => "control-label"
+					%div{:class => "controls"}
+						-Publication.all.each do |p|
+							=sn.radio_button :rss, p.id
+							=p.title 
+						=sn.radio_button :rss, 0
+						No RSS
+						%span{:class => 'icon_16px icons'}
+							=image_tag('/social_icons/16px/rss.png')
+						%span{:class => 'icon_24px icons'}
+							=image_tag('/social_icons/24px/rss.png')
+						%span{:class => 'icon_32px icons'}
+							=image_tag('/social_icons/32px/rss.png')
+
+						

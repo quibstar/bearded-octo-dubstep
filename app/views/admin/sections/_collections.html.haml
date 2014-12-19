@@ -1,0 +1,8 @@
+%li.section-form
+  %h4
+    Choose gallery/playlist.
+%li.control-group  
+  -Collection.all.each do |c|
+    %label.checkbox.inline
+      =check_box_tag "section[collection_ids][]",c.id, @section.collections.include?(c), :id => c.id
+      =c.title

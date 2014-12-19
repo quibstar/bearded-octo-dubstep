@@ -1,0 +1,93 @@
+=function = s.asset_by_category.function_id
+=filter = s.asset_by_category.filter
+=image_size = s.asset_by_category.image_size
+
+-assets = Array.new
+-img = Array.new 
+-ids = Array.new
+-images = Array.new
+-imgs = Array.new
+
+-if filter == "any"
+	%h1
+		or
+		
+	-section = AssetCategory.where(:categorizable_id => s.id)
+	-section.each do |s|
+		-assets << s.category_id
+	
+	-assets.each do |a|
+		-img += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'Image')
+	
+	-img.each do |d|
+		-ids << d.categorizable_id	
+
+	-if ids.empty?
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories.
+		
+	-if ids.uniq
+		-ids.uniq.each do |i|
+			-imgs << Image.find(i)
+	-else
+		-ids.each do |i|
+			-imgs << Image.find(i)
+		
+	-if imgs
+		%ul{:class => 'asset-list'}
+			-imgs.each do |d|
+				%li
+					%span{:class => 'image'}
+						-if	image_size
+							=link_to(image_tag(d.image_url(image_size.to_sym)), d.image_url(:large), :class => "fbox", :rel =>"gallery-#{s.id}", :title =>d.caption)
+						-else
+							=link_to(image_tag(d.image_url(:thumb)), d.image_url(:large), :class => "fbox", :rel =>"gallery-#{s.id}", :title =>d.caption)
+					%span
+						=d.caption
+
+	-else
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories.
+
+-if filter == "all"
+	%h1
+		and
+
+		
+	-section = AssetCategory.where(:categorizable_id => s.id)
+	-section.each do |s|
+		-assets << s.category_id
+	
+	-assets.each do |a|
+		-img += AssetCategory.where("category_id = ? and categorizable_type = ?", a, 'Image')
+	
+	-img.each do |d|
+		-ids << d.categorizable_id
+	
+	-if ids.empty?
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories.
+	
+	-ids.each {|each| images << each if ids.count(each) == assets.count}
+		
+	-images.uniq.each do |d|
+		-imgs << Image.find(d)
+		
+	-if ids.empty? || imgs.empty?
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories
+			
+	-if imgs
+		%ul{:class => 'asset-list'}
+			-imgs.each do |d|
+				%li
+					%span{:class => 'image'}
+						-if	image_size
+							=link_to(image_tag(d.image_url(image_size.to_sym)), d.image_url(:large), :class => "fbox", :rel =>"gallery-#{s.id}", :title =>d.caption)
+						-else
+							=link_to(image_tag(d.image_url(:thumb)), d.image_url(:large), :class => "fbox", :rel =>"gallery-#{s.id}" , :title =>d.caption)
+					%span
+						=d.caption
+	-else
+		%p{:class => 'error'}
+			No images match your category choice, Please check you categorization or choose other categories.

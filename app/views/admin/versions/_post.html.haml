@@ -1,0 +1,173 @@
+= content_for :page_title do
+  %h1
+    Post
+
+%div{:id => "versions"}
+  %table{:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Post Version
+    %thead
+      %th
+        Attribute
+      %th
+        Current Version
+      %th
+        Previous Version
+        =link_to "Restore", undo_path(:undo => @record.item_type,:vid => @record.id),:class => 'btn btn-envato btn-mini'
+    %tr
+      %td
+        Slug
+        =compare_properties(@version.slug, @version.previous_version.slug)
+      %td
+        =@version.slug
+      %td
+        =@version.previous_version.slug
+
+    %tr
+      %td
+        Publication
+        =compare_properties(@version.publication_id, @version.previous_version.publication_id)
+      %td
+        -publication = Publication.find_by_id(@version.publication_id)
+        -if publication
+          =publication.title
+      %td
+        -publication = Publication.find_by_id(@version.previous_version.publication_id)
+        -if publication
+          =publication.title
+
+    %tr
+      %td
+        User
+        =compare_properties(@version.user_id, @version.previous_version.user_id)
+      %td
+        -user = User.find_by_id(@version.user_id)
+        -if user 
+          -if user.name
+            =user.name
+          -else
+            =user.email
+      %td
+        -user = User.find_by_id(@version.previous_version.user_id)
+        -if user 
+          -if user.name
+            =user.name
+          -else
+            =user.email
+
+    %tr
+      %td
+        Title
+        =compare_properties(@version.title, @version.previous_version.title)
+      %td
+        =@version.title
+      %td
+        =@version.previous_version.title
+
+    %tr
+      %td
+        Content
+        =compare_properties(@version.body, @version.previous_version.body)
+      %td
+        =@version.body.html_safe
+      %td
+        =@version.previous_version.body.html_safe
+
+    %tr
+      %td
+        Comment Open
+        =compare_properties(@version.comments_open, @version.previous_version.comments_open)
+      %td
+        =@version.comments_open
+      %td
+        =@version.previous_version.comments_open
+
+    %tr
+      %td
+        Event
+        =compare_properties(@version.event, @version.previous_version.event)
+      %td
+        =@version.event
+      %td
+        =@version.previous_version.event
+
+    %tr
+      %td
+        Start Date
+        =compare_properties(@version.start_date, @version.previous_version.start_date)
+      %td
+        =@version.start_date
+      %td
+        =@version.previous_version.start_date
+
+    %tr
+      %td
+        End Date
+        =compare_properties(@version.end_date, @version.previous_version.end_date)
+      %td
+        =@version.end_date
+      %td
+        =@version.previous_version.end_date
+
+    %tr
+      %td
+        Show Date
+        =compare_properties(@version.show_date, @version.previous_version.show_date)
+      %td
+        =@version.show_date
+      %td
+        =@version.previous_version.show_date
+
+    %tr
+      %td
+        Show Time
+        =compare_properties(@version.show_time, @version.previous_version.show_time)
+      %td
+        =@version.show_time
+      %td
+        =@version.previous_version.show_time
+
+    %tr
+      %td
+        Start Time 
+        =compare_properties(@version.start_time, @version.previous_version.start_time)
+      %td
+        =@version.start_time.strftime('%I:%M%P')
+      %td
+        =@version.previous_version.start_time.strftime('%I:%M%P')
+
+    %tr
+      %td
+        End Time
+        =compare_properties(@version.end_time, @version.previous_version.end_time)
+      %td
+        =@version.end_time.strftime('%I:%M%P')
+      %td
+        =@version.previous_version.end_time.strftime('%I:%M%P')
+
+    %tr
+      %td
+        External Link
+        =compare_properties(@version.external_link, @version.previous_version.external_link)
+      %td
+        =@version.external_link
+      %td
+        =@version.previous_version.external_link
+
+    %tr
+      %td
+        Source
+        =compare_properties(@version.source, @version.previous_version.source)
+      %td
+        =@version.source
+      %td
+        =@version.previous_version.source
+
+    %tr
+      %td
+        Show Author
+        =compare_properties(@version.show_author, @version.previous_version.show_author)
+      %td
+        =@version.show_author
+      %td
+        =@version.previous_version.show_author

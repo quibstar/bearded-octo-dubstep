@@ -1,0 +1,36 @@
+!!! 5
+%html
+	%head
+		%title
+			= title
+		/[if lt IE 8]
+			= stylesheet_link_tag 'ie.css', :media => 'screen, projection'
+		=stylesheet_link_tag "admin/application" 
+		=javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"
+		
+		=yield :slider_helper
+		=yield :slider
+		= csrf_meta_tags                                                                                   
+	%body{:class => "private #{@column_type} #{controller.controller_name} #{controller.action_name} left-sidebar "}
+		.page-container
+			#header-container
+				#header
+					=render "layouts/admin/header"
+					=render 'layouts/admin/header_drawer'
+		#main-container
+			=render'/shared/admin_sidebar'
+			=yield :section_choice
+			#main-content.main-content.container-fluid
+				.row-fluid.page-head
+					=render 'layouts/admin/messages'
+					= yield :page_title
+				#page-content.page-content.row-fluid
+					= yield
+		=render "layouts/admin/footer"	
+		=javascript_include_tag "//tinymce.cachefly.net/4.0/tinymce.min.js"
+		=javascript_include_tag "admin/application"
+		
+	/ custom JS
+	=yield :custom_js
+	=yield :modal_container
+	

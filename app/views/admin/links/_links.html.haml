@@ -1,0 +1,26 @@
+%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+  %caption
+    Links
+  %thead
+    %th
+      Action
+    %th{:scope => 'col'}
+      Link Title
+      %span.column-sorter
+    %th
+      Link
+    %th
+      New Window
+  -@links.each do |link|
+    %tr
+      %td
+        .btn-group
+          =link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit', edit_admin_link_path(link) , :class => 'fboxForm fancybox.ajax btn btn-mini btn-yellow'
+          =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_link_path(link), :comfirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini'
+
+      %td
+        =link.link_title
+      %td
+        =link.link
+      %td
+        =link.new_window

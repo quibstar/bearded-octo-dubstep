@@ -1,0 +1,60 @@
+%div{:id => "notes"}
+  %table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Notes
+    %thead
+      %th
+        Actions
+      %th{:scope => 'col'}
+        Title
+        %span.column-sorter
+
+      %th
+        Note
+
+      %th
+        Referencing Page
+        %span.column-sorter
+
+      %th
+        Assigned User
+        %span.column-sorter
+
+      %th{:scope => 'col'}
+        Reference Topic
+        %span.column-sorter
+
+      %th
+        Created By
+
+      %th
+        Created at
+
+    -@notes.each_with_index do |note, i|
+      %tr
+        %td
+          .btn-group
+            =link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') + ' Edit',edit_admin_note_path(note), :class => 'btn btn-mini btn-yellow'
+            =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_note_path(note),:data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'
+        %td
+          =note.title
+        %td
+          =note.content.html_safe
+        %td
+          =note.pages.map{ |p| link_to p.title, admin_page_sections_path(p.id)}.join(' ').html_safe
+        %td
+          =note.users.map{ |u| link_to u.full_name, edit_admin_user_path(u.id)}.join(', ').html_safe
+        %td
+          =note.reference
+
+
+        %td
+          -user = User.find_by_id(note.user_id)
+          =user.name
+          %br
+          =user.title
+          %br
+          =mail_to user.email
+          =link_to 'Profile', edit_admin_user_path(user), :class => 'btn btn-mini btn-yellow'
+        %td
+          =note.created_at.to_formatted_s(:long)

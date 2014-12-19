@@ -1,0 +1,49 @@
+=f.fields_for :navigation_branch do |nb|
+	-navigations = Navigation.all
+	%div{:class => 'tabbable tabbable-bordered tabs-top'}
+		%ul.nav.nav-tabs
+			-navigations.each_with_index do |n, i|
+				-if i == 0
+					-active = 'active'
+				-else
+					-active = ''
+				%li{:class => "#{active}"}
+					=link_to n.nav_group , "#nav-#{i}", 'data-toggle' => 'tab'
+		.tab-content
+			-navigations.each_with_index do |n, i|
+				-if i == 0
+					-active = 'active'
+				-else
+					-active = ''
+				%ul{:class => "tab-pane #{active}", :id =>"nav-#{i}"}
+					-n.pages.order('position').each do |p|
+						-if p.parent_id == 0
+							%li
+								=link_to p.title, "#", :data => {:page => p.id}
+								=nb.radio_button :navigation_page , p.id
+								=branch_sub_nav(n.pages.order('position'),p.id,0, nb)
+
+	
+	%li.control-group
+		=nb.label "Show parent navigation", :class => "inline"
+		%label.radio.inline 
+			=nb.radio_button :show_parents, false
+			No
+		%label.radio.inline
+			=nb.radio_button :show_parents, true
+			Yes
+	%li.control-group
+		=nb.label "Show child navigation.", :class => "inline"
+		%label.radio.inline
+			=nb.radio_button :show_children, false
+			No
+		%label.radio.inline
+			=nb.radio_button :show_children, true
+			Yes
+	%li.control-group
+		%label.control-label
+			Number of columns
+		.controls
+			=nb.text_field :number_of_columns
+
+				

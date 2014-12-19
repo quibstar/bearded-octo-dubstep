@@ -1,0 +1,25 @@
+.form-horizontal
+	=form_for [:admin, setting] do |f|
+		=render 'shared/error_messages', :object => f.object
+		.modal-header
+			=link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+			%h4
+				Edit Logo
+		.modal-body
+			%ul.form-list.label-left.list-bordered
+
+				%li.control-group
+					%b
+						Current Logo
+					%br
+					= image_tag(@setting.logo_url) if @setting.logo? 
+					%br
+					=f.label "New Logo?", :class => "control-label"
+					.controls
+						=f.file_field :logo
+					%br
+					=f.label "Remove logo?", :class => "control-label"
+					.controls
+						= f.check_box :remove_logo 
+		.modal-footer
+			=f.submit "Save", :class =>'btn btn-primary' 

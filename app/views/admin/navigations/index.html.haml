@@ -1,0 +1,68 @@
+=content_for :page_title do
+  %h1.page-title
+    Navigation Groups
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-plus-1') +' New Navigation Group',new_admin_navigation_path, :class => 'fboxForm fancybox.ajax'
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-doc-1') +' New page', new_admin_page_path, :class => 'fboxPages fancybox.ajax'
+
+-for navigation in @navigations
+  .widget.widget-box
+    .widget-header
+      %h4
+        =navigation.nav_group
+
+        \: Drag 
+        %i{:class => "item-icon fontello-icon-move"} 
+        to change navigation order.
+
+      .btn-group.pull-right
+        =link_to content_tag(:i,'',:class=> 'fontello-icon-doc-1') + " New Page", new_admin_page_path(:nav_group => navigation.id), :class=> 'btn btn-sky btn-mini fboxPages fancybox.ajax'
+
+        =link_to content_tag(:i,'',:class => ' fontello-icon-cog') + "#{navigation.nav_group} Nav Settings", edit_admin_navigation_path(navigation,:nav_group => navigation.id), :class => 'btn btn-yellow btn-mini fboxForm fancybox.ajax'
+
+        -if navigation.id > 2
+          =link_to content_tag(:i,'',:class => ' fontello-icon-trash-4') + " Remove #{navigation.nav_group}", admin_navigation_path(navigation), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'delete', :class => 'btn btn-redlight btn-mini'
+
+    .widget-content
+      .widget-body
+        %ol{:id => "admin_nav_#{navigation.id}", :class => "pages-nav sortable"}
+          -navigation.pages.order('position').each do |p|
+            -if p.parent_id == 0
+              %li{:id => "page_#{p.id}",:data => {:parent_id => p.parent_id, :navigation => p.navigation_id, :position => p.position}}
+                %div{:class => "list-wrap well"}
+                  %i{:class => "item-icon fontello-icon-move"}
+                  %span
+                    Page: 
+                    =p.title
+                    -unless p.navigation_text.blank?
+                      |
+                      Link text:
+                      =p.navigation_text
+                  .btn-group
+                    =link_to content_tag(:i,'',:class=> 'fontello-icon-article') + " Content", admin_page_sections_path(p.id), :class=> 'btn btn-mini btn-sky '
+                    =link_to content_tag(:i,'',:class=> 'fontello-icon-popup-3') + " Create subpage", new_admin_page_path(:parent_id => p.id, :nav_group => p.navigation_id), :class=> 'btn btn-sky btn-mini fboxPages fancybox.ajax'
+                    =link_to content_tag(:i,'',:class=> 'fontello-icon-cog') + " Page settings", edit_admin_page_path(p.id), :class=> 'btn btn-mini btn-yellow fboxPages fancybox.ajax'
+                    -if p.published == true
+                      =link_to content_tag(:i,'',:class=> 'fontello-icon-link-1') + " View", "/#{p.url_path}",:target => '_blank', :class=> 'btn btn-sky btn-mini'
+                    -unless p.id == 1
+                      =link_to content_tag(:i,'',:class => ' fontello-icon-trash-4') + " Delete", admin_page_path(p.id), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'delete', :class => 'btn btn-redlight btn-mini'
+
+                  %span{:class =>'published'}
+                    Published:
+                    =status_tag(p.published)
+                  %span{:class =>'show-in-nav'}
+                    Show in nav:
+                    =status_tag(p.show_in_nav)
+                  %span{:class =>'show-in-mobile'}
+                    Show in mobile navigation:
+                    =status_tag(p.mobile)
+                =admin_sub_nav(navigation.pages.order('position'), p.id,p.url_path,p.navigation_id,0)
+    .widget-footer
+			

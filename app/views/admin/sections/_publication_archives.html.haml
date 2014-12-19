@@ -1,0 +1,9 @@
+%li.section-form
+  %h4
+    Choose a Publication to show archives.
+
+%li.control-group    
+  -for pub in Publication.all
+    %label.radio.inline
+      =radio_button_tag "section[publication_ids][]",pub.id, @section.publications.include?(pub), :id => pub.id
+      =pub.title

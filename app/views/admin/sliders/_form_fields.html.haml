@@ -1,0 +1,274 @@
+=render 'shared/error_messages', :object => f.object 
+%fieldset
+	%ul.form-list.label-left.list-bordered
+		%li.control-group
+			=f.label 'Title *', :class => "control-label"
+			.controls
+				=f.text_field :title
+				.help-block
+					Title will be used identification for inserting into content areas.
+
+%fieldset
+	%ul.form-list.label-left.list-bordered
+		%li.section-form
+			%h4
+				Required Settings
+		%li.control-group
+			%label.radio.inline
+				.radios
+					=f.radio_button :effectType, '3D'
+				3D
+			%label.radio.inline
+				.radios
+					=f.radio_button :effectType, '2D'
+				2D
+			.help-block
+				If you choose 2D make sure you set 'Make shadow' to no.
+		%li.control-group
+			=f.label 'Image Width *', :class => "control-label"
+			.controls
+				=f.text_field :imageWidth
+				.help-block
+					the width of the rendered image.
+		%li.control-group
+			=f.label 'Image Height *' , :class => "control-label"
+			.controls
+				=f.text_field :imageHeight
+				.help-block
+					the height of the rendered image.
+%fieldset
+	%ul.form-list.label-left.list-bordered
+		%li.section-form
+			%h4
+				General Settings
+		%li.control-group
+			=f.label 'Animation speed', :class => "control-label"
+			.controls
+				=f.text_field :animSpeed
+				.help-block
+					This is the time in ms for the animation to be complete. If 3d effect is chosen then this is the time that each slice will take to animate.
+		%li.control-group
+			=f.label 'Start slide', :class => "control-label"
+			.controls
+				=f.text_field :startSlide
+				.help-block
+					Use this option to start the slideshow at any slide of your choice. Here you have to enter the slide number. The numbering of the slides is zero based, which means that the first slide is 0, the second slide is 1, and so on. The default value is 0, i.e. the first slide.
+
+%fieldset
+	%ul.form-list.label-left.list-bordered
+		%li.section-form
+			%h4
+				Navigation
+		%li.control-group
+			=f.label 'Direction Navigation'
+			%label.radio.inline
+				.radios
+					=f.radio_button :directionNav, true, :value => 1
+				Show
+			%label.radio.inline
+				.radios
+					=f.radio_button :directionNav, false
+				Hide
+			.help-block
+				This option is to enable next/prev buttons. Enter 'show' if you want them and 'hide' if you don't. They are enabled by default.
+		%li.control-group
+			=f.label "Control links"
+			%label.radio.inline
+				.radios
+					=f.radio_button :controlLinks, true
+				show
+			%label.radio.inline
+				.radios
+					=f.radio_button :controlLinks, false
+				hide
+			.help-block
+				This option enables links to each individual slide.
+		%li.control-group
+			=f.label 'Control link thumbs'
+			%label.radio.inline
+				.radios
+					=f.radio_button :controlLinkThumbs, true
+				Show
+			%label.radio.inline
+				.radios
+					=f.radio_button :controlLinkThumbs, false
+				Hide
+			.help-block
+				If you want to have thumbnails of your slide images as control links then set this option to 'show'. It is disabled by default. If you enable thumbnails for control links then a class called controlThumbs is applied on the slider container.
+		%li.control-group
+			=f.label 'Auto-play'
+			%label.radio.inline
+				.radios
+					=f.radio_button :autoPlay, true
+				yes
+			%label.radio.inline
+				.radios
+					=f.radio_button :autoPlay, false
+				No
+			.help-block
+				Enter 'yes' if you want autoplay enabled. It is enabled by default. Also when this is enabled a play/pause button will be generated.
+		%li.control-group
+			=f.label 'Pause timer', :class => "control-label"
+			.controls
+				=f.text_field :pauseTime
+				.help-block
+					The time interval for which a particular slide will be visible before advancing on to the next.
+		%li.control-group
+			=f.label 'Pause on hover'
+			%label.radio.inline
+				.radios
+					=f.radio_button :pauseOnHover, true
+				yes
+			%label.radio.inline
+				.radios
+					=f.radio_button :pauseOnHover, false
+				No
+			.help-block
+				If autoPlay is enabled then this gives you the option to pause the slideshow when hovering over it. Autoplay will resume when the mouse moves away from the slideshow.
+
+%fieldset
+	%ul.form-list.label-left.list-bordered
+		%li.section-form
+			%h4
+				Captions
+		%li.control-group
+			=f.label 'Captions', :class => "control-label"
+			%label.radio.inline
+				.radios
+					=f.radio_button :captions, true
+				Yes
+			%label.radio.inline
+				.radios
+					=f.radio_button :captions, false
+				No
+			.help-block
+				If you want captions then set this to 'yes'. Captions are enabled by default.
+		%li.control-group
+			=f.label 'Caption position', :class => "control-label"
+			.controls
+				=select(:slider, :captionPosition, %w[bottom top left right], {})
+		%li.control-group
+			=f.label 'Caption animation', :class => "control-label"
+			.controls
+				=select(:slider, :captionAnimation, %w[slide fade none], {})
+		%li.control-group
+			=f.label 'Caption amimation speed', :class => "control-label"
+			.controls
+				=f.text_field :captionAnimationSpeed
+				
+%fieldset
+	%ul.form-list.label-left.list-bordered
+		%li.section-form
+			%h4
+				3D					
+		%li.control-group
+			=f.label 'Effect', :class => "control-label"
+			.controls
+				=select(:slider, :effect_3d, %w[cubeUp cubeDown cubeRight cubeLeft flipUp flipDown flipRight flipLeft blindsVertical blindsHorizontal gridBlocksUp gridBlocksDown gridBlocksRight gridBlocksLeft], {})
+		%li.control-group
+			=f.label 'Inner slider color', :class => "control-label"
+			.controls
+				=f.text_field :innerSideColor
+				.help-block
+					color of the inner side of the cube slices. Applicable only for 'cube' 3d effects
+		%li.control-group
+			=label_tag 'Transparent image'
+			%label.radio.inline
+				.radios
+					=f.radio_button :transparentImg, true
+				Yes
+			%label.radio.inline
+				.radios
+					=f.radio_button :transparentImg, false
+				No
+			.help-block
+				if you are using transparent png images as your slides then enable this. Enabling this avoids an image "pile up" effect.
+		%li.control-group
+			=label_tag 'Make Shadow'
+			%label.radio.inline
+				.radios
+					=f.radio_button :makeShadow, true
+				Yes
+			%label.radio.inline
+				.radios
+					=f.radio_button :makeShadow, false
+				No
+			.help-block
+				whether a shadow will be rendered or not. Applicable only for 'cube' 3d effects.
+		%li.control-group
+			=f.label 'Shadow color'
+			.controls
+				=f.text_field :shadowColor
+				.help-block
+					if you want a shadow then you can mention its color. Standard css color values apply.
+		%li.control-group
+			=f.label :slices, :class => "control-label"
+			.controls
+				=f.text_field :slices
+				.help-block
+					number of slices in which the image will be divided.
+		%li.control-group
+			=f.label :rows, :class => "control-label"
+			.controls
+				=f.text_field :rows
+				.help-block
+					number of rows in which the image will be divided (only required for 'grid' effects).
+		%li.control-group
+			=f.label :columns, :class => "control-label"
+			.controls
+				=f.text_field :columns
+				.help-block
+					number of columns in which the image will be divided (only required for 'grid' effects).
+		%li.control-group
+			=f.label :delay, :class => "control-label"
+			.controls
+				=f.text_field :delay
+				.help-block
+					delay between the animation of each slice. Value is in ms.
+		%li.control-group
+			=f.label 'Delay direction', :class => "control-label"
+			.controls
+				=select(:slider, :delayDir, %w[first-last last-first fromCentre toCentre], {})
+				.help-block
+					the direction in which the delay will propagate. Available options are – 'first-last', 'last-first', 'fromCentre' and 'toCentre'.
+		%li.control-group
+			=f.label 'Depth off set', :class => "control-label"
+			.controls
+				=f.text_field :depthOffset
+				.help-block
+					The distance the slices will travel along the z-axis (away from the screen) while animating.
+		%li.control-group
+			=f.label 'Slice gap', :class => "control-label"
+			.controls
+				=f.text_field :sliceGap
+				.help-block
+					The distance/separation between the slices while animating.
+		%li.control-group
+			=f.label :easing, :class => "control-label"
+			.controls
+				=select(:slider, :easing, %w[jswing easeInQuad easeOutQuad easeInOutQuad easeInCubic easeOutCubic easeInOutCubic easeInQuart easeOutQuart easeInOutQuart easeInSine easeOutSine easeInOutSine easeInExpo easeOutExpo easeInOutExpo easeInQuint easeOutQuint easeInOutQuint easeInCirc easeOutCirc easeInOutCirc easeInElastic easeOutElastic easeInOutElastic easeInBack easeOutBack easeInOutBack easeInBounce easeOutBounce easeInOutBounce], {})
+				.help-block
+					An easing option of your choice. Generally easing values of the 'InOut' variety look much better.
+		%li.control-group
+			=f.label 'Fall back', :class => "control-label"
+			.controls
+				=f.text_field :fallBack
+				.help-block
+					A 2d effect fallback for older browsers. Mention any effect from available the list of 2d effects. When the fallback effect is activated in an older browser then a class called fallback is applied on the slider container.
+		%li.control-group
+			=f.label 'Fall back speed', :class => "control-label"
+			.controls
+				=f.text_field :fallBackSpeed
+				.help-block
+					The time for the animation to be complete in case a 2d effect is activated for an older browser.
+
+%fieldset
+	%ul.form-list.label-left.list-bordered
+		%li.section-form
+			%h4
+				2D						
+		%li.control-group
+			=f.label 'Effect', :class => "control-label"
+			.controls
+				=select(:slider, :effect_2d, %w[fade horizontalOverlap verticalOverlap horizontalSlide verticalSlide horizontalWipe verticalWipe verticalSplit horizontalSplit fadeSlide circle fadeZoom clock zoomInOut spinFade rotate], {})
+				Width and height do not apply to 2D sliders. A 2D slider will take up the width it's container.

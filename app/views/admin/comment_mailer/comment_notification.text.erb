@@ -1,0 +1,8 @@
+A new comment on the post "<%= @post.title %>"is waiting for your approval
+<%= publication_post_comments_url(@publication.id, @post.id)%>?published=0
+
+Author : <%= @comment.name %>
+E-mail : <%= @comment.email %>
+URL    : <%= @comment.url %>
+Comment: 
+<%= @comment.comment %>

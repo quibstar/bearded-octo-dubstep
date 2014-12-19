@@ -1,0 +1,23 @@
+%div{:id => "youtubes"}
+	%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+		%caption
+			YouTube Videos
+		%thead
+			%th
+				Actions
+			%th{:scope => 'col'}
+				Title
+				%span.column-sorter
+			%th
+				Categories
+			
+		-@youtubes.each_with_index do |youtube, i|
+			%tr
+				%td
+					.btn-group
+						=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') + ' Edit',edit_admin_youtube_path(youtube), :class => 'fboxForm fancybox.ajax btn btn-mini btn-yellow'
+						=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_youtube_path(youtube),:data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'
+				%td
+					=youtube.title
+				%td
+					=youtube.categories.collect{|c| c.name}.join(', ')

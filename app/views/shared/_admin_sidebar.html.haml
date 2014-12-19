@@ -1,0 +1,118 @@
+#main-sidebar.sidebar.sidebar-inverse
+	.sidebar-item
+		.media.profile
+			.media-thumb.media-left.thumb-bordereb
+				-unless current_user == nil
+					=link_to image_tag(avatar_url current_user.email), admin_user_path(current_user.id)
+			.media-body
+				%h5.media-heading
+					=current_user.email
+					%small
+						Access:
+						=current_user.roles.map(&:name).join(", ")
+					%small
+						Department:
+						=current_user.categories.map(&:name).join(", ")
+					%small
+						Current IP: 
+						=current_user.current_sign_in_ip
+				%p.data
+					Last Access: 
+					=current_user.current_sign_in_at.to_formatted_s(:short)
+	#admin-sidebar
+		%ul.nav-side	
+			%li
+				=link_to content_tag(:i, '', :class => 'fontello-icon-home') + "Topics (Campaigns)", admin_topics_path
+			/ %li
+			/ 	=link_to content_tag(:i, '', :class => 'fontello-icon-home') + "Groups", admin_groups_path
+
+			%li
+				=link_to content_tag(:i, '', :class => 'fontello-icon-home') + "Dashboard", admin_dashboard_index_path
+			-if can? :create, Navigation
+				%li{:class => 'arrow'}
+					%span
+					=link_to content_tag(:i, '', :class => 'fontello-icon-flow-tree') + ' Nav Groups/Pages', admin_navigations_path
+					%ul{:class => 'subnav'}
+						=nav_groups
+
+				%li{:class => 'arrow'}
+					%spanz
+					=link_to content_tag(:i, '', :class => 'fontello-icon-list-nested') + " Multi Navigations", admin_multi_navigations_path,:class => 'multi-navigations'
+					%ul{:class => 'subnav'}
+						=admin_side_nav('multi_navigations','sections')
+
+				%li{:class => 'arrow'}
+					%span
+					=link_to content_tag(:i, '', :class => 'fontello-icon-popup-3') + " Shared Content", admin_shared_contents_path	,:class => 'shared-content'
+					%ul{:class => 'subnav'}
+						=admin_side_nav('shared_contents','sections')
+
+				%li{:class => 'arrow'}
+					%span
+					=link_to content_tag(:i, '', :class => 'fontello-icon-picture') + " sliders", admin_sliders_path ,:class => 'sliders'
+					%ul{:class => 'subnav'}
+						=admin_side_nav('sliders','')
+
+			-if can? :create, Publication
+				%li{:class => 'arrow'}
+					%span
+					=link_to content_tag(:i, '', :class => 'fontello-icon-docs-1') + ' Publications', admin_publications_path,:class => 'publications'
+					%ul{:class => 'subnav'}
+						=admin_side_nav('publications','edit')
+
+			-if can? :create, Category
+				%li
+					=link_to content_tag(:i, '', :class => 'fontello-icon-list') + ' Categories', admin_categories_path, :class => 'categories'
+					
+			-if can? :create, Image
+				%li{:class => 'arrow'}
+					%span
+					=link_to content_tag(:i, '', :class => 'fontello-icon-box-1') + ' Assets', admin_assets_path,:class => 'assets'
+					%ul{:class => 'subnav'}
+						%li
+							=link_to 'Images', admin_images_path
+						%li
+							=link_to 'Audios', admin_audios_path
+						%li
+							=link_to 'Documents', admin_documents_path
+						%li
+							=link_to 'Links', admin_links_path
+						%li
+							=link_to 'YouTube Videos', admin_youtubes_path
+						%li
+							=link_to 'FAQ\'s', admin_faqs_path
+						%li
+							=link_to 'Testimonials', admin_testimonials_path
+			
+			-if can? :create, Collection
+				%li
+					=link_to content_tag(:i, '', :class => 'fontello-icon-star') + ' Galleries/Playlists', admin_collections_path,:class => 'Collections'
+						
+			-if can? :create, Footer	
+				%li{:class => 'arrow'}
+					%span
+					=link_to content_tag(:i, '', :class => 'fontello-icon-arrow-curved') + ' Footers', admin_footers_path,:class => 'footers'
+					%ul{:class => 'subnav'}
+						=admin_side_nav('footers','sections')
+			
+			-if can? [:create, :update], Form		
+				%li{:class => 'arrow'}
+					%span
+					=link_to  content_tag(:i, '', :class => 'fontello-icon-check') + ' Forms', admin_forms_path, :class => 'forms'
+					%ul{:class => 'subnav'}
+						=admin_side_nav('forms','edit')
+					
+			%li{:class => 'arrow'}
+				%span
+				=link_to content_tag(:i, '', :class => 'fontello-icon-users') + '  Users', admin_users_path, :class => 'users'
+				%ul{:class => 'subnav', :id => 'users-list'}
+					=admin_side_nav('users','edit')
+
+			-if can? :update, Version
+				%li
+					=link_to content_tag(:i, '', :class => 'fontello-icon-flow-branch') + ' Versions', admin_versions_path
+
+			-if can? :create, Rewrite
+				%li
+					=link_to content_tag(:i, '', :class => 'fontello-icon-exchange') + ' Rewrites', admin_rewrites_path
+				

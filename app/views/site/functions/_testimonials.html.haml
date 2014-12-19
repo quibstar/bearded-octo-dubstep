@@ -1,0 +1,37 @@
+-if !s.settings.nil? && s.settings['in_carousel'] == '1'
+  :javascript 
+    $(document).ready(function(){
+      $('#slider#{s.id}').bxSlider({
+        
+        slideWidth: #{s.settings['slideWidth']},
+        minSlides: #{s.settings['minSlides']},
+        maxSlides: #{s.settings['maxSlides']},
+        slideMargin: #{s.settings['slideMargin']},
+        pause: #{s.settings['pause']},
+        auto: true,
+        autoControls: true
+      });
+    });
+  %div{:id => "slider#{s.id}"}
+    -s.testimonials.each do |t|
+      %blockquote
+        %div{:class => 'testimonial-body'}
+          =t.testimonial.html_safe
+        %div{:class => 'testimonial-author'}
+          =t.author
+        %span{:class => 'testimonial-position'}
+          =t.position
+        %span{:class => 'testimonial-company'}
+          =t.company
+
+-else
+  -s.testimonials.each do |t|
+    %blockquote
+      %div{:class => 'testimonial-body'}
+        =t.testimonial.html_safe
+      %div{:class => 'testimonial-author'}
+        =t.author
+      %span{:class => 'testimonial-position'}
+        =t.position
+      %span{:class => 'testimonial-company'}
+        =t.company

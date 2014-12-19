@@ -1,0 +1,29 @@
+-if @page
+	-@page.sections.where(:parent_id => s.id).order('position ASC').each do |s|
+		=render 'site/sections', :s => s
+	-#for subnav
+	-if s.multi_navigation_id
+		-sec = Section.where(:parent_id => s.id).order('position ASC')
+		-sec.each do |s|
+			=render 'site/sections', :s => s
+
+-if @publication
+	-@publication.sections.where(:parent_id => s.id).order('position ASC').each do |s|
+		=render 'site/sections', :s => s
+	-#for subnav
+	-if s.multi_navigation_id
+		-sec = Section.where(:parent_id => s.id).order('position ASC')
+		-sec.each do |s|
+			=render 'site/sections', :s => s
+		
+
+-if @footer_sections
+	-# Admin side use different method to get sections check sections_controller#index params[footer_id] 
+	-@footer_sections.where(:parent_id => s.id).order('position ASC').each do |s|
+		=render 'site/sections', :s => s
+
+-else
+	-if @footer
+		-# public side use different method to get sections check site_controller#show 
+		-@footer.where(:parent_id => s.id).order('position ASC').each do |s|
+			=render 'site/sections', :s => s

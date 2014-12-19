@@ -1,0 +1,44 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+	%li.control-group
+		=f.label :name, :class => "control-label"
+		.controls
+			=f.text_field :name, :class => "required"
+
+	%li.control-group
+		%label.radio.inline
+			=f.radio_button :network, "Google"
+			Google
+		%label.radio.inline
+			=f.radio_button :network, "Twitter"
+			Twitter
+		%label.radio.inline
+			=f.radio_button :network, "FaceBook Ad"
+			FaceBook Ad
+		%label.radio.inline
+			=f.radio_button :network, "FaceBook Post"
+			FaceBook Post
+		%label.radio.inline
+			=f.radio_button :network, "LinkedIn"
+			LinkedIn
+
+	%li.control-group
+		=f.label :destination_url, :class => "control-label"
+		.controls
+			=f.text_area :destination_url
+
+	%li.control-group
+		=f.label :display_url, :class => "control-label"
+		.controls
+			=f.text_area :display_url
+
+	%li.control-group
+		=f.label :keywords, :class => "control-label"
+		.controls
+			=f.text_area :keywords
+
+			-if @topic
+				=f.hidden_field :topic_id, :value => @topic.id 
+			-else
+				=f.hidden_field :topic_id

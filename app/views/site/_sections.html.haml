@@ -1,0 +1,141 @@
+-# content type Text
+-if s.section_type == 'text'
+	%section{:class => "#{s.section_type}   #{s.section_class} #{s.extra_class}"}			
+		=s.content.content.html_safe	
+		=render 'site/sub_section', :s => s
+
+-# content type HTML
+-if s.section_type == 'html'
+	%section{:class => "#{s.section_type}  #{s.section_class} #{s.extra_class}"}
+		%article
+			=s.content.content.html_safe
+		=render 'site/sub_section', :s => s
+		
+-# content type Table
+-if s.section_type == 'table'
+	%section{:class => "#{s.section_class} #{s.extra_class}"}
+		%table{:class => "#{s.section_type} #{s.table_class}"}
+			%thead
+				%tr
+					%th
+						-header = s.content.content.split("\n")[0]
+						=header.gsub("\t",'<th>').html_safe	
+					-row = s.content.content.split("\n")
+					-row.delete(row[0])
+					-i = 0
+				%tbody
+					-row.count.times do
+						%tr{:class => cycle('t-row', 't-alt-row') }
+							-cell = row[i].split("\t")
+			
+							-j = 0
+							-cell.count.times do
+								%td
+									=cell[j]
+								-j += 1
+							-i += 1
+		=render 'site/sub_section', :s => s
+		
+-# content type Tabs
+-if s.section_type == 'tabbed'
+
+	-# only seen on desktops devices
+	%section{:class => "desktop tabs sec-#{s.id}   #{s.section_class} #{s.extra_class} #{s.extra_class}"}
+		%ul{:class => 'sub-sections'}
+			-#tabbed header
+			=render 'site/tabs/tab_header', :s => s
+		
+		-#tabbed content		
+		%section{:class => "sec-#{s.id} #{s.section_class} #{s.extra_class}"}
+			=render 'site/tabs/tab_content', :s => s
+
+	-# only seen on mobile devices
+	%section{:class => "mobile accordion sec-#{s.id}  #{s.section_class} #{s.extra_class}"}
+		=render 'site/accordions/accordion_content', :s => s
+	
+	
+-# content type Accordions			
+-if s.section_type == 'accordions'
+	%section{:class => "accordion sec-#{s.id}  #{s.section_class} #{s.extra_class}"}
+		=render 'site/accordions/accordion_content', :s => s
+
+-# content type columns	
+-if s.section_type == 'columns'
+	%section{:class => "#{s.section_type} cols-#{s.column_class}  #{s.section_class} #{s.extra_class}"}	
+		=render 'site/sub_section', :s => s
+		
+		
+-# content type column
+-if s.section_type == 'column' 
+	%section{:class => "#{s.section_type} #{s.column_class}  #{s.section_class} #{s.extra_class}"}	
+		=render 'site/sub_section', :s => s
+		
+
+
+
+-#new functions
+-# included,  image by, audio by, video by, user by
+-if s.section_type == 'asset by category'
+	%section{:class => "#{s.section_type.gsub(" ", "-")}  #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/all_functions', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'publications'
+	%section{:class => "#{s.section_type.gsub(" ", "-")}  #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/publications', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'publication categories'
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/publication_categories', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'testimonials'
+	%section{:class => "#{s.section_type.gsub(" ", "-")}  #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/testimonials', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'faqs'
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/faqs', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'custom forms'
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/custom_forms', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'social rss'
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/social_networks', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'nav group'
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/navigation_group', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'nav branch'
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/navigation_branch', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'youtube'
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/youtubes', :s => s
+		=render 'site/sub_section', :s => s
+
+-if s.section_type == 'shared content'
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/shared_contents', :s => s
+		=render 'site/sub_section', :s => s
+
+-# content type slideshow
+-if s.section_type == 'slideshow'
+	%section{:class => "slideshow #{s.section_class} #{s.extra_class}"}		
+		=render 'admin/sections/slideshows/slider', :s => s
+
+-# content type collection(gallery/playlist)
+-if s.section_type == 'collections'
+	%section{:class => "collection #{s.section_class} #{s.extra_class}"}		
+		=render 'site/collections/collection', :s => s

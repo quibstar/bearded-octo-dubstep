@@ -1,0 +1,18 @@
+.tabbable 
+  %ul.nav.nav-tabs
+    -copy.alternates.where(:is_duplicate => "true").each_with_index do |c,i|
+      -if i == 0
+        %li.active
+          =link_to "Version #{c.id}", "#v#{c.id}", :data => {:toggle => "tab"}
+      -else
+        %li
+          =link_to "Version #{c.id}", "#v#{c.id}", :data => {:toggle => "tab"}
+
+  .tab-content
+    -copy.alternates.where(:is_duplicate => "true").each_with_index do |c,i|
+      -if i == 0
+        %div{:class => 'tab-pane active', :id => "v#{c.id}"}
+          =render partial: "admin/topics/duplicates", locals: {copy: c}  
+      -else
+        %div{:class => 'tab-pane', :id => "v#{c.id}"}
+          =render partial: "admin/topics/duplicates", locals: {copy: c}

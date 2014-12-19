@@ -1,0 +1,59 @@
+%div{:id => 'users'}
+	%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+		%caption
+			Users
+		%thead
+			%th
+				Actions
+			%th
+				Image/Gravitar
+			%th{:scope => 'col'}
+				Email
+				%span.column-sorter
+			%th{:scope => 'col'}
+				Name
+				%span.column-sorter
+			%th{:scope => 'col'}
+				Title
+				%span.column-sorter
+			%th{:scope => 'col'}
+				Roles
+				%span.column-sorter
+			%th{:scope => 'col'}
+				Department
+				%span.column-sorter
+			%th
+				Phone
+			%th
+				Reset password
+		-@users.each do |u|
+			%tr
+				%td
+					.btn-group
+						=link_to content_tag(:i, '', :class => 'fontello-icon-pencil') + " Edit Profile", edit_admin_user_path(u),:class => "btn btn-mini btn-yellow"  if can? :update, u
+						= link_to content_tag(:i, '', :class => 'fontello-icon-trash-4') + ' Delete User', admin_user_path(u), :data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'if can? :delete, u
+								
+				%td
+					-if u.image.blank? 
+						=image_tag avatar_url u.email
+					-else
+						=image_tag(u.image_url(:thumb))
+						
+				%td
+					=u.email
+				%td
+					-if u.name
+						=u.name
+					-else
+						First and last name not set.
+				%td
+					=u.title
+				%td
+					=u.roles.map(&:name).join(", ")
+				%td
+					=u.categories.map(&:name).join(", ")
+				%td
+					=u.phone
+				%td
+					=form_tag(admin_user_generate_new_password_email_path(u)) do 
+						=submit_tag 'Send Reset Password', {:class => 'btn btn-sky btn-mini', :confirm => 'Are you sure you want to email reset password instructions?'}

@@ -1,0 +1,157 @@
+@import "partials/variables";
+
+#topic-show .btn {
+	/*display:none;*/
+}
+
+#new_copy .btn {
+	display: inline-block;
+}
+
+#topic-show ul {
+	list-style: none;
+}
+
+#topic-show .widget-footer .btn {
+	display: inline-block;
+}
+.topics.show h3 {
+	margin: 0;
+}
+
+.ad-content {
+	margin-top: 20px;
+	width: 250px;
+	height: 200px;
+}
+
+.counter {
+	margin-top: 20px;
+}
+
+.counter-error {
+	color: red;
+}
+
+/*.edit_copy,
+.new_copy {
+	border:1px solid #CCC;
+	padding:10px;
+	background: #efefef;
+}*/
+
+.copy-content {
+	clear: both;
+}
+
+.group-copy {
+	margin: 0;
+
+	li {
+	}
+	p {
+		margin: 0;
+		padding: 0;
+	}
+}
+.group {
+	border-bottom: 1px solid #CCC;
+}
+
+.network {
+	clear: both;
+}
+
+@media (min-width: 768px) {
+	.text-right {
+		text-align: right;
+	}
+}
+
+.to-many-lines {
+	display: none;
+}
+
+/*front end*/
+#topic-show.front-end {
+	ul {
+		list-style: none;
+	}
+
+	.group {
+		padding: 50px 0 20px 0;
+		margin-top: 10px;
+		overflow: auto;
+	}
+	.nav-tabs {
+		margin-bottom: 5px;
+	}
+	.btn-group {
+		margin: 10px 0;
+	}
+}
+
+.fancybox-inner ul {
+	list-style: none;
+	margin:0;
+	padding: 0;
+}
+
+.fancybox-inner .edit_copy,
+.fancybox-inner .new_copy {
+	border:none;
+	padding:0;
+	background: white;
+}
+
+
+.copy {
+	margin: 2px 0;
+	padding: 2px 0;
+	clear:both;
+	overflow: auto;
+	p {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+
+/* alt copies */
+
+.alt-group-copy {
+	overflow: auto;
+	margin: 0;
+	padding: 0;
+/*	&:after {
+		content: "."; 
+	   visibility: hidden; 
+	   display: block; 
+	   height: 0; 
+	   clear: both;
+	}*/
+	 > li {
+	 	margin: 5px 0;
+
+	 }
+}
+
+/* duplicates */
+.dups {
+
+
+	margin-top: -40px;
+}
+
+#send-to {
+	display: none;
+}
+
+
+/*front */
+.front-form {
+	border: 1px solid #CCC;
+	background: #EFEFEF;
+	margin: 0 0 10px 0;
+	display: none;
+}

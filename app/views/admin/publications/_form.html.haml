@@ -1,0 +1,6 @@
+=form_for [:admin, @publication] do |f|
+  .widget-content
+    .widget-body
+      = render :partial => 'admin/publications/form_fields', :locals => {:f => f, :publication => @publication}
+  .widget-footer
+    =f.submit "Save", :class =>'btn btn-primary'

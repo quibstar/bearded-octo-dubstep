@@ -1,0 +1,24 @@
+=javascript_include_tag 'admin/modal_links.js'
+%ul.form-list.label-left.list-bordered.form-horizontal
+	%li.control-group
+		=f.label "Title *", :class => "control-label"
+		%div{:class => 'controls'}
+			=f.text_field :title,:class => 'required'
+			.help-block
+				Title will be used identification for inserting into slideshows or content areas.
+	%li.control-group
+		=f.label "Testimonial *", :class => "control-label"
+		.controls
+			=f.text_area :testimonial, :class => 'required',:rows => 5
+	%li.control-group
+		=f.label :author, :class => "control-label"
+		.controls
+			=f.text_field :author
+	%li.control-group
+		=f.label :position, :class => "control-label"
+		.controls
+			=f.text_field :position
+	%li.control-group
+		=f.label :company, :class => "control-label"
+		.controls
+			=f.text_field :company

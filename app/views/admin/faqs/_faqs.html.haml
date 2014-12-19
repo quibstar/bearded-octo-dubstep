@@ -1,0 +1,22 @@
+%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+	%caption
+		FAQ's
+	%thead
+		%th
+			Action
+		%th{:scope => 'col'}
+			Question
+			%span.column-sorter
+		%th
+			Answer
+	-@faqs.each do |faq|
+		%tr
+			%td
+				.btn-group
+					=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit', edit_admin_faq_path(faq) , :class => 'fboxForm fancybox.ajax btn btn-mini btn-yellow'
+					=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_faq_path(faq), :comfirm => "Are you sure?", :method => :delete, :class => "btn btn-mini btn-danger"
+
+			%td
+				=faq.question
+			%td
+				=faq.answer.html_safe

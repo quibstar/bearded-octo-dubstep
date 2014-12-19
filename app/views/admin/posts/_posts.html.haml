@@ -1,0 +1,45 @@
+%div{:id => 'posts'}
+	%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered"}
+		%caption
+			Posts
+		%thead
+			%th
+				Actions
+			%th{:scope => 'col'}
+				Title
+				%span.column-sorter
+			%th{:scope => 'col'}
+				Last Updated
+				%span.column-sorter
+			%th{:scope => 'col'}
+				Date Created
+				%span.column-sorter
+			%th
+				Comments waiting approval
+			%th
+				Comments approved
+		-@posts.each do |p|
+			%tr
+				%td
+					.btn-group
+						=link_to content_tag(:i,'',:class => 'fontello-icon-edit') + " Edit", edit_admin_publication_post_path(@publication, p), :class => 'btn btn-mini btn-primary'
+						=link_to content_tag(:i,'',:class => 'fontello-icon-trash-1') + " Delete", admin_publication_post_path(@publication, p),:data => {:confirm => 'Are you sure?'},:method => :delete , :class => 'btn btn-mini btn-danger'
+				%td 
+					=p.title
+				%td 
+					=p.updated_at.to_formatted_s(:long)
+				%td
+					=p.created_at.to_formatted_s(:long)
+				%td	
+					-if p.comments.where(:published => false).count > 0
+						-unPublishedComments = p.comments.where(:published => false).count
+						=link_to content_tag(:i,'',:class => 'fontello-icon-comment') + " #{pluralize(unPublishedComments, 'comment')}", admin_publication_post_comments_path(@publication, p.id, :published => false), :class => 'btn btn-sky'
+				%td
+					
+					-if p.comments.where(:published => true).count > 0
+						-publishedComments = p.comments.where(:published => true).count
+						=link_to content_tag(:i,'',:class => 'fontello-icon-comment') + " #{pluralize(publishedComments, 'comment')}", admin_publication_post_comments_path(@publication, p.id, :published => true), :class => 'btn btn-sky'
+					-else
+						=p.comments.where(:published => true).count
+						
+		

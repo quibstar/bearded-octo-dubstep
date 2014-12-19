@@ -1,0 +1,101 @@
+-publication = s.publications.first
+
+-if s.post_per_page.is_a? Integer
+	-perPage = s.post_per_page
+-else
+	-perPage = 5
+
+-# get posts
+-posts = publication.posts.where(:published => true).page(params[:page]).per(perPage).order('created_at DESC')
+-if posts.count == 0
+	.text-error
+		No post for this publication yet.
+-posts.each do |post|
+	%div{:class => cycle('post', 'alt-post')}
+		%h3
+			=post.title
+		%ul.unstyled.inline
+			%li
+				%i.icon-calendar
+				=post.created_at.strftime("%B %d, %Y")
+
+			%li
+				%i.icon-pencil
+				=post.user.name
+			%li.comments
+				%i.icon-comment
+				-if post.comments.count > 0	
+					=post.comments.count
+					=pluralize_without_count(post.comments.count, 'Comment')
+
+		%section{:class => 'categories'}
+			=pluralize_without_count(post.categories.count, 'Category')
+			-for category in post.categories
+				=link_to category.name ,  post_category_path(publication, category)
+		
+
+		-#get image
+		-post.images.each do |image| 
+
+			-if post.post_images[0].image_size == 'original'
+				-post_image_size = nil
+			-else
+				-post_image_size = post.post_images[0].image_size 
+
+			-if publication.post_template == 1
+				%section{:class => 'post-image float-left'}
+					=image_tag image.image_url(post_image_size)
+
+			-elsif publication.post_template == 2
+				%section{:class => 'post-image hero'}
+					=image_tag image.image_url(post_image_size)
+
+			-else publication.post_template == 3	
+				%section{:class => 'post-image float-right'}
+					=image_tag image.image_url(post_image_size)
+
+
+		%div{:class => 'article-content'}
+			=smart_truncate(post.body,:words => 50).html_safe 
+			%p
+				-if !current_user
+					-if @page.id == 1
+						=link_to 'Read More', "#{publication.slug}/#{post.slug}", :class => 'btn-u btn-u-small'
+					-else
+						=link_to 'Read More', "#{request.fullpath}/#{post.slug}", :class => 'btn-u btn-u-small'
+				-else
+					-if controller.controller_name == 'site' || controller.controller_name == 'publications'
+						=link_to 'Read More', "#{request.fullpath}/#{post.slug}", :class => 'btn-u btn-u-small'
+					-else
+						=link_to 'Read More', "#", :class => 'btn-u btn-u-small'
+						
+		
+		-if(post.event)
+			%section
+				-if(post.show_date)
+					%div{:class => 'start-date'}
+						%span{:class => 'date-start-label'}
+							Start Date: 
+						%span{:class => 'date-start-value'}
+							=post.start_date.to_formatted_s(:long)
+					
+					%div{:class => 'end-date'}
+						%span{:class => 'date-end-label'}
+							End Date:
+						%span{:class => 'date-end-value'} 
+							=post.end_date.to_formatted_s(:long)
+					
+				-if(post.show_time)
+					%div{:class => 'start-time'}
+						%span{:class => 'time-start-label'}
+							Start Time: 
+						%span{:class => 'time-start-value'} 
+							=post.start_time.strftime("at %I:%M%p")
+					
+					%div{:class => 'end-time'}
+						%span{:class => 'time-end-label'}
+							End Date: 
+						%span{:class => 'time-end-value'} 
+							=post.end_time.strftime("at %I:%M%p")
+	.pagination.pagination-centered
+		=paginate posts

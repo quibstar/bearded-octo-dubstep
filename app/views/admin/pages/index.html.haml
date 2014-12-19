@@ -1,0 +1,54 @@
+=content_for :page_title do
+  %h1.page-title
+    Page Content
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+
+%div{:id => "page-content"}
+  %table{:id => 'page-content-table',:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      Page Content and Notes
+    %thead
+      %th
+        Page ID
+      %th
+        Page Title
+
+      %th
+        Page Status
+      %th
+        Page Notes
+    -@pages.each do |page|
+      %tr
+        %td
+          =page.id
+        %td
+          =link_to page.title, admin_page_sections_path(page)
+        %td
+          -case page.content_status
+          -when 1
+            .label.label-important
+              Content needs to be added
+          -when 2
+            .label.label-warning
+              Content added needs review
+          -when 3
+            .label.label-info
+              Content presentation needs review
+          -when 4
+            .label.label-success
+              Content reviewed and approved.
+          -else
+            .label
+              Content status not set.
+        %td
+          -page.notes.each do |note|
+            =link_to note.title, admin_notes_path
+            
+
+
+

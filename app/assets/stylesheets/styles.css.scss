@@ -1,0 +1,302 @@
+@import "partials/variables";
+
+
+// ------------------------------------------------------------------------
+//    header
+// ------------------------------------------------------------------------
+// BEGIN
+
+html {
+	background-color: #444;
+	
+	overflow-x: hidden;
+	overflow-y: visible;
+
+}
+
+body {
+	
+}
+
+@include breakpoint(phone) {
+	body {
+		padding: 0;
+		width: 100%;
+		overflow: hidden;
+	}
+}
+
+.site-wrap {
+	width: 100%;
+	overflow: hidden;
+	@include navTrans;
+	&.show-nav {
+		margin-left: $mobileConstant;
+	}
+}
+
+
+h2, h3, h4 {
+
+}
+
+.clear-both {
+	clear: both;
+}
+
+a {
+	color: #72c02c;
+	&:hover {
+		color: darken(#72c02c, 20);
+		text-decoration: underline;
+		}
+}
+
+
+// ----- END --------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------
+//    header
+// ------------------------------------------------------------------------
+// BEGIN
+
+#header {
+	z-index:999;
+	#logo {
+		float: left;
+	}
+}
+
+
+// ----- END --------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------
+//    container
+// ------------------------------------------------------------------------
+// BEGIN
+
+#content {
+	@include breakpoint(phone) {
+		padding: 0 2%;
+	}
+}
+
+// ----- END --------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------
+//    footer
+// ------------------------------------------------------------------------
+// BEGIN
+
+#footer {
+	margin-top: 40px;
+	padding: 20px 10px;
+	background: #585f69;
+	color: #dadada;
+	a {
+		&:hover {
+			color: white;
+		}
+	}
+}
+
+/*Copyright*/
+.copyright {
+	font-size:12px;
+	padding:5px 10px;
+	background:#3e4753;
+	border-top:solid 1px #777;	
+}
+.copyright p {
+	color:#dadada;
+}
+.copyright a {
+	margin:0 5px;
+	color:#72c02c;
+}
+.copyright a:hover {
+	color:#a8f85f;
+    -webkit-transition:all 0.4s ease-in-out;
+    -moz-transition:all 0.4s ease-in-out;
+    -o-transition:all 0.4s ease-in-out;
+    transition:all 0.4s ease-in-out;
+}
+.copyright .span8 {
+	padding-top:15px;
+}
+.copyright .span4 {
+	padding-top:10px;
+}
+
+
+// ------------------------------------------------------------------------
+//    Theme Customization Below
+// ------------------------------------------------------------------------
+
+// ------------------------------------------------------------------------
+//    blog buttons
+// ------------------------------------------------------------------------
+// BEGIN
+
+
+/*Button Style*/
+.btn {
+	box-shadow: none;
+}
+
+.btn-u {
+	border:0;
+	font-size:14px;
+	cursor:pointer;
+	padding:5px 13px;
+	position:relative;
+	background:#72c02c;
+	display:inline-block;
+	color:#fff !important;
+	text-decoration:none !important;
+}
+.btn-u:hover {
+	color:#fff;
+	background:#5fb611;
+	text-decoration:none;
+    -webkit-transition:all 0.4s ease-in-out;
+    -moz-transition:all 0.4s ease-in-out;
+    -o-transition:all 0.4s ease-in-out;
+    transition:all 0.4s ease-in-out;
+}
+
+.btn-u-small {
+	padding:3px 12px;
+}
+.btn-u-large {
+	font-size:18px;
+	padding:10px 25px;
+}
+a.btn-u {
+	padding:4px 13px;
+	vertical-align:middle;
+}
+a.btn-u-small {
+	padding:2px 12px;
+}
+a.btn-u-large {
+	font-size:18px;
+	padding:6px 25px;
+}
+
+/*Buttons Color*/
+.btn-u-blue {
+	background: #3498db !important;
+}
+.btn-u-blue:hover {
+	background: #2980b9 !important;
+}
+
+.btn-u-red {
+	background: #e74c3c !important;
+}
+.btn-u-red:hover {
+	background: #c0392b !important;
+}
+
+.btn-u-orange {
+	background: #e67e22 !important;
+}
+.btn-u-orange:hover {
+	background: #d35400 !important;
+}
+
+.btn-u-sea {
+	background: #1abc9c !important;
+}
+.btn-u-sea:hover {
+	background: #16a085 !important;
+}
+
+.btn-u-green {
+	background: #2ecc71 !important;
+}
+.btn-u-green:hover {
+	background: #27ae60 !important;
+}
+
+.btn-u-yellow {
+	background: #F1C40F !important;
+}
+.btn-u-yellow:hover {
+	background: #F39C12 !important;
+}
+
+// ----- END --------------------------------------------------------------
+
+// ------------------------------------------------------------------------
+//    login
+// ------------------------------------------------------------------------
+// BEGIN
+
+/*Login*/
+.login-page {
+	min-width:25%;
+	max-width:25%;
+	padding:35px 30px 30px;
+
+}
+.login-page h3 {
+	margin:0 0 25px 0;
+}
+.login-page input.login-inputs {
+	width:86%;
+}
+.login-page .checkbox {
+	margin-top:7px;
+}
+.login-page .checkbox input {
+	margin-right:6px !important;
+}
+.login-page button {
+	margin:0 0 5px 0;
+}
+
+/*Login Page v1.1*/
+.log-page {
+	width: 310px;
+	padding: 20px;
+	margin: 0 auto;
+	background:#fcfcfc;
+	border:solid 1px #eee;
+	box-shadow:0 0 7px #eee;
+	h1,h2,h3,h4,h5 {
+		border-bottom: none;
+	}
+}
+
+
+// ----- END --------------------------------------------------------------
+
+// ------------------------------------------------------------------------
+//    testimonials
+// ------------------------------------------------------------------------
+// BEGIN
+
+.testimonial-author,
+.testimonial-position,
+.testimonial-company {
+	font-style: italic;
+	color: $rtGreenHover; 
+	font-size: 85%;
+}
+
+
+blockquote:hover {
+	border-color: $rtGreenHover;
+	@include transition-property(all);
+	@include transition-duration(0.5s);
+	@include transition-timing-function(ease-in-out);
+	}
+
+// ----- END --------------------------------------------------------------
+
+

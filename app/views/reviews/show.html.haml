@@ -1,0 +1,49 @@
+#topic-show.front-end
+  #form-remote.widget.widget-box
+    .widget-header
+      = link_to "Edit Mode", "#", :id => 'edit-mode', :class => "pull-right"
+
+      %h3
+        =@topic.name
+
+    .widget-content
+      .widget-body
+        -if @topic.groups.count > 0
+          %ul.widget-list
+            -@topic.groups.each do |group|
+              %li{:id => "group-#{group.id}", :class => "group"}
+                .group-name.clear-both.span2
+                  %strong
+                    Group:
+                    =group.name
+
+                -if(group.network == "Google")
+                  .keywords.span3
+                    %strong
+                      Keywords:
+                    =simple_format group.keywords
+
+                .copies.span6
+                  -if group.copies.count > 0  
+                    %div.group-copy
+                      %strong
+                        Copy:
+                    %ul.group-copy
+                      -group.copies.where(:copy_id => 0).each do |copy|
+                        %li
+                          -if copy.alternates.where(:is_duplicate => "true").count > 0
+                            .col-50
+                              =render partial: "reviews/copy", locals: {group: group, copy: copy}
+                              
+                            .col-50.dups
+                              =render partial: "admin/topics/tabbed_versions", locals: {copy: copy}
+                          -else
+                            =render partial: "reviews/copy", locals: {group: group, copy: copy}
+                            
+
+
+                          -if copy.alternates.where(:is_duplicate => "false").count > 0
+                            %ul.alt-group-copy
+                              -copy.alternates.where(:is_duplicate => "false").each do |c|
+                                %li.span4
+                                  =render partial: "admin/topics/alt_copy", locals: {copy: c}

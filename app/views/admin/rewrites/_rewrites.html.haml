@@ -1,0 +1,46 @@
+%div{:id => "rewrites"}
+  %table{:id => 'rewrites-table',:class => "table table-striped table-hover table-bordered boo-table"}
+    %caption
+      URL Rewrites
+    %thead
+      %th
+        Action
+      %th
+        ID
+      %th
+        Page ID
+      %th
+        Post ID
+      %th
+        Request URL
+      %th
+        Target URL
+      %th
+        Created by
+      %th
+        Created at
+      
+    -@rewrites.each do |r|
+      %tr
+        %td
+          .btn-group
+            =link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') + ' Edit',edit_admin_rewrite_path(r), :class => 'fboxForm fancybox.ajax btn btn-mini btn-yellow'
+            =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_rewrite_path(r),:data => {:confirm => 'Are you sure?'}, :method => :delete, :class => 'btn btn-mini btn-danger'
+        %td
+          =r.id
+        %td
+          =r.page_id
+        %td
+          =r.post_id
+        %td
+          =r.request_path
+        %td
+          =r.target_path
+        %td
+          -if r.created_by != 'System'
+            -user = User.find_by_id(r.created_by)
+            =link_to user.name, edit_admin_user_path(user), :class => 'btn btn-mini btn-sky'
+          -else
+            =r.created_by
+        %td
+          =r.created_at.to_formatted_s(:short)

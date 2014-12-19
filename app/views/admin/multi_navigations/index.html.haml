@@ -1,0 +1,12 @@
+=content_for :page_title do
+  %h1.page-title
+    Multi-navigations
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-plus-1') + ' New multi-navigation',new_admin_multi_navigation_path, :class => 'fboxForm fancybox.ajax'
+   
+=render 'multi_navigation'

@@ -1,0 +1,54 @@
+:javascript
+	$(document).ready(function(){
+	$('.page-section').hide();
+	$("li a").click(function(){
+		
+		$('.page-section').slideUp();
+		$(this).siblings('ol').first().slideDown();
+		
+		var pid =$(this).attr('data-page')
+		console.log(pid);
+		$('#page_field input').val(pid);	
+		})
+		
+	 });
+		 
+=form_for [:admin, set_resource, @section] do |f|
+	.modal-header
+		=link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+		%h4
+			Move section.
+
+	.modal-container
+		.modal-body
+			%p
+				Click on page names to display content areas.
+			%div{:class => 'copy-move tabbable tabbable-bordered tabs-top'}
+				%ul.nav.nav-tabs
+					-@navigations.each_with_index do |navigation,i| 
+						-if i == 0
+							-active = 'active'
+						%li{:class => "#{active}"}
+							=link_to navigation.nav_group, "#nav-#{i}", 'data-toggle' => 'tab'
+
+				.tab-content
+					-@navigations.each_with_index do |navigation,i|	
+						-if i == 0
+							-active = 'active'	
+						%div{:class => "tab-pane #{active}" , :id => "nav-#{i}"}
+							%div{:class => 'copy-move'}
+								%ol{:id => "copy-move-radio"}
+									-navigation.pages.order('position').each do |p|
+										-if p.parent_id == 0
+											%li
+												=link_to p.title, "#", :data => {:page => p.id}, :class => 'btn btn-sky btn-mini'
+												=section_area(p.template_id)
+											=cpmv_sub_nav(navigation.pages.order('position'),p.id,0)
+					
+					%div{:id => "page_field"}
+						=f.hidden_field :page_id
+					=f.hidden_field :parent_id, :value => 0
+					=f.hidden_field :position, :value => 0
+					=hidden_field_tag :route, 'page'
+		.modal-footer
+			=f.submit 'Update', :class => 'btn btn-primary'

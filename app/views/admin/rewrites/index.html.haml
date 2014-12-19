@@ -1,0 +1,12 @@
+=content_for :page_title do
+  %h1.page-title
+    URL Rewrites
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-exchange') + ' New URL Rewrite',new_admin_rewrite_path, :class => 'fboxForm fancybox.ajax'
+ 
+=render 'rewrites'

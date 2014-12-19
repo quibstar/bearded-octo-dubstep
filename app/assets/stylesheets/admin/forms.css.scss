@@ -1,0 +1,416 @@
+@import "../partials/variables.css.scss";
+
+.form-remote form {
+	margin: 0 !important;
+}
+/*---------- =errors ----------*/
+
+#error_explanation {
+	background: #fccac1;
+	border: 1px solid #eb5439;
+	color: #565656;
+	padding:0.8em;
+	margin-bottom:1em;
+	h3 {	
+	color:#8a1f11;
+	}
+	p {
+		padding:0;
+		color:#8a1f11;
+	}
+	ul {
+		list-style:none;
+		li{
+			padding:0;
+			color:#8a1f11;
+		}
+	}
+}
+
+.field_with_errors {
+	display: inline;
+	label {
+		color: #eb5439;
+		}
+	input,
+	textarea {
+		border: 1px solid #eb5439 !important;
+		}
+	}
+
+/*----------  End ----------*/
+
+
+/*---------- =form builder ----------*/
+
+#custom-forms {
+	margin-bottom: 100px;
+	 .tab-content {
+	overflow: visible;
+	}
+}
+.form-tabbed-content {
+	border-top: 1px solid  #CCC;
+	padding: 10px 0 0;
+	display: none;
+	}
+
+
+.form-tab-header {
+	list-style: none;
+	height: 28px;
+	margin: 0;
+	padding: 0;
+	li {
+		float: left;
+		a {
+			display: block;
+			padding: 5px;
+			margin: 0 5px;
+			text-decoration: none;
+			color: #CCC;
+			border: 1px solid #CCC;
+			border-bottom: none;
+			@include border-radius(4px 4px 0 0);
+			&.current {
+				background: #F9F9F9;
+				padding-bottom: 5px;
+				color: #1A1A1A;
+				}
+			}
+		}
+	}
+#field-selector {
+	/* position: fixed; */
+	}
+.add-fields {
+	width: 110px;
+	list-style: none;
+	overflow: auto;
+	background: #333;
+	margin: 0 0 10px 0;
+	padding: 0;
+	@include box-shadow( 0 2px 4px black);
+	a {
+		display: block; 
+		color: #888 !important;
+		text-shadow: 0 1px black;
+		text-decoration: none;
+		padding: 10px;
+		border-top: 1px solid #444;
+		border-bottom: 1px solid #272727;
+		&:hover {
+			background: $midBlue;
+			@include background-image(linear-gradient($lightBlue, $midBlue ));
+			color: white !important;
+			}
+		}
+	}
+.form-col-left {
+	float: left;
+	width: 15%;
+	}
+.form-col-right {
+	float: left;
+	width: 84%;
+	}
+	
+#form-builder {
+	border-left: 1px solid #CCC;
+	overflow: visible;
+	position: relative;
+	ul {
+		list-style: none;
+		margin: 0 0 0 5px;
+		padding: 0;
+		position: relative;
+		}
+	li {
+		position: relative;
+		margin-bottom: 5px;
+		label {
+			display: inline-block;
+			}
+
+		.fields-left {
+			float:left;
+			width: 45%;
+			min-height: 50px;
+			margin-right: 0.5%;
+			padding:3px;
+			border: 1px solid transparent;
+			position: relative;
+			a.delete {
+				display: none;
+				}
+			&.selected {
+				background: #f5f5f5;
+				border: 1px solid #BBB;
+				@include border-radius(4px);
+			}
+			&.date {
+				label{
+					display: block;
+					}
+				input {
+					display: inline-block;
+					width: 10% !important;
+					}
+				.month,
+				.day,
+				.year {
+					display: inline-block;
+					width: 15% !important;
+					text-align: center;
+					}
+				}
+			&.divider {
+				height: 20px;
+				}
+			&:hover {
+				border: 1px dashed #CCC;
+				cursor: pointer;
+				}
+			}
+			.fields-right {
+				position: absolute;
+				left: 48%;
+				top: -180px;
+				z-index: 100;
+
+				display: none;
+				padding: 10px;
+				width: 340px;
+				background: #f5f5f5;
+				border: 1px solid #bbb;
+				@include border-radius(4px);
+				&.origin div input[type='text'],
+				&.multi-origin div input[type='text'] {
+					display: inline-block;
+					width: 150px;
+					}
+				&.textarea {
+					top: -45px;
+					.left-arrow {
+						top: 128px;
+						}
+					}
+				&.raidio {
+					top: 35%;
+					.left-arrow {
+						position: absolute;
+						top: 23%;
+						}
+					}
+				&.dropdown {
+					top: -90px;
+					.left-arrow {
+						position: absolute;
+						top: 23%;
+						}
+					}
+				.left-arrow {
+					position: absolute;
+					top: 180px;
+					left: -14px;
+					}
+				}
+			span.required {
+				display: inline-block;
+				padding-top: 8px;
+				color: #eb5439;
+				font-style: italic;
+				display:none;
+				}
+			span.required.static {
+				display: inline-block !important;
+				}
+				input.text, 
+				input.title, 
+				input[type="email"], 
+				input[type="text"], 
+				input[type="password"] {
+				display: block;
+				}
+				textarea {
+					width: 300px;
+					height: 150px;
+					}
+			}
+	}
+	
+
+#form-builder ul li .fields-left .edit {
+	float: right;
+	/*position: absolute;*/
+	right: 0;
+	top: 0;
+	width: 26px;
+	height: 34px;
+	display: block;
+	}
+#form-builder ul li .fields-left .del {
+	float: right;
+	/*position: absolute;*/
+	right: 0;
+	bottom: 0;
+	z-index: 200;
+	width: 26px;
+	height: 34px;
+	display: block;
+	}	
+
+#form-builder ul li .fields-right .opt-add ,
+#form-builder ul li .fields-right .opt-del {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin: 5px 0 0 5px;
+	padding: 0;
+	}
+
+#form-builder ul li .fields-right .opt-add {
+	text-decoration: none;
+	}	
+	
+#form-builder ul li .fields-right .opt-del {
+	text-decoration: none;
+	}
+#form-builder {
+	input[type="radio"], 
+	input[type="checkbox"] {
+		margin: -3px 7px 0 0;
+		float: none;
+	}
+
+}
+		
+.form-builder-submit {
+	clear: both;
+	}
+
+.form-closer {
+	float: right;
+	margin-top: -5px;
+}
+/*----------  End ----------
+
+
+/*---------- =edit form fields ----------*/
+
+.edit-fields {
+	label {
+		display: block;
+		
+		}
+	input {
+		display: block;
+		
+		}
+	.inline {
+		display: inline-block;
+		}
+	.field {
+		border-bottom: 1px solid #CCC;
+		}
+	}
+
+/*----------  End ----------*/
+
+/*---------- =form in page ----------*/
+
+.form-container {
+	ul {
+		list-style: none;
+		margin-right: 0;
+		margin-left: 0;
+		li {
+			label {
+				display: block;
+				margin-bottom: 5px
+				}
+			input[type='text'] {
+				clear:both;
+				margin:0;
+				}
+			textarea {
+				width: 97% !important;
+				margin-bottom: 20px;
+				}
+			input[type='checkbox'],
+			input[type='radio'] {
+				display: inline;
+				}
+			}
+		}
+	.required {
+		color: #f40404;
+		font-style:italic; 
+		}
+		.required.inline {
+			float: none;
+		}
+	}
+span.form-info {
+	color: #555;
+	display: block;
+	margin-bottom: 10px;
+	&.important {
+		color: red;
+	}
+}
+/*----------  End ----------*/
+
+/* ------------------------------------------------------------------------
+	form-slider
+------------------------------------------------------------------------- */
+.form-special {
+	h3 {
+		padding: 5px;
+		margin: 0 -10px;
+		@include background(linear-gradient( #F9F9F9, #EDEDED ));
+		font-size: 18px;
+		text-shadow: 0 1px white;
+		border-top: 1px solid #DFDFDF;
+		border-bottom: 1px solid #DFDFDF;
+	}
+}
+
+/*---------=hidden fields for updates ----------*/
+.no-check,
+.no-radio {
+	display: none;
+}	
+
+.remote-delete-option {
+	display: none;
+}
+/*-------------------------*/
+
+/* ------------------------------------------------------------------------
+	form inline hiding for ajax update
+------------------------------------------------------------------------- */
+#inline-form,.inline-form {display: none;}
+
+
+
+/* ------------------------------------------------------------------------
+	visible-form
+------------------------------------------------------------------------- */
+/* jquery will submit form on link click */
+.visible-form {
+	height: 20px;
+	input {
+		display: none;
+	}
+}
+
+
+/* ------------------------------------------------------------------------
+	nav-banch
+------------------------------------------------------------------------- */
+.nav-banch {
+	ol {
+		list-style: none;
+	}
+}

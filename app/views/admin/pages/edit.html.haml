@@ -1,0 +1,46 @@
+.wizard
+  =form_for [:admin, @page], :html => {:id => "wizard-progress"} do |f|
+    .modal-header
+      =link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'', :class=> "close close-form", 'aria-hidden' => "true"
+      %h4
+        =@page.title.capitalize
+    .modal-body
+      .navbar
+        .navbar-inner
+          .container
+            %ul.page-links
+              %li
+                =link_to "Link Text", '#link-text', 'data-toggle' => "tab"
+              %li
+                =link_to "Visibility", '#visibility', 'data-toggle' => "tab"
+              %li
+                =link_to "SEO", '#seo', 'data-toggle' => "tab" 
+              %li
+                =link_to "Sliders/Mega navs", '#sliders', 'data-toggle' => "tab"
+              %li
+                =link_to "Required Fields", '#required', 'data-toggle' => "tab"
+      #bar.progress._progress-success.progress-mini.filled3
+        .filler
+          .bar
+
+      -if @page
+        =render 'shared/error_messages', :object => @page 
+      =render "admin/pages/form_fields", :f => f
+    .modal-footer
+      %ul.wizard-action.wizard-pager
+        %li
+          %a{:class => "previous first btn", :href => "javascript:void(0);"}
+            First
+        %li
+          %a{:class => "previous btn", :href => "javascript:void(0);"}
+            %i.fontello-icon-left-circle2
+            Previous
+        %li
+          %a{:class => "next last btn", :href => "javascript:void(0);"}
+            Last
+        %li
+          %a{:class => "next btn", :href => "javascript:void(0);"}
+            %i.fontello-icon-right-circle2
+            Next
+        %li
+          =f.submit "Save", :class =>'next finish btn btn-primary'

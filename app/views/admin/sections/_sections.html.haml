@@ -1,0 +1,162 @@
+-# content type Text
+-if s.section_type == 'text'
+	%section{:class => "#{s.section_type} article sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render :partial => 'sub_section_list', :locals => {:s => s}		
+		%article
+			=s.content.content.html_safe
+		=render 'admin/sections/sub_section', :s => s
+
+-# content type HTML
+-if s.section_type == 'html'
+	%section{:class => "#{s.section_type} article sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}
+		=render :partial => 'sub_section_list', :locals => {:s => s}			
+		%article
+			=s.content.content.html_safe
+		=render 'admin/sections/sub_section', :s => s
+		
+-# content type Table
+-if s.section_type == 'table'
+	%section{:class => "article sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}
+		=render :partial => 'sub_section_list', :locals => {:s => s}
+
+		%table{:class => "#{s.section_type} #{s.table_class}"}
+			%thead
+				%tr
+					%th
+						-header = s.content.content.split("\n")[0]
+						=header.gsub("\t",'<th>').html_safe	
+					-row = s.content.content.split("\n")
+					-row.delete(row[0])
+					-i = 0
+				%tbody
+					-row.count.times do
+						%tr{:class => cycle('t-row', 't-alt-row') }
+							-cell = row[i].split("\t")
+			
+							-j = 0
+							-cell.count.times do
+								%td
+									=cell[j]
+								-j += 1
+							-i += 1
+		=render 'admin/sections/sub_section', :s => s
+		
+-# content type Tabs
+-if s.section_type == 'tabbed'
+	=render :partial => 'tab_accordion_toolbar', :locals => {:s => s}
+	%section{:class => "tabs sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class} #{s.extra_class}"}
+		%ul{:class => 'sub-sections'}
+			-#tabbed header
+			=render 'admin/sections/tabs/tab_header', :s => s
+		
+		-#tabbed content		
+		%section{:class => "sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}
+			=render 'admin/sections/tabs/tab_content', :s => s
+	
+	
+-# content type Accordions			
+-if s.section_type == 'accordions'
+	=render :partial => 'tab_accordion_toolbar', :locals => {:s => s}
+	%section{:class => "accordion sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}
+		=render 'admin/sections/accordions/accordion_content', :s => s
+
+-# content type columns	
+-if s.section_type == 'columns'
+	%section{:class => "#{s.section_type} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'admin/sections/columns/columns_toolbar', :s => s
+		=render 'admin/sections/sub_section', :s => s
+		%div{:class => 'clear-both'}
+		
+-# content type column
+-if s.section_type == 'column' 
+	%section{:class => "#{s.section_type} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'admin/sections/columns/columns_toolbar', :s => s
+		=render 'admin/sections/sub_section', :s => s
+		%div{:class => 'clear-both'}
+
+
+-#new functions
+-# included,  image by, audio by, video by, user by
+-if s.section_type == 'asset by category'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/all_functions', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'publications'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/publications', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'publication categories'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/publication_categories', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'publication archives'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/publication_archives', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'testimonials'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/testimonials', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'faqs'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/faqs', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'custom forms'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/custom_forms', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'social rss'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/social_networks', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'nav group'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/navigation_group', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'nav branch'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/navigation_branch', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'youtube'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/youtubes', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'shared content'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'site/functions/shared_contents', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'slideshow'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}	
+		=render 'admin/sections/slideshows/slider', :s => s
+		=render 'admin/sections/sub_section', :s => s
+
+-if s.section_type == 'collections'
+	=render :partial => 'function_toolbar', :locals => {:s => s}
+	%section{:class => "#{s.section_type.gsub(" ", "-")} #{s.column_class} sec-#{s.id}  pg-#{s.page_id} loc-#{s.location} parent-#{s.parent_id} pos-#{s.position} #{s.section_class} #{s.extra_class}"}
+		=render 'site/collections/collection', :s => s
+		=render 'admin/sections/sub_section', :s => s	

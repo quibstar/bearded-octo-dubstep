@@ -1,0 +1,31 @@
+%ul.form-list.label-left.list-bordered
+  =form_for [:admin, @collection], :html => {:id => "asset-settings-form"}   do |f|
+    %li.control-group
+      =f.label "Title *", :class => "control-label"
+      .controls
+        =f.text_field :title, :class => "required"
+    =f.fields_for :settings do |set|
+      %li.control-group
+        %label.inline.checkbox
+          =set.check_box :categories,:checked => checked(@collection.settings ?  @collection.settings['categories'] : 0)
+          Use Categories
+          
+      %li.control-group#category-filter
+        %label
+          Add to gallery by category.
+        -categories = Category.where(:video => 1) 
+        -if categories.count > 0
+          -categories.each do |cat| 
+            %label.checkbox.inline
+              -if @collection.categories.include?(cat)
+                -active = 'active'
+              =check_box_tag "collection[category_ids][]",cat.id, @collection.categories.include?(cat), :id => cat.id, :class => "checkbox #{active}",'data-filter' => "#{cat.name}", 'data-categoryId' => "#{cat.id}"
+              =cat.name
+
+      %li.control-group
+        =set.text_field :asset_ids, :value => @collection.settings ?  @collection.settings['asset_ids'] : ''
+
+      =set.hidden_field :collection, :value => "Video"
+
+    %hr
+    =f.submit "Save", :class =>'btn btn-primary'

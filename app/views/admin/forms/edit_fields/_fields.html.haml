@@ -1,0 +1,297 @@
+-if fe.field_type == 'text' || fe.field_type == 'name' || fe.field_type == 'address' || fe.field_type == 'address2' || fe.field_type == 'phone' || fe.field_type == 'city' || fe.field_type == 'zip'|| fe.field_type == 'email' || fe.field_type == 'website'
+	%li
+		%div{:class => "fields-left"}
+			%div{:class => "edit fontello-icon-edit"}
+			=link_to content_tag(:i, '', :class => 'fontello-icon-trash-4') + '', admin_form_field_path(@form, fe.id),:data => {:data => {:confirm => 'Are you sure?'}}, :method => :delete,:class => "del"
+			%label{:class => "label"}
+				=fe.field_name
+			
+			-if fe.required
+				=content_tag :span, '*', :class => 'static required'
+			=text_field_tag '','',:disabled => 'disabled'
+
+		%div{:class => "fields-right origin"}  
+			=image_tag 'white-left-arrow.png', :class => 'left-arrow' 
+			%div{:class => "form-closer"}
+				X                 
+			%label
+				Field Label
+			=text_field_tag "form[fields_attributes][#{fe.id}][field_name]",fe.field_name, :id => "text_#{fe.field_type}", :class => "label",:value => fe.field_name
+			
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 1, ('true' if fe.required == true)	
+			Yes
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 0, ('true' if fe.required == false)
+			No
+			%span
+				%strong>
+					Required?
+			%div
+				%strong
+					Instructions
+				%textarea{:name => "form[fields_attributes][#{fe.id}][instructions]"}
+					=fe.instructions
+			=hidden_field_tag "form[fields_attributes][#{fe.id}][id]", fe.id
+		%div{:class => 'clear-both'}
+		
+		
+
+-if fe.field_type == 'textarea'
+	%li
+		%div{:class => "fields-left"}
+			%div{:class => "edit fontello-icon-edit"}
+			=link_to content_tag(:i, '', :class => 'fontello-icon-trash-4') + '', admin_form_field_path(@form, fe.id),:data => {:data => {:confirm => 'Are you sure?'}}, :method => :delete,:class => "del"
+			%label{:class => "label"}
+				=fe.field_name
+			-if fe.required
+				=content_tag :span, '*', :class => 'static required'
+			%br
+			=text_area_tag '','', :disabled => 'disabled'
+		%div{:class => "fields-right origin textarea"}  
+			=image_tag 'white-left-arrow.png', :class => 'left-arrow'
+			%div{:class => "form-closer"}
+				X                    
+			%label
+				Field Label
+			=text_field_tag "form[fields_attributes][#{fe.id}][field_name]",fe.field_name, :id => "text_#{fe.field_type}", :class => "label",:value => fe.field_name
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 1, ('true' if fe.required == true)	
+			Yes
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 0, ('true' if fe.required == false)
+			No
+			%span
+				%strong>
+					Required?
+			%div
+				%strong
+					Instructions
+				%textarea{:name => "form[fields_attributes][#{fe.id}][instructions]"}
+					=fe.instructions
+			=hidden_field_tag "form[fields_attributes][#{fe.id}][id]", fe.id
+		%div{:class => 'clear-both'}
+		
+		
+
+-if fe.field_type == 'radio'
+	%li
+		%div{:class => "fields-left multi"}
+			%div{:class => "edit fontello-icon-edit"}
+			=link_to content_tag(:i, '', :class => 'fontello-icon-trash-4') + '', admin_form_field_path(@form, fe.id),:data => {:data => {:confirm => 'Are you sure?'}}, :method => :delete,:class => "del"
+			%label{:class => "label"}
+				=fe.field_name
+			-if fe.required
+				=content_tag :span, '*', :class => 'static required'
+			-fe.field_options.each_with_index do |of, i|
+				%span{:class => "required"}                      
+				%div{:id => "multi-#{i}"}
+					=radio_button_tag '',of.selected,('true' if of.selected == true),:disabled => "disabled"
+					%span
+						=of.option
+
+		
+		%div{:class => "fields-right multi-origin radio"} 
+			=image_tag 'white-left-arrow.png', :class => 'left-arrow'  
+			%div{:class => "form-closer"}
+				X                   
+			%label
+				Field Label
+			=text_field_tag "form[fields_attributes][#{fe.id}][field_name]",fe.field_name, :id => "text_#{fe.field_type}", :class => "label",:value => fe.field_name
+			
+			
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 1, ('true' if fe.required == true)	
+			Yes
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 0, ('true' if fe.required == false)
+			No
+			%span
+				%strong
+					Required?
+			%div
+				%strong
+					Instructions
+				%textarea{:name => "form[fields_attributes][#{fe.id}][instructions]"}
+					=fe.instructions
+			=hidden_field_tag "form[fields_attributes][#{fe.id}][id]", fe.id
+			-fe.field_options.each_with_index do |of, i|
+				%div{:class => "multi-#{i}"}
+					%div{:class => 'no-radio'}
+						=radio_button_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][selected]",0, ('false' if of.selected == false)
+					=label_tag "Option"
+					=radio_button_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][selected]",1, ('true' if of.selected == true)
+					
+					=text_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][option]", of.option, :class => 'keyup', :data => {:type => "radio", :form => fe.id}
+					=link_to "","", :class => 'opt-add fontello-icon-plus-1'
+					-if i > 0
+						=link_to "", admin_fieldOption_path(of.id),:class => 'opt-del fontello-icon-trash-4'
+					=hidden_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][id]", of.id
+					%br
+					=label_tag "Option Value"
+					=text_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][option_value]", of.option_value, :data => {:type => "radio", :form => fe.id}
+		%div{:class => 'clear-both'}  
+	
+	
+	
+
+-if fe.field_type == 'dropdown'
+	%li
+		%div{:class => "fields-left multi"}
+			%div{:class => "edit fontello-icon-edit"}
+			=link_to content_tag(:i, '', :class => 'fontello-icon-trash-4') + '', admin_form_field_path(@form, fe.id),:data => {:data => {:confirm => 'Are you sure?'}}, :method => :delete,:class => "del"
+			%label{:class => "label"}
+				=fe.field_name
+			-if fe.required
+				=content_tag :span, '*', :class => 'static required'
+			%span{:class => "required"}                      
+			%select{:disabled => "disabled"}                      	
+				%option
+					Choose Option
+
+		
+		%div{:class => "fields-right multi-origin drop-down"}
+			=image_tag 'white-left-arrow.png', :class => 'left-arrow' 
+			%div{:class => "form-closer"}
+				X                     
+			%label
+				Field Label
+			=text_field_tag "form[fields_attributes][#{fe.id}][field_name]",fe.field_name, :id => "text_#{fe.field_type}", :class => "label",:value => fe.field_name
+			
+			
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 1, ('true' if fe.required == true)	
+			Yes
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 0, ('true' if fe.required == false)
+			No
+			%span
+				%strong
+					Required?
+			%div
+				%strong
+					Instructions
+				%textarea{:name => "form[fields_attributes][#{fe.id}][instructions]"}
+					=fe.instructions
+			=hidden_field_tag "form[fields_attributes][#{fe.id}][id]", fe.id
+			-fe.field_options.each_with_index do |of, i|
+				%div{:class => "multi-#{i}"}
+					%div{:class => 'no-radio'}
+						=radio_button_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][selected]",0, ('false' if of.selected == false)
+					=label_tag "Option"
+					=radio_button_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][selected]",1, ('true' if of.selected == true)
+					=text_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][option]", of.option, :class => 'keyup', :data => {:type => "radio", :form => fe.id}
+
+					=link_to "","", :class => 'opt-add fontello-icon-plus-1'
+					-if i > 1
+						=link_to "", admin_fieldOption_path(of.id),:class => 'opt-del fontello-icon-trash-4'
+					=hidden_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][id]", of.id
+					%br
+					=label_tag "Option Value"
+					=text_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][option_value]", of.option_value, :data => {:type => "radio", :form => fe.id}
+		%div{:class => 'clear-both'} 
+	
+	
+	
+
+-if fe.field_type == 'checkbox'
+	%li
+		%div{:class => "fields-left multi"}
+			%div{:class => "edit fontello-icon-edit"}
+			=link_to content_tag(:i, '', :class => 'fontello-icon-trash-4') + '', admin_form_field_path(@form, fe.id),:data => {:confirm => 'Are you sure?'}, :method => :delete,:class => "del"
+			%label{:class => "label"}
+				=fe.field_name
+			-if fe.required
+				=content_tag :span, '*', :class => 'static required'
+			-fe.field_options.each_with_index do |of, i|
+				%span{:class => "required"}                      
+				%div{:id => "multi-#{i}"}
+					=check_box_tag '','',('true' if of.selected == true),:disabled => "disabled"
+					%span
+						=of.option
+
+		
+		%div{:class => "fields-right multi-origin checkbox"} 
+			=image_tag 'white-left-arrow.png', :class => 'left-arrow'
+			%div{:class => "form-closer"}
+				X                     
+			%label
+				Field Label
+			=text_field_tag "form[fields_attributes][#{fe.id}][field_name]",fe.field_name, :id => "text_#{fe.field_type}", :class => "label",:value => fe.field_name
+			
+			
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 1, ('true' if fe.required == true)	
+			Yes
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 0, ('true' if fe.required == false)
+			No
+			%span
+				%strong
+					Required?
+			%div
+				%strong
+					Instructions
+				%textarea{:name => "form[fields_attributes][#{fe.id}][instructions]"}
+					=fe.instructions
+			=hidden_field_tag "form[fields_attributes][#{fe.id}][id]", fe.id
+			-fe.field_options.each_with_index do |of, i|
+				%div{:class => "multi-#{i}"}
+					
+					=label_tag "Option"
+					
+					=text_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][option]", of.option, :class => 'keyup', :data => {:type => "checkbox", :form => fe.id}
+
+					=link_to "","", :class => 'opt-add fontello-icon-plus-1'
+					-if i > 0
+						=link_to "", admin_fieldOption_path(of.id),:class => 'opt-del fontello-icon-trash-4'
+					=hidden_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][id]", of.id
+					%br
+					=label_tag "Option Value"
+					=text_field_tag "form[fields_attributes][#{fe.id}][field_options_attributes][#{of.id}][option_value]", of.option_value, :data => {:type => "checkbox", :form => fe.id}
+		%div{:class => 'clear-both'}                   
+	
+	
+	
+	
+	
+-if fe.field_type == 'date'
+	%li
+		%div{:class => "fields-left date"}
+			%div{:class => "edit fontello-icon-edit"}
+			=link_to content_tag(:i, '', :class => 'fontello-icon-trash-4') + '', admin_form_field_path(@form, fe.id),:data => {:confirm => 'Are you sure?'}, :method => :delete,:class => "del"
+			%label{:class => "label"}
+				=fe.field_name
+			-if fe.required
+				=content_tag :span, '*', :class => 'static required'
+			=text_field_tag '','',:disabled => 'disabled'
+			\-
+			=text_field_tag '','',:disabled => 'disabled'
+			\-
+			=text_field_tag '','',:disabled => 'disabled'
+			%br                      
+			%span{:class => "month"}
+				MM
+			%span{:class => "day"}
+				DD
+			%span{:class => "year"}
+				YY 
+		%div{:class => "fields-right origin"} 
+			=image_tag 'white-left-arrow.png', :class => 'left-arrow'
+			%div{:class => "form-closer"}
+				X
+			%label
+				Field Label
+			=text_field_tag "form[fields_attributes][#{fe.id}][field_name]",fe.field_name, :id => "text_#{fe.field_type}", :class => "label",:value => fe.field_name
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 1, ('true' if fe.required == true)	
+			Yes
+			=radio_button_tag "form[fields_attributes][#{fe.id}][required]", 0, ('true' if fe.required == false)
+			No
+			%span
+				%strong
+					Required?
+			%div
+				%strong
+					Instructions
+				%textarea{:name => "form[fields_attributes][#{fe.id}][instructions]"}
+					=fe.instructions
+			=hidden_field_tag "form[fields_attributes][#{fe.id}][id]", fe.id
+		%div{:class => 'clear-both'}                   
+
+
+
+-if fe.field_type == 'divider'
+	%li
+		%div{:class => "fields-left divider"}
+			=link_to '', admin_form_field_path(@form, fe.id),:data => {:confirm => 'Are you sure?'}, :method => :delete,:class => "del"
+			%hr               

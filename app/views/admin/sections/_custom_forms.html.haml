@@ -1,0 +1,8 @@
+%li.section-form
+  %h4
+    Choose custom form.
+%li.control-group 
+  -for form in Form.all
+    %label.radio.inline
+      =radio_button_tag "section[form_ids][]",form.id, @section.forms.include?(form), :id => form.id
+      =form.title

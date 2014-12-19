@@ -1,0 +1,11 @@
+=form_for [:admin, @slider], :remote => true do |f|
+	FORM REMOTE SET UP modal
+	.modal-header
+		=link_to content_tag(:i, '',:class => "fontello-icon-cancel-1" ),'', :class=> "close", 'data-dismiss'=>"modal", 'aria-hidden' => "true"
+		%h4
+			Edit
+			=@slider.title
+	.modal-body
+		= render :partial => 'admin/sliders/form_fields', :locals => { :f => f}
+	.modal-footer
+		=f.submit :class => "btn btn-primary"

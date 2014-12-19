@@ -1,0 +1,258 @@
+@import "variables";
+
+// ------------------------------------------------------------------------
+//    primary navigation
+// ------------------------------------------------------------------------
+// BEGIN
+
+/*Menu*/
+
+#primary {
+	clear: both;
+	float: right;
+}
+#primary > li {
+	float: left;
+	display:block; 
+	position:relative;
+	> a {
+		display:block;
+		font-size:15px;
+		font-weight:400;
+		color: #687074;
+		text-shadow:none;
+		padding:9px 20px;
+		text-transform:uppercase;
+		border-bottom:solid 2px #eee;
+		-webkit-transition:all 0.4s ease-in-out;
+		-moz-transition:all 0.4s ease-in-out;
+		-o-transition:all 0.4s ease-in-out;
+		transition:all 0.4s ease-in-out;
+		&:hover,
+		&:focus {
+			color:#72c02c;
+			border-bottom:solid 2px #72c02c;
+		}
+		&.current,
+		&.current:focus {
+			color:#72c02c;	
+			text-decoration:none;
+			border-bottom:solid 2px #72c02c;
+			background:none;	
+			@include box-shadow(none);
+		}
+		&.current:hover {
+		  	color:#72c02c;	
+			background:none;		
+			border-bottom:solid 2px #72c02c;
+		  	@include box-shadow(none);
+		}
+	}
+}
+
+/*Dropdown Menu*/
+#primary  > li ol { 
+	position: absolute;
+	left: 0;
+	display: none;
+	list-style: none;
+	padding:0;
+	border:none;
+	margin:-2px 0; 
+	min-width:200px;
+	border-radius:0; 
+	border-top:solid 2px #72c02c; 
+	border-bottom:solid 2px #687074; 
+	z-index: 9999 !important;
+	background: white;
+	@include box-shadow(0 5px 10px rgba(0,0,0,0.2));
+	li {
+		a {
+			display: block;
+			color:#687074; 
+			font-size:13px; 
+			font-weight:400; 
+			padding:6px 15px; 
+			border-bottom:solid 1px #eee;
+		&:hover,
+		&:focus {
+			color:#ffffff;
+			background:#687074 !important;
+			-webkit-transition:all 0.2s ease-in-out;
+			-moz-transition:all 0.2s ease-in-out;
+			-o-transition:all 0.2s ease-in-out;
+			transition:all 0.2s ease-in-out;
+			filter:none !important;
+			text-decoration: none;
+			}
+		&.current {
+			color:#ffffff !important;
+			background:#687074 !important;
+			filter:none !important;
+			}
+		}
+
+	}
+}
+
+
+/*Serach*/
+.navbar .search-open {
+	right:0; 
+	top:44px; 
+	display:none;
+	padding:15px; 
+	position:absolute; 
+	background:#fcfcfc; 
+	border-top:solid 2px #eee; 
+}
+
+.navbar .search-open form,
+.navbar .search-open .input-append {
+	margin:0 !important;	
+}
+
+.navbar a.search i.icon-remove {
+	top:2px;
+	font-size:18px;
+	position:relative;
+}
+
+.navbar .nav > li > a.search {
+	color:#aaa;
+	cursor:pointer;
+	background:#f7f7f7;
+	padding:8px 12px 10px;
+	border-bottom-color:#aaa;
+}
+.navbar .nav > li > a.search:hover {
+	color:#72c02c;
+	border-bottom-color:#72c02c;
+}
+
+/*Fancybox for gallery page*/
+.fancybox-overlay.fancybox-overlay-fixed {
+	z-index:9999;
+}
+
+
+
+// ------------------------------------------------------------------------
+//    Constant
+// ------------------------------------------------------------------------
+// BEGIN
+#constant {
+	float: right;
+}
+#constant li {
+	display: inline;
+	top:-1px;
+	font-size:8px;
+	position:relative;
+	list-style:none;
+	margin:0;
+	padding:0 3px;
+	border-right:solid 1px #bbb;
+}
+
+#constant li a {
+	color:#7c8082;
+	font-size:11px;
+	text-transform:uppercase;
+	font-family:'Open Sans', sans-serif;
+	display: inline-block;
+	&:hover {
+
+	}
+}
+
+#constant li { 
+/*	top:-1px;
+	padding:0;
+	font-size:8px;
+	position:relative;
+	margin:0 3px;
+	font-family:Tahoma;
+	border-right:solid 1px #bbb;*/
+}
+
+#constant li.no-border {
+	border: none;
+}
+
+// ----- END --------------------------------------------------------------
+
+
+.navigation-group {
+	float: left;
+	 li {
+	 	float: left;
+		list-style: none;
+		background: #ccc;
+		position: relative;
+		a {
+			display: block;
+			padding: 5px;
+			text-decoration: none;
+			&:hover {
+				text-decoration: none;
+				}
+			}
+		ol {
+			position: absolute;
+			top: 99%;
+			z-index: 1000;
+			margin: 0;
+			padding: 0;
+			display:none;
+			li {
+				float: none;
+				background: #DDD;
+				padding: .5em .5em;
+				white-space: nowrap;
+			ol {
+					left: 90%;
+					top: 0;
+				}
+			}
+		}
+	}
+}
+.navigation-group.verticle {
+	float:none;
+	li {
+		float: none;
+		a {
+			display: inline;
+			}
+		}
+	}
+/*----------  End ----------*/
+
+/*---------=multi-nav ----------*/
+.multi-nav {
+	position: absolute;
+	z-index: 1000;
+	background: #CCC;
+	border: 1px solid #DDD;
+	display: none;
+	padding: 10px;
+	.after {float:left;}
+	.before {float:left;}
+	ol {
+		display: inline-block !important;
+		position: static !important;
+		padding: 0;
+		margin: 0;
+		li {
+			float: none !important;
+		}
+	}
+
+}
+/*-------------------------*/
+
+
+
+
+

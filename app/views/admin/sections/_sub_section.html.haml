@@ -1,0 +1,2 @@
+-set_resource.sections.where(:parent_id => s.id).order('position ASC').each do |s|
+	=render 'admin/sections/sections', :s => s

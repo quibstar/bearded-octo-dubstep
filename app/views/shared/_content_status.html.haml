@@ -1,0 +1,17 @@
+-if @page
+  -case @page.content_status
+  -when 1
+    .label.label-important
+      Content needs to be added
+  -when 2
+    .label.label-warning
+      Content added needs review
+  -when 3
+    .label.label-info
+      Content presentation needs review
+  -when 4
+    .label.label-success
+      Content reviewed and approved.
+  -else
+    .label
+      Content status not set.
