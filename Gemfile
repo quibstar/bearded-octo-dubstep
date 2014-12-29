@@ -23,6 +23,10 @@ gem 'pg_search'
 gem 'sitemap_generator'
 
 gem 'thin'
+gem 'mailcatcher'
+
+gem 'roo'
+gem 'spreadsheet'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

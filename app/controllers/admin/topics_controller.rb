@@ -13,6 +13,10 @@ class Admin::TopicsController < ApplicationController
   def show
     @topic = Topic.friendly.find(params[:id])
     @title = @topic.name
+    respond_to do |format|
+      format.html
+      format.csv {render text: @topic.to_csv(@topic)}
+    end
   end
   
   def new
@@ -64,4 +68,11 @@ class Admin::TopicsController < ApplicationController
   def topic_params
     params.require(:topic).permit(:name)
   end
+
+  def import
+    Topic.get_user(params[:user])
+    Topic.import(params[:file])
+    redirect_to admin_topics_path, notice: "Campaign imported"
+  end
+
 end

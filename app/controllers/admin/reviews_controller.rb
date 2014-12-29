@@ -12,6 +12,7 @@ class Admin::ReviewsController < ApplicationController
       review.user = u 
       review.topic_id = params[:topic_id]
       review.save
+      ReviewMailer.send_review_link(review.url, review.user).deliver
     end
     flash[:success]= "Successfully send out review notices."
     redirect_to admin_topic_path(params[:topic_id])

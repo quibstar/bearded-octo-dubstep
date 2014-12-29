@@ -38,6 +38,7 @@ devise_for :users, :controllers => { :registrations => "admin/registrations" }
       resources :groups do 
         resources :copies 
       end
+      collection {post :import}
     end
 
     resources :groups

@@ -11,3 +11,11 @@
           =link_to content_tag(:i,'',:class => 'fontello-icon-comment') + ' New Topic',new_admin_topic_path , :class => 'fboxForm fancybox.ajax'
 
 =render 'topics'
+
+.well.well-nice
+  %h3
+    Upload ad report
+
+  =form_tag import_admin_topics_path(:user => current_user), multipart: true  do |f|
+    =file_field_tag :file
+    =submit_tag "Import", :class => 'btn btn-mini btn-yellow' 

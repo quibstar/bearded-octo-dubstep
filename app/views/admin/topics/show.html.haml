@@ -14,7 +14,12 @@
     .widget-header
       %h3
         =@topic.name
-      =link_to content_tag(:i,'',:class => 'fontello-icon-edit') + " Edit #{@topic.name}", edit_admin_topic_path(@topic), :class => 'btn btn-sky pull-right btn-mini fboxForm fancybox.ajax edit-topic'
+      .help-block.pull-right
+        Download CSV of campaign
+        =@topic.name
+        =link_to content_tag(:i,'',:class => 'fontello-icon-download-cloud'), admin_topic_path(@topic, format: "csv"), :class => 'btn btn-mini btn-sky'
+        
+      
     .widget-content
       .widget-body
         
