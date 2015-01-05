@@ -1,0 +1,5 @@
+=form_for [:admin, copy] do |f|
+  %label.inline
+    =f.check_box :selected, :class => 'submittable'
+    Selected
+  =f.submit :style => 'display:none;width:0;'

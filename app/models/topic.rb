@@ -1,6 +1,5 @@
 class Topic < ActiveRecord::Base
 
-
   extend FriendlyId
     friendly_id :name, use: :slugged
 
@@ -8,6 +7,7 @@ class Topic < ActiveRecord::Base
 
   has_many :groups, :dependent => :destroy
 
+  belongs_to :client
 
   def self.get_user(id)
     @user = User.find(id)
@@ -48,14 +48,49 @@ class Topic < ActiveRecord::Base
           end
 
           copy.content = content
-          puts "TEST TEST TEST"
           copy.editor = @user.email
+          copy.selected = true
           group.copies << copy
         end
       end
 
     end
 
+  end
+
+  def self.keywords(file)
+    xls = Roo::Spreadsheet.open(file.path, extension: :xlsx)
+    xls.each(:campaign => 'Campaign', :keyword => '^Keyword$', :ad_group => 'Ad group') do |hash|
+
+      unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
+        topic = Topic.find_by_name hash[:campaign]
+        if !topic
+            topic = Topic.new
+            topic.name = hash[:campaign]
+            puts "New #{topic.name}"
+        end
+
+        topic.save
+
+        unless hash[:ad_group] == nil
+              
+          group = Group.find_by_name hash[:ad_group]
+          if !group
+            group = Group.new
+          end
+
+          group.name = hash[:ad_group]
+          group.network = "Google"
+          topic.groups << group
+          if group.keywords !=nil
+            group.keywords += "#{hash[:keyword]}\n"
+          else
+            group.keywords = "#{hash[:keyword]}\n"
+          end
+          group.save
+        end
+      end
+    end
   end
 
   def to_csv(topic)

@@ -2,42 +2,52 @@
   #form-remote.widget.widget-box
     .widget-header
       = link_to "Edit Mode", "#", :id => 'edit-mode', :class => "pull-right"
-
-      %h3
+      %h1
+        -if @topic.client
+          =@topic.client.name
+          \:
         =@topic.name
-
     .widget-content
       .widget-body
         -if @topic.groups.count > 0
           %ul.widget-list
             -@topic.groups.each do |group|
               %li{:id => "group-#{group.id}", :class => "group"}
-                .group-name.clear-both.span2
-                  %strong
+                .group-name.clear-both
+                  %h2
                     Group:
                     =group.name
 
-                -if(group.network == "Google")
-                  .keywords.span3
+                    =link_to content_tag(:i,'',:class => 'fontello-icon-pencil') + " New Ad", new_topic_group_copy_path(@topic, group, :rev_id => @review.url), :class => "btn btn-yellow btn-mini new-copy fbox fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}
+
+                .keywords.span3
+                  -if (group.network == 'Google')
                     %strong
                       Keywords:
                     =simple_format group.keywords
+                  -else
+                    %strong
+                      Image: 
+                    =image_tag group.image
 
-                .copies.span6
+
+                .copies.span8
                   -if group.copies.count > 0  
                     %div.group-copy
                       %strong
                         Copy:
                     %ul.group-copy
-                      -group.copies.where(:copy_id => 0).each do |copy|
+                      -group.copies.where(:copy_id => 0).each_with_index do |copy, index|
                         %li
                           -if copy.alternates.where(:is_duplicate => "true").count > 0
                             .col-50
+                              =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
                               =render partial: "reviews/copy", locals: {group: group, copy: copy}
                               
                             .col-50.dups
                               =render partial: "admin/topics/tabbed_versions", locals: {copy: copy}
                           -else
+                            =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
                             =render partial: "reviews/copy", locals: {group: group, copy: copy}
                             
 
@@ -46,4 +56,5 @@
                             %ul.alt-group-copy
                               -copy.alternates.where(:is_duplicate => "false").each do |c|
                                 %li.span4
+                                  =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
                                   =render partial: "admin/topics/alt_copy", locals: {copy: c}

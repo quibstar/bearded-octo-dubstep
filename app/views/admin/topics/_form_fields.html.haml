@@ -5,3 +5,8 @@
 		=f.label "Name *", :class => "control-label"
 		.controls
 			=f.text_field :name, :class => "required"
+	%li.control-group
+		=f.label "Client", :class => "control-label"
+		.controls
+			=f.collection_select(:client_id, @clients, :id, :name)
+

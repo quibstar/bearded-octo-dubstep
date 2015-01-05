@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	
+
 $("a[data-toggle=popover]").popover({ 
 	html: true 
 }).click(function(e){
@@ -11,63 +13,67 @@ $("#note-handle").click(function(){
 	$('#page-notes').toggleClass('show');
 });
 
-$(function() {
-		$( ".tabs, #featured-image #tabs" ).tabs();
-		$( ".accordion" ).accordion({
-			heightStyle: "content"
-		});
 
-		$( ".header-text, .slider-content, .link-one, .link-two, .slide-settings" ).draggable({
-			stop: function(event, ui) {
-		        // Show dropped position.
-		        var Stoppos = $(this).position();
-		        //console.log(Stoppos.left + " " + Stoppos.top);
-		        var id = $(this).find('p').attr('id');
+	// groups start and end date
+	$("#group_start_date" ).datepicker();
+	$("#group_end_date" ).datepicker();
 
-		        if(id == undefined) {
-		        	id = $(this).find('a').attr('id');
-		        }
-
-		        var top = id + "_top";
-		        var left = id + "_left";
-		        $("#" + top).val(Stoppos.top);
-		        $("#" + left).val(Stoppos.left);
-
-		        // console.log(top + " " + Stoppos.top);
-		        // console.log($("#" + top));
-	    	}
-		});
-
-		$( ".slider-header-slider" ).slider({
-			min: 0,
-			max: 1000,
-			slide: function( event, ui ) {
-				id = $(this).attr('id');
-				$(this).closest('.slide-settings').siblings('.slider-image').find('.header-text').css('width', ui.value +"px");
-				$("." + id).val(ui.value);
-				// console.log(ui.value);
-			}
-		});
-		$( ".slider-content-slider" ).slider({
-			min: 0,
-			max: 1000,
-			slide: function( event, ui ) {
-				id = $(this).attr('id');
-				$(this).closest('.slide-settings').siblings('.slider-image').find('.slider-content').css('width',  ui.value +"px");
-				$(this).next('.content_width').val(ui.value);
-				$("." + id).val(ui.value);
-				// console.log($(this).closest('.content_width'))
-			}
-		});
-		$('.cp-basic').colorpicker({
-			select: function(event, color) {
-							var elementId = $(this).attr("id");
-							elementId = elementId.replace('color_','');
-							$("#" + elementId).css("color", "#" + color.formatted)
-							console.log(elementId);
-							}
-		});
+	$( ".tabs, #featured-image #tabs" ).tabs();
+	$( ".accordion" ).accordion({
+		heightStyle: "content"
 	});
+
+	$( ".header-text, .slider-content, .link-one, .link-two, .slide-settings" ).draggable({
+		stop: function(event, ui) {
+	        // Show dropped position.
+	        var Stoppos = $(this).position();
+	        //console.log(Stoppos.left + " " + Stoppos.top);
+	        var id = $(this).find('p').attr('id');
+
+	        if(id == undefined) {
+	        	id = $(this).find('a').attr('id');
+	        }
+
+	        var top = id + "_top";
+	        var left = id + "_left";
+	        $("#" + top).val(Stoppos.top);
+	        $("#" + left).val(Stoppos.left);
+
+	        // console.log(top + " " + Stoppos.top);
+	        // console.log($("#" + top));
+    	}
+	});
+
+	$( ".slider-header-slider" ).slider({
+		min: 0,
+		max: 1000,
+		slide: function( event, ui ) {
+			id = $(this).attr('id');
+			$(this).closest('.slide-settings').siblings('.slider-image').find('.header-text').css('width', ui.value +"px");
+			$("." + id).val(ui.value);
+			// console.log(ui.value);
+		}
+	});
+	$( ".slider-content-slider" ).slider({
+		min: 0,
+		max: 1000,
+		slide: function( event, ui ) {
+			id = $(this).attr('id');
+			$(this).closest('.slide-settings').siblings('.slider-image').find('.slider-content').css('width',  ui.value +"px");
+			$(this).next('.content_width').val(ui.value);
+			$("." + id).val(ui.value);
+			// console.log($(this).closest('.content_width'))
+		}
+	});
+	$('.cp-basic').colorpicker({
+		select: function(event, color) {
+						var elementId = $(this).attr("id");
+						elementId = elementId.replace('color_','');
+						$("#" + elementId).css("color", "#" + color.formatted)
+						console.log(elementId);
+						}
+	});
+
 
 
 
@@ -267,6 +273,7 @@ $('.section_cols').change(function(){
 $('.submittable').live('change', function() {
   $(this).parents('form:first').submit();
 	$(this).parents('td').effect('highlight');
+	$(this).parents('.tab-pane').effect('highlight');
 	return false;
 });
 

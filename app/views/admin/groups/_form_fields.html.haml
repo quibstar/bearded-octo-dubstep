@@ -1,4 +1,10 @@
 =javascript_include_tag 'admin/modal_links.js'
+:javascript
+	$(document).ready(function() {
+		// groups start and end date
+		$("#group_start_date" ).datepicker();
+		$("#group_end_date" ).datepicker();
+	});
 
 %ul.form-list.label-left.list-bordered.form-horizontal
 	%li.control-group
@@ -42,3 +48,27 @@
 				=f.hidden_field :topic_id, :value => @topic.id 
 			-else
 				=f.hidden_field :topic_id
+
+	%li.control-group
+		=f.label :start_date, :class => "control-label"
+		.controls
+			=f.text_field :start_date 
+
+	%li.control-group
+		=f.label "End date (optional)", :class => "control-label"
+		.controls
+			=f.text_field :end_date
+
+	%li.control-group
+		=f.label :image, :class => "control-label"
+		%div{:class => "controls"}
+			=f.file_field :image
+			.help-block
+				Upload a new image if you wish
+
+		-if @group.image?
+			%li.control-group
+				%label.checkbox
+					= f.check_box :remove_image
+					= f.hidden_field :image_cache
+					Remove current image

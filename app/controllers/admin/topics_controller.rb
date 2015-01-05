@@ -16,11 +16,14 @@ class Admin::TopicsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv {render text: @topic.to_csv(@topic)}
+      format.xls
+      format.xlsx
     end
   end
   
   def new
     @topic = Topic.new
+    @clients = Client.all
     render :layout => false
   end
 
@@ -44,6 +47,7 @@ class Admin::TopicsController < ApplicationController
   def edit
     @topic = Topic.friendly.find(params[:id])
     @title = @topic.name
+    @clients = Client.all
     render :layout => false
   end 
   
@@ -66,13 +70,18 @@ class Admin::TopicsController < ApplicationController
   end
 
   def topic_params
-    params.require(:topic).permit(:name)
+    params.require(:topic).permit(:name, :client_id)
   end
 
   def import
     Topic.get_user(params[:user])
     Topic.import(params[:file])
     redirect_to admin_topics_path, notice: "Campaign imported"
+  end
+
+  def keywords
+    Topic.keywords(params[:file])
+    redirect_to admin_topics_path, notice: "Keywords imported"
   end
 
 end

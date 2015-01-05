@@ -28,6 +28,7 @@ devise_for :users, :controllers => { :registrations => "admin/registrations" }
 
  namespace :admin do
 
+    resources :clients
     resources :reviews
 
     resources :users do 
@@ -39,6 +40,7 @@ devise_for :users, :controllers => { :registrations => "admin/registrations" }
         resources :copies 
       end
       collection {post :import}
+      collection {post :keywords}
     end
 
     resources :groups

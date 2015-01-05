@@ -1,0 +1,10 @@
+-if group.start_date || group.end_date
+  .post-dates.clear-both
+    -if group.start_date.length > 0 && group.end_date.length > 0
+      Post Date:
+      =group.start_date
+      \-
+      =group.end_date
+    -elsif group.start_date.length > 0
+      Post Date:
+      =group.start_date

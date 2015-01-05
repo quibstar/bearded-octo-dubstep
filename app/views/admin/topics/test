@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="<%=@topic.name%>">
+    <Table>
+    <Row>
+      <Cell><Data ss:Type="String">Ad State</Data></Cell>
+      <Cell><Data ss:Type="String">Ad</Data></Cell>
+      <Cell><Data ss:Type="String">Description line 1</Data></Cell>
+      <Cell><Data ss:Type="String">Description line 2</Data></Cell>
+      <Cell><Data ss:Type="String">Display URL</Data></Cell>
+      <Cell><Data ss:Type="String">Destination URL</Data></Cell>
+      <Cell><Data ss:Type="String">Campaign</Data></Cell>
+      <Cell><Data ss:Type="String">Ad group</Data></Cell>
+      <Cell><Data ss:Type="String">Status</Data></Cell>
+    </Row>
+      <% @topic.groups.each do |group| %>
+        <% group.copies.each do |copy| %>
+          <% con = copy.content.lines.map(&:chomp) %>
+            <Row>
+              <Cell><Data ss:Type="String">enabled</Data></Cell>
+              <Cell><Data ss:Type="String"><%=con[0]%></Data></Cell>
+              <Cell><Data ss:Type="String"><%=con[1]%></Data></Cell>
+              <Cell><Data ss:Type="String"><%=con[2]%></Data></Cell>
+              <Cell><Data ss:Type="String"><%=group.display_url%></Data></Cell>
+              <Cell><Data ss:Type="String"><%=group.destination_url%></Data></Cell>
+              <Cell><Data ss:Type="String"><%=@topic.name%></Data></Cell>
+              <Cell><Data ss:Type="String"><%=group.name%></Data></Cell>
+              <Cell><Data ss:Type="String">approved</Data></Cell>
+            </Row>
+        <% end %>
+    <% end %> 
+  </Table>
+  </Worksheet>
+</Workbook>

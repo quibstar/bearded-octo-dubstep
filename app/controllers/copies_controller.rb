@@ -6,7 +6,11 @@ class CopiesController < ApplicationController
     @copy = Copy.new
     @review = Review.find_by_url(params[:rev_id])
     @group = Group.find(params[:group_id])
-    @alt_copy = Copy.find(params[:copy_id])
+    
+    if params[:copy_id]
+      @alt_copy = Copy.find(params[:copy_id]) 
+    end
+    
     render :layout => false
   end
 

@@ -1,5 +1,8 @@
 =content_for :page_title do
   %h1.page-title
+    -if @topic.client
+      =@topic.client.name
+      \:
     =@topic.name
     
 .navbar.navbar-page
@@ -7,77 +10,88 @@
     .container
       %ul.nav.pull-right
         %li.divider-vertical
+
         %li
           = link_to "Edit Mode", "#", :id => 'edit-mode'
+        %li.divider-vertical
+        %li
+          = link_to content_tag(:i,'',:class => 'fontello-icon-download-cloud') + "XLSX", admin_topic_path(@topic, format: "xlsx")
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-download-cloud') + "CSV", admin_topic_path(@topic, format: "csv")
 #topic-show
   #form-remote.widget.widget-box
-    .widget-header
-      %h3
-        =@topic.name
-      .help-block.pull-right
-        Download CSV of campaign
-        =@topic.name
-        =link_to content_tag(:i,'',:class => 'fontello-icon-download-cloud'), admin_topic_path(@topic, format: "csv"), :class => 'btn btn-mini btn-sky'
-        
-      
     .widget-content
       .widget-body
-        
-        %h3
-          Groups
-          =link_to "New Group", new_admin_topic_group_path(@topic), :class => 'pull-right btn btn-yellow pull-right btn-mini fboxForm fancybox.ajax new-groups'
-
-
+        =link_to "New Group", new_admin_topic_group_path(@topic), :class => 'pull-right btn btn-yellow pull-right btn-mini fboxForm fancybox.ajax new-groups'
+        .clear-both
         -if @topic.groups.count > 0
+
           %ul.widget-list
             -@topic.groups.each do |group|
+
               %li{:id => "group-#{group.id}", :class => "group"}
-              
-                .btn-group
-                  =link_to "New copy/ad", new_admin_topic_group_copy_path(@topic, group), :class => "btn btn-yellow btn-mini new-copy fboxForm fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}
-
-                  =link_to content_tag(:i,'',:class => 'fontello-icon-edit') + " Edit #{group.name}", edit_admin_topic_group_path(@topic, group), :class => 'btn btn-sky  btn-mini fboxForm fancybox.ajax '
-
-                  =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_topic_group_path(@topic, group), :comfirm => "Are you sure?", :method => :delete, :class => "btn btn-mini btn-danger"
-                .clear-both
-                .group-name.clear-both.span2
-                  %strong
+                .group-name.clear-both
+                  %h2
                     Group:
-                  =group.name
-                  =render partial: "admin/topics/network", locals: {group: group}
+                    =group.name
+                    =render partial: "admin/topics/network", locals: {group: group}
+
+
+                  .btn-group
+                    =link_to content_tag(:i,'',:class => 'fontello-icon-pencil') + " New", new_admin_topic_group_copy_path(@topic, group), :class => "btn btn-yellow btn-mini new-copy fboxForm fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}
+
+                    =link_to content_tag(:i,'',:class => 'fontello-icon-edit') + " Edit", edit_admin_topic_group_path(@topic, group), :class => 'btn btn-sky  btn-mini fboxForm fancybox.ajax '
+
+                    =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_topic_group_path(@topic, group), :comfirm => "Are you sure?", :method => :delete, :class => "btn btn-mini btn-danger"
+
                 .keywords.span3
-                  %strong
-                    Keywords:
-                  =simple_format group.keywords
-                .copies.span6
+                  -if (group.network == 'Google')
+                    %strong
+                      Keywords:
+                    =simple_format group.keywords
+                  -else
+                    %strong
+                      Image:
+                    =image_tag group.image
+                .copies.span8
                 
                   -if group.copies.count > 0  
                     %strong
                       Copy:
                     %ul.group-copy
-                      -group.copies.where(:copy_id => 0).each do |copy|
+                      -group.copies.where(:copy_id => 0).each_with_index do |copy, index|
                         %li
                           -if copy.alternates.where(:is_duplicate => "true").count > 0
                             .col-50
-                              =render partial: "admin/topics/copy", locals: {copy: copy}
-                              =render partial: "admin/topics/copy_buttons", locals: {group: group, copy: copy}
+                              - #index of copy is the small red/green circle
+                              =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
+                              =render partial: "admin/topics/copy", locals: {group: group, copy: copy}
+                              
 
                             .col-50.dups
                               =render partial: "admin/topics/tabbed_versions", locals: {copy: copy}
+                              
+
                           -else
-                            =render partial: "admin/topics/copy", locals: {copy: copy}
-                            =render partial: "admin/topics/copy_buttons", locals: {group: group, copy: copy}
+                            - #index of copy is the small red/green circle
+                            =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
+                            =render partial: "admin/topics/copy", locals: {group: group, copy: copy}
+
+                            
 
 
                           -if copy.alternates.where(:is_duplicate => "false").count > 0
                             %ul.alt-group-copy
                               -copy.alternates.where(:is_duplicate => "false").each do |c|
                                 %li.span4
+                                  - #index of copy is the small red/green circle
+                                  =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
                                   =render partial: "admin/topics/alt_copy", locals: {copy: c}
+                =render partial: "admin/topics/dates", locals: {group: group}
 
     .widget-footer
       .span4
-        =link_to content_tag(:i,'',:class => 'fontello-icon-download') +' Download CSV', "#", :class => "btn btn-yellow"
         =link_to content_tag(:i,'',:class => 'fontello-icon-mail') +' Client Review', "#", :class => "btn btn-yellow send-to"
 
       #send-to.span4

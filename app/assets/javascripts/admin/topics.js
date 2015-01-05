@@ -79,6 +79,11 @@ $(document).ready(function() {
 		 $.fancybox.close( true ); 
 	});
 
+	$(".cancel-new-front").live("click",function(e){
+		e.preventDefault();
+		$(".front-form").hide();
+	});
+
 	$(".send-to").live("click",function(e){
 		e.preventDefault();
 		$("#send-to").fadeToggle();

@@ -19,3 +19,11 @@
   =form_tag import_admin_topics_path(:user => current_user), multipart: true  do |f|
     =file_field_tag :file
     =submit_tag "Import", :class => 'btn btn-mini btn-yellow' 
+
+.well.well-nice
+  %h3
+    Upload keywords spreadsheet
+
+  =form_tag keywords_admin_topics_path(:user => current_user), multipart: true  do |f|
+    =file_field_tag :file
+    =submit_tag "Import", :class => 'btn btn-mini btn-yellow'   

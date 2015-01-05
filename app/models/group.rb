@@ -4,4 +4,7 @@ class Group < ActiveRecord::Base
 
   belongs_to :topic 
   has_many :copies, :dependent => :destroy
+
+  mount_uploader :image, GroupUploader
+
 end
