@@ -1,0 +1,10 @@
+-if group.network == "Twitter"
+  =render partial: "admin/topics/twitter", locals: {group: group, copy: copy}
+-if group.network == "Google"
+  =render partial: "admin/topics/google", locals: {group: group, copy: copy}
+-if group.network == "FaceBook Ad"
+  =render partial: "admin/topics/facebook_ad", locals: {group: group, copy: copy}
+-if group.network == "FaceBook Post"
+  =render partial: "admin/topics/facebook_post", locals: {group: group, copy: copy}
+-if group.network == "LinkedIn"
+  =render partial: "admin/topics/linkedin", locals: {group: group, copy: copy}

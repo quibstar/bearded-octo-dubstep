@@ -1,45 +1,30 @@
 .tabbable 
   %ul.nav.nav-tabs
-    -seleted = copy.alternates.map{|a| a.selected == true}
     -copy.alternates.where(:is_duplicate => "true").each_with_index do |c,i|
-      -if seleted.include?(true)
-        -if c.selected == true
-          %li.active
-            =link_to selected_version(c.selected, i), "#v#{c.id}", :data => {:toggle => "tab"}
-        -else
-          %li
-            =link_to selected_version(c.selected, i), "#v#{c.id}", :data => {:toggle => "tab"}
+      -if i == 0
+        %li.active
+          %a{:href => "#v#{c.id}", :data => {:toggle => "tab"}}
+            =selected_version(c.selected, i)
+            =render partial: "admin/topics/checkboxes", locals: {copy: c, index: index}
 
       -else
-        -if i == 0
-          %li.active
-            =link_to selected_version(c.selected, i), "#v#{c.id}", :data => {:toggle => "tab"}
-        -else
-          %li
-            =link_to selected_version(c.selected, i), "#v#{c.id}", :data => {:toggle => "tab"}
+        %li
+          %a{:href => "#v#{c.id}", :data => {:toggle => "tab"}}
+            =selected_version(c.selected, i)
+            =render partial: "admin/topics/checkboxes", locals: {copy: c, index: index}
 
   .tab-content
-    -copy.alternates.where(:is_duplicate => "true").each_with_index do |c,i|
-      -if seleted.include?(true)
-        -if c.selected == true
-          %div{:class => 'tab-pane active', :id => "v#{c.id}"}
-            =render partial: "admin/topics/duplicates", locals: {copy: c} 
-            =render partial: "admin/topics/selected_form", locals: {copy: c}
-
-        -else
-          %div{:class => 'tab-pane', :id => "v#{c.id}"}
-            =render partial: "admin/topics/duplicates", locals: {copy: c}
-            =render partial: "admin/topics/selected_form", locals: {copy: c}
+    -copy.alternates.where(:is_duplicate => "true").each_with_index do |c ,i|
+      -if i == 0
+        %div{:class => 'tab-pane active', :id => "v#{c.id}"}
+          =render partial: "admin/topics/duplicates", locals: {group: group, copy: c} 
+          -if current_user
+            =render partial: "admin/topics/selected_form", locals: {group: group, copy: c}
 
       -else
-        -if i == 0
-          %div{:class => 'tab-pane active', :id => "v#{c.id}"}
-            =render partial: "admin/topics/duplicates", locals: {copy: c} 
-            =render partial: "admin/topics/selected_form", locals: {copy: c}
-
-        -else
-          %div{:class => 'tab-pane', :id => "v#{c.id}"}
-            =render partial: "admin/topics/duplicates", locals: {copy: c}
-            =render partial: "admin/topics/selected_form", locals: {copy: c}
+        %div{:class => 'tab-pane', :id => "v#{c.id}"}
+          =render partial: "admin/topics/duplicates", locals: {group: group, copy: c}
+          -if current_user
+            =render partial: "admin/topics/selected_form", locals: {group: group, copy: c}
 
 

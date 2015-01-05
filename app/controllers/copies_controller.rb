@@ -10,6 +10,10 @@ class CopiesController < ApplicationController
     if params[:copy_id]
       @alt_copy = Copy.find(params[:copy_id]) 
     end
+
+    if params[:dup_copy_id]
+      @copy = Copy.find(params[:dup_copy_id]) 
+    end
     
     render :layout => false
   end

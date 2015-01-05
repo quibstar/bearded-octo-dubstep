@@ -6,7 +6,7 @@
   });
 
 .clear-both
-=form_for @copy do |f|
+=form_for Copy.new do |f|
   .modal-header
     =link_to content_tag(:i, '',:class => "fontello-icon-cancel" ),'#', :class=> "close close-form", 'aria-hidden' => "true", :data => {:dismiss => "modal"}
     %h4.modal-title

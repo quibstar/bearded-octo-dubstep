@@ -41,14 +41,12 @@
                         %li
                           -if copy.alternates.where(:is_duplicate => "true").count > 0
                             .col-50
-                              =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
-                              =render partial: "reviews/copy", locals: {group: group, copy: copy}
+                              =render partial: "reviews/copy", locals: {group: group, copy: copy, index: index}
                               
                             .col-50.dups
-                              =render partial: "admin/topics/tabbed_versions", locals: {copy: copy}
+                              =render partial: "admin/topics/tabbed_versions", locals: {group: group, copy: copy, index: index}
                           -else
-                            =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
-                            =render partial: "reviews/copy", locals: {group: group, copy: copy}
+                            =render partial: "reviews/copy", locals: {group: group, copy: copy, index: index}
                             
 
 
@@ -56,5 +54,4 @@
                             %ul.alt-group-copy
                               -copy.alternates.where(:is_duplicate => "false").each do |c|
                                 %li.span4
-                                  =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
-                                  =render partial: "admin/topics/alt_copy", locals: {copy: c}
+                                  =render partial: "admin/topics/alt_copy", locals: {copy: c, index: index}

@@ -41,7 +41,6 @@
 .group-copy {
 	margin: 0;
 	 > li {
-		border-bottom: 1px dashed #CCC;
 		overflow: auto;
 		padding: 5px 0;
 	}
@@ -52,16 +51,11 @@
 }
 
 .index-of-copy {
-	background: red;
-	border: 2px solid white;
-	color: white;
-	padding: 0 7px;
-	@include border-radius(12px);
-	float: left;
+	margin-top: -2px;
 }
 
 .index-of-copy.selected {
-	background: green;
+
 }
 
 .group-name h2 {
@@ -74,11 +68,15 @@
 
 
 #topic-show a .selected-version {
-	color:green;
+
 }
 
 #topic-show a .non-selected-version {
-	color:red;
+
+}
+
+.tabbable li a {
+	color: #555;
 }
 
 @media (min-width: 768px) {
@@ -133,13 +131,11 @@
 	display: none;
 }
 
-
 /*front */
 .front-form {
 	border: 1px solid #CCC;
 	background: #EFEFEF;
 	margin: 0 0 10px 0;
-	display: none;
 }
 
 #topic-show.front-end {
@@ -158,4 +154,25 @@
 	.btn-group {
 		margin: 10px 0;
 	}
+}
+
+.google-display {
+	padding: 5px;
+}
+
+.google-display {
+	color: #333!important;
+	margin: 10px 0 ;
+	border: 1px solid #CCC;
+}
+
+.google-display .google-ad-header {
+	color: blue;
+	font-size: 18px;
+}
+
+.ads-visurl {
+	color: #006621;
+	white-space: nowrap;
+	font-size: 14px;
 }

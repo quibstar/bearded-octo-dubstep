@@ -1,8 +1,2 @@
-=simple_format copy.content
-%strong
-  Editor:
-=copy.editor
-%br/
-%strong
-  Date:
-= copy.created_at.strftime("%b %d, %I:%M %P")
+=render partial: "admin/topics/content_per_network", locals: {group: group, copy: copy}
+=render partial: "admin/topics/editor", locals: {group: group, copy: copy}

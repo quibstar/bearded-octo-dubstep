@@ -3,7 +3,7 @@
 %ul.form-list.label-left.list-bordered.form-horizontal
   %li.control-group
     .span5.clear-both
-      =f.text_area :content, :class => "ad-content"
+      =f.text_area :content, :class => "ad-content", :value => @copy.content
     .span5.counter
       .counter-one-container
         Line one:
@@ -24,6 +24,10 @@
   %li
     -if @alt_copy
       =f.hidden_field :copy_id, :value => @alt_copy.id 
+
   =f.hidden_field :editor ,:value =>  @review.user
   =hidden_field_tag :url , @review.url
   =f.hidden_field :selected, :value => false
+  -if @copy.id
+    =f.hidden_field :copy_id, :value => @copy.id 
+    =f.hidden_field :is_duplicate, :value => true

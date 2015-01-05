@@ -1,38 +1,15 @@
-.copy-content
-  %div{:id => "copy-#{copy.id}"}
-    =simple_format copy.content
-  .front-form
-    =form_for Copy.new  do |f|
-      %div{:class => "to-many-lines alert alert-error"}
-        Too many lines.
-      %ul.form-list.label-left.form-horizontal
-        %li.control-group
-          .span3.clear-both
-            =f.text_area :content, :class => "ad-content",:id => "textarea-#{copy.id}"
-          .span2.counter
-            .counter-one-container
-              Line one:
-              %span.count-one
+.tabbable 
+  %ul.nav.nav-tabs
+    %li.active
+      %a
+        Original
+        =render partial: "admin/topics/index_of_copy", locals: {copy: copy, index: index}
+        =render partial: "admin/topics/checkboxes", locals: {copy: copy, index: index}
 
-            .counter-two-container
-              Line two:
-              %span.count-two
+  .tab-content
+    .tab-pane.active
 
-            .counter-three-container
-              Line three:
-              %span.count-three
-
-        %li.control-group
-          =f.hidden_field :group_id, :value => group.id 
-          =f.hidden_field :copy_id, :value => copy.id 
-          =f.hidden_field :editor ,:value =>  @review.user
-          =hidden_field_tag :url , @review.url
-          =f.hidden_field :selected, :value => false
-          =f.hidden_field :is_duplicate, :value => true
-        %li.control-group
-          =f.submit "Save", :class =>'btn btn-primary'
-          =link_to "Cancel", "#",:class =>'btn btn-warning cancel-new-front'
-
-
-  .btn-group
-    =link_to "Edit Copy", new_topic_group_copy_path(@topic, group, :copy_id => copy.id, :rev_id => @review.url), :class => "btn-u btn-u-sea btn-u-small dup-copy", :data => {:textarea => "textarea-#{copy.id}", :network => "#{group.network}", :target => "copy-#{copy.id}"}
+      .copy-content
+        %div{:id => "copy-#{copy.id}"}
+          =render partial: "admin/topics/content_per_network", locals: {group: group, copy: copy}
+        =link_to "Dupe", new_topic_group_copy_path(@topic, group, :dup_copy_id => copy.id, :rev_id => @review.url), :class => "btn btn-yellow btn-mini new-copy fbox-copy fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}
