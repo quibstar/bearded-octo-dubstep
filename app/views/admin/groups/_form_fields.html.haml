@@ -30,6 +30,11 @@
 			LinkedIn
 
 	%li.control-group
+		%label.inline.checkbox
+			=f.check_box :is_card
+			Twitter Card?
+
+	%li.control-group
 		=f.label :destination_url, :class => "control-label"
 		.controls
 			=f.text_area :destination_url

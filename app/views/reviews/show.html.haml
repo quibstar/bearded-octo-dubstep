@@ -20,18 +20,21 @@
 
                     =link_to content_tag(:i,'',:class => 'fontello-icon-pencil') + " New Ad", new_topic_group_copy_path(@topic, group, :rev_id => @review.url), :class => "btn btn-yellow btn-mini new-copy fbox fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}
 
-                .keywords.span3
+                
                   -if (group.network == 'Google')
-                    %strong
-                      Keywords:
-                    =simple_format group.keywords
-                  -else
-                    %strong
-                      Image: 
-                    =image_tag group.image
+                    .keywords.span3
+                      %strong
+                        Keywords:
+                      =simple_format group.keywords
 
 
-                .copies.span8
+                -if (group.network == 'Google')
+                  -span = "span8"
+                -else
+                  -span = "span11"
+                  
+                %div{:class => "copies #{span}"}
+                
                   -if group.copies.count > 0  
                     %div.group-copy
                       %strong

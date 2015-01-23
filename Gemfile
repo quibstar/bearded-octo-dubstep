@@ -29,6 +29,8 @@ gem 'roo'
 gem 'spreadsheet'
 gem 'axlsx_rails'
 
+gem 'capistrano-rvm'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 gem "compass-rails", "~> 1.1.2"

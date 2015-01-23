@@ -45,16 +45,19 @@
 
                     =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_topic_group_path(@topic, group), :comfirm => "Are you sure?", :method => :delete, :class => "btn btn-mini btn-danger"
 
-                .keywords.span3
+                
                   -if (group.network == 'Google')
-                    %strong
-                      Keywords:
-                    =simple_format group.keywords
-                  -else
-                    %strong
-                      Image:
-                    =image_tag group.image
-                .copies.span8
+                    .keywords.span3
+                      %strong
+                        Keywords:
+                      =simple_format group.keywords
+
+                -if (group.network == 'Google')
+                  -span = "span8"
+                -else
+                  -span = "span11"
+                  
+                %div{:class => "copies #{span}"}
                 
                   -if group.copies.count > 0  
                     %strong

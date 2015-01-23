@@ -1,1 +1,23 @@
-_twitter.html.haml
+.twitter-display
+  -if group.is_card
+    .card
+      %p
+        =copy.content
+      .tweet-image
+        =image_tag group.image
+      =link_to group.display_url, group.destination_url, :class => 'btn'
+  -else
+    .tweet
+      .headline
+        =image_tag "twitter-default.png"
+        %span.t-client
+          TEST
+        %span.t-at
+          @theTweeter 
+        %span.t-date
+          Jun 14
+      .t-content 
+        =copy.content
+        =link_to group.display_url, group.destination_url
+        .t-footer
+          =image_tag "tweet-bottom.png"
