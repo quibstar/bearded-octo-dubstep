@@ -39,16 +39,11 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
+      execute "cd #{release_path}/ && RAILS_ENV=production bundle exec rake assets:precompile"
+      execute :mkdir, '-p', "#{ release_path }/tmp"
       execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 
   after :publishing, :restart
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-
-    end
-  end
-
 end

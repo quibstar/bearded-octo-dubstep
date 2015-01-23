@@ -5,8 +5,6 @@ gem 'rails', '4.1.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
-
-
 gem "geocoder"
 gem 'haml-rails' 
 gem 'devise'
@@ -21,15 +19,11 @@ gem 'kaminari'
 gem 'friendly_id'
 gem 'pg_search'
 gem 'sitemap_generator'
-
 gem 'thin'
 gem 'mailcatcher'
-
 gem 'roo'
 gem 'spreadsheet'
 gem 'axlsx_rails'
-
-gem 'capistrano-rvm'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -42,7 +36,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -58,10 +52,11 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-
 group :development do
   gem "better_errors"
   gem 'spring'
+  gem 'capistrano-rvm'
+  gem 'capistrano-rails'
 end
 
 # Use ActiveModel has_secure_password
