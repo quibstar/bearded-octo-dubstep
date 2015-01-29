@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
     redirect_to admin_dashboard_index_path
   end
 
-    before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_filter :configure_permitted_parameters, if: :devise_controller?
 
   protected
 

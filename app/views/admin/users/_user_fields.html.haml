@@ -28,11 +28,11 @@
 	=f.label :title, :class => "control-label"
 	%div{:class => "controls"}
 		=f.text_field :title
-
-%li.control-group
-	=f.label :email, :class => "control-label"
-	%div{:class => "controls"}
-		=f.text_field :email
+-if action_name != 'new'
+	%li.control-group
+		=f.label :email, :class => "control-label"
+		%div{:class => "controls"}
+			=f.text_field :email
 
 %li.control-group
 	=f.label :phone, :class => "control-label"

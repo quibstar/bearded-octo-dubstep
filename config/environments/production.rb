@@ -88,10 +88,21 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
 
+  config.action_mailer.default_url_options = { :host => '104.131.178.120' }
+
   config.action_mailer.smtp_settings = {
+    # :address   => "smtp.mandrillapp.com",
+    # :port      => 587,
+    # :user_name => ENV["MANDRILL_USERNAME"],
+    # :password  => ENV["MANDRILL_API_KEY"]
+
     :address   => "smtp.mandrillapp.com",
-    :port      => 587,
-    :user_name => ENV["MANDRILL_USERNAME"],
-    :password  => ENV["MANDRILL_API_KEY"]
+    :port      => 25,
+    :enable_starttls_auto => true,
+    :user_name => Rails.application.secrets.mandrill_username,
+    :password  => Rails.application.secrets.mandrill_api_key, 
+    :authentication => 'login',
+    :domain => '104.131.178.120'
   }
+
 end

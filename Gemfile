@@ -8,7 +8,7 @@ gem 'pg'
 gem "geocoder"
 gem 'haml-rails' 
 gem 'devise'
-gem 'devise_invitable'
+gem 'devise_invitable', '~> 1.3.4'
 gem "cancan"
 gem "acts_as_list"
 gem 'paper_trail'

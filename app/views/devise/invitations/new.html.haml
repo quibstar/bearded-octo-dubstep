@@ -6,20 +6,11 @@
 %div{:class => 'log-page'} 
 	=form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f|
 		= devise_error_messages!
+
 		.input-prepend
 			%span.add-on
 				%i.icon-mail
 			= f.text_field :email,:placeholder => 'Email address' , :class => 'input-xlarge'
-
-		%h3
-			Roles
-		-roles = Role.all
-		-roles.each do |r|
-			%label.checkbox.inline
-				=check_box_tag "user[role_ids][]",r.id, @user.roles.include?(r)
-				=r.name
-		%hr
-			If you don't choose a role the user will login to the dashbard and have no access right to do anything.
 
 		%hr
 		=f.submit "Send an invitation", :class =>'btn-u'
