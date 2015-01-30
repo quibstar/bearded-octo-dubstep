@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(version: 20150130134538) do
     t.string   "image"
     t.boolean  "is_card",                   default: false
     t.integer  "ad_id",           limit: 8
+    t.integer  "ad_group_id",     limit: 8
   end
 
   create_table "help_categories", force: true do |t|

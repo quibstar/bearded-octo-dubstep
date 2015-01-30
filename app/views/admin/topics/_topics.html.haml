@@ -9,6 +9,8 @@
 			%span.column-sorter
 		%th
 			Client
+		%th
+			Groups
 
 	-@topics.each do |topic|
 		%tr
@@ -25,3 +27,14 @@
 					=topic.client.name
 				-else
 					n/a
+			%td
+				-topic.groups.each do|group|
+					=group.name
+					\-
+					%strong
+						Ad Id -
+					=group.ad_id
+					%strong
+						Group Ad Id -
+					=group.ad_group_id
+					%br/

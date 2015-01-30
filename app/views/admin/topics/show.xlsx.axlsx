@@ -1,11 +1,11 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: @topic.name[0..30]) do |sheet|
-  sheet.add_row ["Ad state","Ad","Description line 1","Description line 2","Display URL","Destination URL","Campaign", "Ad group","Status"]
+  sheet.add_row ["Ad state","Ad","Description line 1","Description line 2","Display URL","Destination URL","Campaign", "Ad group","Status", "Ad ID", "Ad group ID"]
   @topic.groups.each do |group|
     group.copies.each do |copy|
     	if(copy.selected == true)
       		con = copy.content.lines.map(&:chomp)
-      		sheet.add_row ["enabled", con[0] , con[1] , con[2] , group.display_url , group.destination_url , @topic.name , group.name , "approved"]
+      		sheet.add_row ["enabled", con[0] , con[1] , con[2] , group.display_url , group.destination_url , @topic.name , group.name , "approved", group.ad_id, group.ad_group_id]
     	end
     end
   end
