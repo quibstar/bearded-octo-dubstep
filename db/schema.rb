@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107162559) do
+ActiveRecord::Schema.define(version: 20150130134538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,7 +256,8 @@ ActiveRecord::Schema.define(version: 20150107162559) do
     t.string   "start_date"
     t.string   "end_date"
     t.string   "image"
-    t.boolean  "is_card",         default: false
+    t.boolean  "is_card",                   default: false
+    t.integer  "ad_id",           limit: 8
   end
 
   create_table "help_categories", force: true do |t|

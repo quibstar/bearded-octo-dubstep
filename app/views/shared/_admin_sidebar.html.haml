@@ -20,14 +20,13 @@
 					Last Access: 
 					=current_user.current_sign_in_at.to_formatted_s(:short)
 	#admin-sidebar
-		%ul.nav-side	
+		%ul.nav-side
+			%li
+				=link_to content_tag(:i, '', :class => 'fontello-icon-home') + "Dashboard", admin_dashboard_index_path	
 			%li
 				=link_to content_tag(:i, '', :class => 'fontello-icon-home') + "Topics (Campaigns)", admin_topics_path
 			%li
 				=link_to content_tag(:i, '', :class => 'fontello-icon-users') + "Clients", admin_clients_path
-
-			%li
-				=link_to content_tag(:i, '', :class => 'fontello-icon-home') + "Dashboard", admin_dashboard_index_path
 			-if can? :create, Navigation
 				%li{:class => 'arrow'}
 					%span

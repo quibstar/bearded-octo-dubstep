@@ -64,11 +64,11 @@ class ApplicationController < ActionController::Base
   end
 	
   def after_sign_in_path_for(resource)
-    admin_navigations_path 
+    admin_topics_path 
   end
   
   def after_sign_up_path_for(resource)
-  	admin_dashboard_index_path
+  	admin_topics_path
   end
 
   #cancan authorization
