@@ -6,6 +6,7 @@ class Topic < ActiveRecord::Base
   default_scope { order('id DESC') }
 
   has_many :groups, :dependent => :destroy
+  has_many :reviews, :dependent => :destroy
 
   belongs_to :client
 
