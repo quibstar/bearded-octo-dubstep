@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130134538) do
+ActiveRecord::Schema.define(version: 20150206212715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,10 +137,11 @@ ActiveRecord::Schema.define(version: 20150130134538) do
     t.string   "for_network"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "selected",     default: false
-    t.integer  "copy_id",      default: 0
+    t.boolean  "selected",               default: false
+    t.integer  "copy_id",                default: 0
     t.string   "editor"
-    t.string   "is_duplicate", default: "f"
+    t.string   "is_duplicate",           default: "f"
+    t.integer  "ad_id",        limit: 8
   end
 
   create_table "css_classes", force: true do |t|
@@ -257,7 +258,6 @@ ActiveRecord::Schema.define(version: 20150130134538) do
     t.string   "end_date"
     t.string   "image"
     t.boolean  "is_card",                   default: false
-    t.integer  "ad_id",           limit: 8
     t.integer  "ad_group_id",     limit: 8
   end
 

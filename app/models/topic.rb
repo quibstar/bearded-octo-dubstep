@@ -36,12 +36,11 @@ class Topic < ActiveRecord::Base
 
           topic.save
             
-          group = Group.find_by_ad_id hash[:ad_id]
+          group = Group.find_by_ad_group_id hash[:ad_group_id]
           if !group
             group = Group.new
           end
           group.name = hash[:ad_group]
-          group.ad_id = hash[:ad_id]
           group.ad_group_id = hash[:ad_group_id]
           group.destination_url = hash[:destination_url]
           group.display_url = hash[:display_url]
@@ -52,12 +51,13 @@ class Topic < ActiveRecord::Base
 
           content = hash[:ad] + "\n" + hash[:description_1] + "\n" + hash[:description_2]
 
-          copy = Copy.find_by_group_id group.id
+          copy = Copy.find_by_ad_id hash[:ad_id]
           if !copy
             copy = Copy.new 
             copy.selected = true
           end
 
+          copy.ad_id = hash[:ad_id]
           copy.content = content
           copy.editor = @user.email 
           group.copies << copy
@@ -75,7 +75,7 @@ class Topic < ActiveRecord::Base
       when ".xlsx" then xls = Roo::Spreadsheet.open(file.path, extension: :xlsx)
       else raise "Unknown file type: #{file.original_filename}"
     end
-    
+
     if xls
       xls.each(:campaign => 'Campaign', :keyword => '^Keyword$', :ad_group => 'Ad group') do |hash|
 
