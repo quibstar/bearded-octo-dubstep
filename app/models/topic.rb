@@ -15,51 +15,58 @@ class Topic < ActiveRecord::Base
   end
 
   def self.import(file)
-    xls = Roo::Spreadsheet.open(file.path, extension: :xlsx)
-    xls.each(:ad => '^Ad$',:description_1 => 'Description line 1',:description_2 => 'Description line 2',:ad_group => '^Ad group$', :campaign => 'Campaign', :display_url => 'Display URL', :destination_url => 'Destination URL', :ad_id => "^Ad ID$", :ad_group_id => "^Ad group ID$") do |hash|
+     xls = nil
 
-      
-      unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
-        topic = Topic.find_by_name hash[:campaign]
-        if !topic
-            topic = Topic.new
-            topic.name = hash[:campaign]
-            puts "New #{topic.name}"
+      case File.extname(file.original_filename)
+        when ".xls" then xls = Roo::Spreadsheet.open(file.path, extension: :xls)
+        when ".xlsx" then xls = Roo::Spreadsheet.open(file.path, extension: :xlsx)
+        else raise "Unknown file type: #{file.original_filename}"
+      end
+    if xls
+    
+      xls.each(:ad => '^Ad$',:description_1 => '^Description line 1$',:description_2 => '^Description line 2$',:ad_group => '^Ad group$', :campaign => '^Campaign$', :display_url => '^Display URL$', :destination_url => '^Destination URL', :ad_id => "^Ad ID$", :ad_group_id => "^Ad group ID$") do |hash|
+        
+        unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
+          topic = Topic.find_by_name hash[:campaign]
+          if !topic
+              topic = Topic.new
+              topic.name = hash[:campaign]
+              puts "New #{topic.name}"
+              
+          end
+
+          topic.save
             
+          group = Group.find_by_ad_id hash[:ad_id]
+          if !group
+            group = Group.new
+          end
+          group.name = hash[:ad_group]
+          group.ad_id = hash[:ad_id]
+          group.ad_group_id = hash[:ad_group_id]
+          group.destination_url = hash[:destination_url]
+          group.display_url = hash[:display_url]
+          group.network = "Google"
+          topic.groups << group
+
+          group.save
+
+          content = hash[:ad] + "\n" + hash[:description_1] + "\n" + hash[:description_2]
+
+          copy = Copy.find_by_group_id group.id
+          if !copy
+            copy = Copy.new 
+            copy.selected = true
+          end
+
+          copy.content = content
+          copy.editor = @user.email 
+          group.copies << copy
+
         end
-
-        topic.save
-          
-        group = Group.find_by_ad_id hash[:ad_id]
-        if !group
-          group = Group.new
-        end
-        group.name = hash[:ad_group]
-        group.ad_id = hash[:ad_id]
-        group.ad_group_id = hash[:ad_group_id]
-        group.destination_url = hash[:destination_url]
-        group.display_url = hash[:display_url]
-        group.network = "Google"
-        topic.groups << group
-
-        group.save
-
-        content = hash[:ad] + "\n" + hash[:description_1] + "\n" + hash[:description_2]
-
-        copy = Copy.find_by_group_id group.id
-        if !copy
-          copy = Copy.new 
-          copy.selected = true
-        end
-
-        copy.content = content
-        copy.editor = @user.email 
-        group.copies << copy
 
       end
-
     end
-
   end
 
   def self.keywords(file)
