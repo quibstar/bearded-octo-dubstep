@@ -77,35 +77,34 @@ class Topic < ActiveRecord::Base
     end
 
     if xls
-      xls.each(:campaign => 'Campaign', :keyword => '^Keyword$', :ad_group => 'Ad group') do |hash|
+      xls.each(:campaign => 'Campaign', :keyword => '^Keyword$', :ad_group => 'Ad group',:ad_group_id => '^Ad group ID$') do |hash|
 
         unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
-          topic = Topic.find_by_name hash[:campaign]
-          if !topic
-              topic = Topic.new
-              topic.name = hash[:campaign]
-              puts "New #{topic.name}"
+          # topic = Topic.find_by_name hash[:campaign]
+          # if !topic
+          #     topic = Topic.new
+          #     topic.name = hash[:campaign]
+          #     puts "New #{topic.name}"
+          # end
+
+          # topic.save
+     
+          group = Group.find_by_ad_group_id hash[:ad_group_id]
+          if !group
+            topic = Topic.new
+            topic.name = hash[:campaign]
+            topic.save
+            group = Group.new
+            group.topic_id = topic.topic_id
           end
-
-          topic.save
-
-          unless hash[:ad_group] == nil
-                
-            group = Group.find_by_name hash[:ad_group]
-            if !group
-              group = Group.new
-            end
-
-            group.name = hash[:ad_group]
-            group.network = "Google"
-            topic.groups << group
-            if group.keywords !=nil
-              group.keywords += "#{hash[:keyword]}\n"
-            else
-              group.keywords = "#{hash[:keyword]}\n"
-            end
-            group.save
+          group.name = hash[:ad_group]
+          group.network = "Google"
+          if group.keywords !=nil
+            group.keywords += "#{hash[:keyword]}\n"
+          else
+            group.keywords = "#{hash[:keyword]}\n"
           end
+          group.save
         end
       end
     end
