@@ -24,7 +24,7 @@
 				%td
 					.btn-group
 						=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Edit', edit_admin_testimonial_path(t), :class => 'fboxForm fancybox.ajax btn btn-mini btn-yellow'
-						=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_testimonial_path(t), :comfirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger'
+						=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_testimonial_path(t),  data: { confirm: 'Are you sure?' }, :method => :delete, :class => 'btn btn-mini btn-danger'
 				%td
 					=t.title
 				%td

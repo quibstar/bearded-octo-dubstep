@@ -35,7 +35,7 @@
 
 
 					
-					=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_collection_path(collection), :comfirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger'
+					=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_collection_path(collection),  data: { confirm: 'Are you sure?' }, :method => :delete, :class => 'btn btn-mini btn-danger'
 
 			%td
 				-collection.settings.each do |k,v|
