@@ -25,7 +25,8 @@ class Topic < ActiveRecord::Base
 
       if xls
         xls.each(:ad => '^Ad$',:description_1 => '^Description line 1$',:description_2 => '^Description line 2$',:ad_group => '^Ad group$', :campaign => '^Campaign$', :display_url => '^Display URL$', :destination_url => '^Destination URL', :ad_id => "^Ad ID$", :ad_group_id => "^Ad group ID$", :ad_type => "^Ad type$") do |hash|
-          if hash[:ad_type] == "Ad type"
+          #only import text ads
+          if hash[:ad_type] == "Text ad"
             unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
               topic = Topic.find_by_name hash[:campaign]
               if !topic
