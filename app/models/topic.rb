@@ -73,43 +73,45 @@ class Topic < ActiveRecord::Base
   end
 
   def self.keywords(file)
-    xls = nil
-    case File.extname(file.original_filename)
-      when ".xls" then xls = Roo::Spreadsheet.open(file.path, extension: :xls)
-      when ".xlsx" then xls = Roo::Spreadsheet.open(file.path, extension: :xlsx)
-      else raise "Unknown file type: #{file.original_filename}"
-    end
+    if(file)
+      xls = nil
+      case File.extname(file.original_filename)
+        when ".xls" then xls = Roo::Spreadsheet.open(file.path, extension: :xls)
+        when ".xlsx" then xls = Roo::Spreadsheet.open(file.path, extension: :xlsx)
+        else raise "Unknown file type: #{file.original_filename}"
+      end
 
-    if xls
-      xls.each(:campaign => 'Campaign', :keyword => '^Keyword$', :ad_group => 'Ad group',:ad_group_id => '^Ad group ID$') do |hash|
+      if xls
+        xls.each(:campaign => 'Campaign', :keyword => '^Keyword$', :ad_group => 'Ad group',:ad_group_id => '^Ad group ID$') do |hash|
 
-        unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
-          topic = Topic.find_by_name hash[:campaign]
-          if !topic
-              topic = Topic.new
-              topic.name = hash[:campaign]
-              puts "New #{topic.name}"
-          end
-
-          topic.save
-
-          unless hash[:ad_group] == nil
-                
-            group = Group.find_by_name hash[:ad_group]
-            if !group
-              group = Group.new
+          unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
+            topic = Topic.find_by_name hash[:campaign]
+            if !topic
+                topic = Topic.new
+                topic.name = hash[:campaign]
+                puts "New #{topic.name}"
             end
 
-            group.name = hash[:ad_group]
-            group.ad_group_id = hash[:ad_group_id]
-            group.network = "Google"
-            topic.groups << group
-            if group.keywords !=nil
-              group.keywords += "#{hash[:keyword]}\n"
-            else
-              group.keywords = "#{hash[:keyword]}\n"
+            topic.save
+
+            unless hash[:ad_group] == nil
+                  
+              group = Group.find_by_name hash[:ad_group]
+              if !group
+                group = Group.new
+              end
+
+              group.name = hash[:ad_group]
+              group.ad_group_id = hash[:ad_group_id]
+              group.network = "Google"
+              topic.groups << group
+              if group.keywords !=nil
+                group.keywords += "#{hash[:keyword]}\n"
+              else
+                group.keywords = "#{hash[:keyword]}\n"
+              end
+              group.save
             end
-            group.save
           end
         end
       end
