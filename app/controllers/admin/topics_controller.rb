@@ -76,12 +76,22 @@ class Admin::TopicsController < ApplicationController
   def import
     Topic.get_user(params[:user])
     Topic.import(params[:file])
-    redirect_to admin_topics_path, notice: "Campaign imported"
+    if params[:file]
+      flash[:success] = "Campaign imported"
+    else
+      flash[:error] = "No file chosen."
+    end
+    redirect_to admin_topics_path
   end
 
   def keywords
     Topic.keywords(params[:file])
-    redirect_to admin_topics_path, notice: "Keywords imported"
+    if params[:file]
+      flash[:success] = "Keywords imported"
+    else
+      flash[:error] = "No file chosen."
+    end
+    redirect_to admin_topics_path
   end
 
 end
