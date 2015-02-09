@@ -112,16 +112,16 @@ class Topic < ActiveRecord::Base
     end
   end
 
-  def to_csv(topic)
-    CSV.generate do |csv|
-      csv << ['Ad state','Ad', 'Description line 1', 'Description line 2', 'Display URL', 'Destination URL', 'Campaign', 'Ad group', 'Status']
-      topic.groups.where(:selected => true).each do |group|
-       group.copies.each do |copy|
-        con = copy.content.lines.map(&:chomp)
-        csv << ['enabled', con[0], con[1], con[2], group.display_url, group.destination_url, topic.name, group.name, 'approved']
-       end
-      end
-    end
-  end
+  # def to_csv(topic)
+  #   CSV.generate do |csv|
+  #     csv << ['Ad state','Ad', 'Description line 1', 'Description line 2', 'Display URL', 'Destination URL', 'Campaign', 'Ad group', 'Status']
+  #     topic.groups.where(:selected => true).each do |group|
+  #      group.copies.each do |copy|
+  #       con = copy.content.lines.map(&:chomp)
+  #       csv << ['enabled', con[0], con[1], con[2], group.display_url, group.destination_url, topic.name, group.name, 'approved']
+  #      end
+  #     end
+  #   end
+  # end
 
 end
