@@ -41,4 +41,5 @@
 *= require partials/_navigations.css
 *= require partials/_search.css
 *= require admin/groups.css
+*= require admin/topics.css
  */

@@ -15,7 +15,7 @@ $(document).ready(function() {
 	// FB ad 25/90
 	//      post unlimited
 	// LinedIn 25/75
-
+	
 	$("#edit-mode").click(function(e){
 		if(editMode == 0) {
 			$("#form-remote .widget-header .btn, #form-remote .widget-content .btn, #form-remote .widget-content .btn-u").fadeIn();
