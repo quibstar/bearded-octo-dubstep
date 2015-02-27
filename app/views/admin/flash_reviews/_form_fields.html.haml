@@ -19,4 +19,27 @@
 		%h4
 			Flash Files
 	%li.control-group
-		=collection_check_boxes(:flash_review, :swf_ids, Swf.all, :id, :title, {}, {:class=>'inline'})
+		%table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
+			%caption
+				Flash Files
+			%thead
+				%th
+				
+				%th
+					Title
+				%th{:scope => 'col'}
+					size
+
+			-for swf in Swf.all
+				%tr
+					%td
+						=check_box_tag "flash_review[swf_ids][]",swf.id, @flash_review.swfs.include?(swf), :id => swf.id
+					%td
+						%label.checkbox.inline
+							=swf.title
+					%td
+						=swf.width
+						x
+						=swf.height
+					
+
