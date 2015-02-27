@@ -1,0 +1,6 @@
+.flashwrapper{:style => "background: white;padding:20px 0; width:#{swf.width}px"}
+  .flashContent{:style => "width:#{swf.width}px; height :#{swf.height}px;"}
+    %object{ :width =>"#{swf.width}", :height =>"#{swf.height}"} 
+      %param{ :name =>"movie", :value =>"#{swf.swf}"} 
+      %param{ :name =>"FlashVars", :value => "clickTag=http://#{swf.destination_url}"}
+      %embed{ :src =>"#{swf.swf}", :width =>"#{swf.width}", :height =>"#{swf.height}"} 

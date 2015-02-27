@@ -1,0 +1,22 @@
+=content_for :page_title do
+	%h1.page-title
+		New Flash Review Builder
+
+.navbar.navbar-page
+	.navbar-inner
+		.container
+			%ul.nav.pull-right
+				%li
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+	%li.control-group
+		=f.label "Client", :class => "control-label"
+		.controls
+			=f.collection_select(:client_id, @clients, :id, :name)
+
+%ul.form-list.label-left.list-bordered
+	%li.section-form
+		%h4
+			Flash Files
+	%li.control-group
+		=collection_check_boxes(:flash_review, :swf_ids, Swf.all, :id, :title, {}, {:class=>'inline'})

@@ -337,6 +337,10 @@ $(".fboxSmall").fancybox({
 	maxHeight 	: 600
 });
 
+$(".flashBox").fancybox({		
+
+});
+
 $(".fbox-asset").fancybox();
 
 	

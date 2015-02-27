@@ -1,0 +1,15 @@
+.flashwrapper {
+	background-color: white;
+	width: 100%;
+}
+
+.flashContent {
+	margin: auto;
+}
+
+#flash-review-show.front-end {
+	.flashwrapper {
+		margin: 20px;
+		float:left;
+	}
+}

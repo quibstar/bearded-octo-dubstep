@@ -22,6 +22,8 @@ resources :topics do
   end
 end
 
+resources :flash_media, :only => :show
+
 resources :copies
     
 devise_for :users, :controllers => { :registrations => "admin/registrations" }
@@ -30,6 +32,9 @@ devise_for :users, :controllers => { :registrations => "admin/registrations" }
 
     resources :clients
     resources :reviews
+    resources :flash_reviews
+
+    resources :swfs
 
     resources :users do 
       post :generate_new_password_email

@@ -25,6 +25,10 @@
 				=link_to content_tag(:i, '', :class => 'fontello-icon-home') + "Dashboard", admin_dashboard_index_path	
 			%li
 				=link_to content_tag(:i, '', :class => 'fontello-icon-home') + "Topics (Campaigns)", admin_topics_path
+
+			%li
+				=link_to content_tag(:i, '', :class => 'fontello-icon-cloud') + "Flash (swf) Review Builder", admin_flash_reviews_path
+
 			%li
 				=link_to content_tag(:i, '', :class => 'fontello-icon-users') + "Clients", admin_clients_path
 			-if can? :create, Navigation
@@ -70,16 +74,25 @@
 					%ul{:class => 'subnav'}
 						%li
 							=link_to 'Images', admin_images_path
+
+						%li
+							=link_to 'Flash (.swf)', admin_swfs_path
+
 						%li
 							=link_to 'Audios', admin_audios_path
+
 						%li
 							=link_to 'Documents', admin_documents_path
+
 						%li
 							=link_to 'Links', admin_links_path
+
 						%li
 							=link_to 'YouTube Videos', admin_youtubes_path
+
 						%li
 							=link_to 'FAQ\'s', admin_faqs_path
+
 						%li
 							=link_to 'Testimonials', admin_testimonials_path
 			

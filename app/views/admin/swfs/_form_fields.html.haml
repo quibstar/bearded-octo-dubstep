@@ -1,0 +1,40 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal  
+  / %li.control-group
+  /   =f.label "Client", :class => "control-label"
+  /   .controls
+  /     =f.collection_select(:client_id, @clients, :id, :name)
+
+  %li.control-group
+    =f.label "Flash File swf", :class => "control-label"
+    .controls
+      =f.file_field :swf 
+
+  %li.control-group
+    =f.label "Title *", :class => "control-label"
+    .controls
+      =f.text_field :title , :class => 'required'
+      .help-block
+        Title is used for search.
+
+  %li.control-group
+    =f.label :width, :class => "control-label"
+    .controls
+      =f.text_field :width
+
+  %li.control-group
+    =f.label :height, :class => "control-label"
+    .controls
+      =f.text_field :height
+
+  %li.control-group
+    =f.label :destination_url, :class => "control-label"
+    .controls
+      =f.text_field :destination_url
+      .help-block
+        Do not include http://. Here is a good example www.teamddm.com.
+
+  -if @flash_review
+    =f.text_field :flash_review, :value =>  @flash_review.id
+

@@ -1,0 +1,12 @@
+=content_for :page_title do
+  %h1.page-title
+    Flash Compiled Files (swf)
+.navbar.navbar-page
+  .navbar-inner
+    .container
+      %ul.nav.pull-right
+        %li.divider-vertical
+        %li
+          =link_to content_tag(:i,'',:class => 'fontello-icon-upload') + ' New swf',new_admin_swf_path, :class => 'fboxForm fancybox.ajax'
+   
+=render 'swfs'
