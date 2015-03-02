@@ -1,11 +1,13 @@
 %table{:id => 'sortable-table',:class => "table table-striped table-hover table-bordered boo-table"}
 	%caption
-		FAQ's
+		Clients
 	%thead
 		%th
 			Action
 		%th{:scope => 'col'}
 			Name
+		%th
+			Topics/Groups
 
 	-@clients.each do |client|
 		%tr
@@ -16,3 +18,15 @@
 
 			%td
 				=client.name
+			%td
+				-client.topics.each do |topic|
+
+					-if topic.name
+						=link_to topic.name, admin_topic_path(topic)
+
+						-if topic.groups.present?
+							%strong
+								Groups
+							\:
+							=topic.groups.map{|g| g.name}.join(", ").html_safe
+							%br/
