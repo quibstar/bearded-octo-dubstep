@@ -2,10 +2,10 @@
   #form-remote.widget.widget-box
     .widget-header
       %h1
-        -if @flash_review.client
-          =@flash_review.client.name
-          \: Flash Review
+        -if @banner.client
+          =@banner.client.name
+          \: Banner Review
     .widget-content
       .widget-body
-        -@flash_review.swfs.each do |swf|
+        -@banner.swfs.each do |swf|
           = render 'admin/swfs/flash_wrapper', :swf => swf

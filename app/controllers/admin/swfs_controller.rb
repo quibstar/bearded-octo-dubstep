@@ -13,8 +13,8 @@ class Admin::SwfsController < ApplicationController
     @title = "New Swf"
     @clients = Client.all
 
-    if params[:flash_review]
-      @flash_review = FlashReview.find(params[:flash_review])
+    if params[:banner]
+      @banner = Banner.find(params[:banner])
     end
 
     render :layout => false
@@ -31,12 +31,12 @@ class Admin::SwfsController < ApplicationController
       if @swf.save
         flash[:success]= "Successfully created flash (.swf)"
 
-        if swf_params[:flash_review]
+        if swf_params[:banner]
 
-          @flash_review = FlashReview.find(swf_params[:flash_review])
-          @flash_review.swfs << @swf
-          @flash_review.save
-          redirect_to admin_flash_reviews_path
+          @banner = Banner.find(swf_params[:banner])
+          @banner.swfs << @swf
+          @banner.save
+          redirect_to admin_banners_path
         else
           redirect_to admin_swfs_path
         end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225215548) do
+ActiveRecord::Schema.define(version: 20150302141041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,19 @@ ActiveRecord::Schema.define(version: 20150225215548) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "artist"
+  end
+
+  create_table "banners", force: true do |t|
+    t.integer  "client_id"
+    t.string   "secure_url"
+    t.string   "banner_style"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "banners_swfs", id: false, force: true do |t|
+    t.integer "banner_id"
+    t.integer "swf_id"
   end
 
   create_table "categories", force: true do |t|
@@ -253,6 +266,16 @@ ActiveRecord::Schema.define(version: 20150225215548) do
   create_table "function_names", force: true do |t|
     t.string   "category"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "gifs", force: true do |t|
+    t.string   "title"
+    t.string   "width"
+    t.string   "height"
+    t.string   "destination_url"
+    t.string   "gif"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -22,7 +22,7 @@ resources :topics do
   end
 end
 
-resources :flash_media, :only => :show
+resources :banners, :only => :show
 
 resources :copies
     
@@ -32,8 +32,9 @@ devise_for :users, :controllers => { :registrations => "admin/registrations" }
 
     resources :clients
     resources :reviews
-    resources :flash_reviews
-
+    
+    resources :banners
+    resources :gifs
     resources :swfs
 
     resources :users do 

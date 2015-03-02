@@ -1,0 +1,6 @@
+=form_for [:admin, @banner] do |f|
+  -if @banner
+    =render 'shared/error_messages', :object => @banner 
+  =render "admin/banners/form_fields", :f => f
+
+  =f.submit "Save", :class =>'btn btn-primary'

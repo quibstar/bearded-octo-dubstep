@@ -13,7 +13,7 @@ class ReviewMailer < ActionMailer::Base
     mail(from: email_with_name, cc:@user.email, to: user_email, subject: 'Please review content.')
   end
 
-  def send_flash_review_link(url, user_email, user)
+  def send_banner_link(url, user_email, user)
     
     env = "http://adreview.teamddm.com"
     if Rails.env == 'development'
@@ -22,7 +22,7 @@ class ReviewMailer < ActionMailer::Base
     
     @user = user
     email_with_name = %("#{@user.name}" <#{@user.email}>)
-    @url = "#{env}/flash_media/#{url}"
+    @url = "#{env}/banner/#{url}"
     mail(from: email_with_name, cc:@user.email, to: user_email, subject: 'Please review content.')
   end
 end

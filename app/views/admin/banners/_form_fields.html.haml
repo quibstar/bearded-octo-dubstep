@@ -33,7 +33,7 @@
 			-for swf in Swf.all
 				%tr
 					%td
-						=check_box_tag "flash_review[swf_ids][]",swf.id, @flash_review.swfs.include?(swf), :id => swf.id
+						=check_box_tag "banner[swf_ids][]",swf.id, @banner.swfs.include?(swf), :id => swf.id
 					%td
 						%label.checkbox.inline
 							=swf.title

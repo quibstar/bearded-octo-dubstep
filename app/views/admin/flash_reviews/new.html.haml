@@ -1,5 +1,0 @@
-=form_for [:admin, @flash_review] do |f|
-  -if @flash_review
-    =render 'shared/error_messages', :object => @flash_review 
-  =render "admin/flash_reviews/form_fields", :f => f
-  =f.submit "Save", :class =>'btn btn-primary'
