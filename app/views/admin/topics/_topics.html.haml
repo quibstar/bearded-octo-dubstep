@@ -30,7 +30,13 @@
 			%td
 				-topic.groups.each do|group|
 					=group.name
+					%br/
 					%strong
-						Group Ad Id -
+						Group Ad Id - 
 					=group.ad_group_id
 					%br/
+					-group.copies.each do |copy|
+						%strong
+							Ad Id - 
+						=copy.ad_id
+						%br/
