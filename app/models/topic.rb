@@ -63,7 +63,6 @@ class Topic < ActiveRecord::Base
               copy.content = content
               copy.editor = @user.email 
               group.copies << copy
-
             end
           end
         end
