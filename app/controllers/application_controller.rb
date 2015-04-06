@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-    
+  
+
   def check_rewrite_table(url)
     request = Rewrite.find_by_request_path(url)
     if request

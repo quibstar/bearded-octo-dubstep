@@ -55,7 +55,7 @@ class Admin::TopicsController < ApplicationController
     @topic = Topic.friendly.find(params[:id])
     if @topic.update_attributes(topic_params)
       flash[:success]= "Successfully updated topic."
-      redirect_to admin_topics_path
+      redirect_to admin_topics_path()
     else
       render :action => 'edit'
       @title = "Edit Topic"

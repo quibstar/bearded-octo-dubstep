@@ -1,16 +1,51 @@
-wb = xlsx_package.workbook
-wb.add_worksheet(name: @topic.name[0..30]) do |sheet|
-  sheet.add_row ["Ad state","Ad","Description line 1","Description line 2","Display URL","Destination URL","Campaign", "Ad group","Status", "Ad ID", "Ad group ID"]
-  @topic.groups.each do |group|
+# check to see if there is group or copy ids, if so ad was not created in adreview
+has_group_id = false
+has_copy_id = false
+
+# loop through groups and copies to see if there are ids
+@topic.groups.each do |group|
+  if group.ad_group_id
+    has_group_id = true
     group.copies.each do |copy|
-    	if(copy.selected == true)
-      		con = copy.content.lines.map(&:chomp)
-      		sheet.add_row ["enabled", con[0] , con[1] , con[2] , group.display_url , group.destination_url , @topic.name , group.name , "approved", copy.ad_id, group.ad_group_id]
-    	end
+      if copy.ad_id
+        has_copy_id = true
+      end
     end
   end
 end
 
+
+if has_group_id && has_copy_id
+
+  wb = xlsx_package.workbook
+  wb.add_worksheet(name: @topic.name[0..30]) do |sheet|
+    sheet.add_row ["Ad state","Ad","Description line 1","Description line 2","Display URL","Destination URL","Campaign", "Ad group","Status", "Ad ID", "Ad group ID"]
+    @topic.groups.each do |group|
+      group.copies.each do |copy|
+      	if(copy.selected == true)
+        		con = copy.content.lines.map(&:chomp)
+        		sheet.add_row ["enabled", con[0] , con[1] , con[2] , group.display_url , group.destination_url , @topic.name , group.name , "approved", copy.ad_id, group.ad_group_id]
+      	end
+      end
+    end
+  end
+
+else
+
+  wb = xlsx_package.workbook
+  wb.add_worksheet(name: @topic.name[0..30]) do |sheet|
+    sheet.add_row ["Ad state","Ad","Description line 1","Description line 2","Display URL","Destination URL","Campaign", "Ad group","Status"]
+    @topic.groups.each do |group|
+      group.copies.each do |copy|
+        if(copy.selected == true)
+            con = copy.content.lines.map(&:chomp)
+            sheet.add_row ["enabled", con[0] , con[1] , con[2] , group.display_url , group.destination_url , @topic.name , group.name , "approved"]
+        end
+      end
+    end
+  end
+
+end
 
 
 

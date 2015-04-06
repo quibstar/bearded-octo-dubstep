@@ -33,10 +33,10 @@ class Admin::GroupsController < ApplicationController
     @group = Group.find(params[:id])
     if @group.update_attributes(group_params)
       flash[:success]= "Successfully updated group."
-      redirect_to admin_topic_path(@group.topic_id)
+      redirect_to admin_topic_path(@group.topic_id, anchor: "group-#{@group.id}")
     else
       flash[:success]= "Something went wrong please try again."
-      redirect_to admin_topic_path(@group.topic_id)
+      redirect_to admin_topic_path(@group.topic_id, anchor: "group-#{@group.id}")
     end
   end
 

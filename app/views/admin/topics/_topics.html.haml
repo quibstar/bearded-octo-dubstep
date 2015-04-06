@@ -31,12 +31,15 @@
 				-topic.groups.each do|group|
 					=group.name
 					%br/
-					%strong
-						Group Ad Id - 
-					=group.ad_group_id
-					%br/
-					-group.copies.each do |copy|
+
+					-if group.ad_group_id
 						%strong
-							Ad Id - 
-						=copy.ad_id
+							Group Ad Id - 
+						=group.ad_group_id
 						%br/
+					-group.copies.each do |copy|
+						-if copy.ad_id
+							%strong
+								Ad Id - 
+							=copy.ad_id
+							%br/

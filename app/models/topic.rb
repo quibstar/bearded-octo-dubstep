@@ -10,6 +10,17 @@ class Topic < ActiveRecord::Base
 
   belongs_to :client
 
+  after_create :create_review_url
+
+
+  def create_review_url
+    review = Review.new
+    review.user = "" 
+    review.topic_id = self.id
+    review.save    
+  end
+
+
   def self.get_user(id)
     @user = User.find(id)
   end

@@ -37,6 +37,7 @@
 //= require admin/tinyMCE
 //= require admin/tinyMCEBasic
 //= require admin/z-core
+//= require zeroclipboard
 //= require admin/topics.js
 
 

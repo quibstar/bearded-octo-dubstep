@@ -10,6 +10,7 @@ var counterTwo;
 var counterThree;
 
 $(document).ready(function() {
+
 	// Goolgle 25/35/35
 	// Twitter 140
 	// FB ad 25/90
@@ -27,6 +28,21 @@ $(document).ready(function() {
 			$(this).html("Edit Mode");
 		}
 	});
+
+
+	$("#review-mode").click(function(e){
+		if(editMode == 1) {
+			$("#form-remote .widget-header .btn, #form-remote .widget-content .btn, #form-remote .widget-content .btn-u").fadeIn();
+			editMode = 0
+			$(this).html("Preview Mode");
+		} else {
+			$("#form-remote .widget-header .btn, #form-remote .widget-content .btn, #form-remote .widget-content .btn-u").fadeOut();
+			editMode = 1
+			$(this).html("Edit Mode");
+		}
+	});
+
+
 
 	$(".new-copy").click(function(e){
 		e.preventDefault();
