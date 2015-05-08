@@ -25,6 +25,8 @@ end
 resources :banners, :only => :show
 
 resources :copies
+
+resources :keywords
     
 devise_for :users, :controllers => { :registrations => "admin/registrations" }
 
@@ -36,6 +38,7 @@ devise_for :users, :controllers => { :registrations => "admin/registrations" }
     resources :banners
     resources :gifs
     resources :swfs
+    resources :keywords
 
     resources :users do 
       post :generate_new_password_email

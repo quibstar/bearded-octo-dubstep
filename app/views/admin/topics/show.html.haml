@@ -35,8 +35,8 @@
               %li{:id => "group-#{group.id}", :class => "group"}
                 .group-name.clear-both
                   %h2
-                    Group:
                     =group.name
+                    =group.id
 
                     =render partial: "admin/topics/network", locals: {group: group}
 
@@ -47,12 +47,44 @@
 
                     =link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_topic_group_path(@topic, group),  data: { confirm: 'Are you sure?' }, :method => :delete, :class => "btn btn-mini btn-danger"
 
+                    = link_to content_tag(:i,'',:class => 'fontello-icon-download') + " Selected Group(s)",admin_group_path(group,format: "xlsx",:keywords_only => false), :class => 'btn btn-mini btn-green'
+
                 
                   -if (group.network == 'Google')
                     .keywords.span3
                       %strong
                         Keywords:
-                      =simple_format group.keywords
+                        .btn-group
+                          =link_to "+ New", new_admin_keyword_path(:group_id => group.id), :class => 'btn btn-mini btn-green fboxForm fancybox.ajax '
+                          = link_to content_tag(:i,'',:class => 'fontello-icon-download') + " Keywords",admin_group_path(group,format: "xlsx",:keywords_only => true), :class => 'btn btn-mini btn-green'
+                          
+                      -if (group.keywords.count > 0)
+                        %table
+                          %thead
+                            %th
+                              Word
+                            %th
+                              Is Chosen
+                            %th
+                              Under Review
+                            
+                            
+                          -group.keywords.each do |keyword|
+                            %tr
+                              %td
+                                =link_to keyword.word, edit_admin_keyword_path(keyword), :class => 'fboxForm fancybox.ajax '
+                              %td
+                                -if keyword.under_review != 1
+                                  = green_or_red keyword.is_chosen
+                                -else
+                                  =content_tag(:span, "✕", :class =>"label label-negative")
+                              %td
+                                -if keyword.under_review == 1
+                                  =content_tag(:span, "✓", :class =>"label label-positive")
+                              
+                            
+                            
+
 
                 -if (group.network == 'Google')
                   -span = "span8"
@@ -62,8 +94,6 @@
                 %div{:class => "copies #{span}"}
                 
                   -if group.copies.count > 0  
-                    %strong
-                      Copy:
                     %ul.group-copy
                       -group.copies.where(:copy_id => 0).each_with_index do |copy, index|
                         %li
@@ -75,6 +105,9 @@
 
                             .col-50.dups
                               =render partial: "admin/topics/tabbed_versions", locals: {group: group, copy: copy, index: index}
+                              %h1
+                                copyid
+                                =copy.copy_id
                               
                           -else
 
@@ -89,7 +122,7 @@
                 =render partial: "admin/topics/dates", locals: {group: group}
 
     .widget-footer
-      -if @topic.reviews.count > 0 && @topic.groups.count > 0
+      -if @topic.reviews.length > 0 && @topic.groups.count > 0
         %h3
           Review Url
 

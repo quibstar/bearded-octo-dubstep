@@ -13,4 +13,14 @@ module TopicsHelper
     end
   end
 
+  def green_or_red(i)
+
+    if i == 0
+      content_tag(:span, "✕", :class =>"label label-negative")
+    else
+      content_tag(:span, "✓", :class =>"label label-positive")
+    end
+    
+  end
+
 end

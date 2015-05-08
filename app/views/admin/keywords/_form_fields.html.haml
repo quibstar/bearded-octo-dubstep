@@ -1,0 +1,22 @@
+=javascript_include_tag 'admin/modal_links.js'
+
+%ul.form-list.label-left.list-bordered.form-horizontal
+	%li.control-group
+		=f.label :word, :class => "control-label"
+		.controls
+			=f.text_field :word, :class => "required"
+	%li.control-group
+		=f.label :is_chosen, :class => "control-label"
+		.controls
+			=f.check_box :is_chosen
+
+	%li.control-group
+		=f.label :under_review, :class => "control-label"
+		.controls
+			=f.check_box :under_review
+
+
+	-if @group
+		=f.hidden_field :group_id, :value => @group.id 
+	-else
+		=f.hidden_field :group_id

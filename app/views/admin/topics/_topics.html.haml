@@ -17,7 +17,7 @@
 			%td
 				.btn-group
 					=link_to content_tag(:i,'',:class => 'fontello-icon-edit') +' Edit', edit_admin_topic_path(topic) , :class => 'btn btn-mini btn-green fboxForm fancybox.ajax'
-					=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Show', admin_topic_path(topic) , :class => 'btn btn-mini btn-yellow'
+					=link_to content_tag(:i,'',:class => 'fontello-icon-pencil-1') +' Groups', admin_topic_path(topic) , :class => 'btn btn-mini btn-yellow'
 					=link_to content_tag(:i,'',:class => 'fontello-icon-trash-4') +' Delete', admin_topic_path(topic),  data: { confirm: 'Are you sure?' }, :method => :delete, :class => "btn btn-mini btn-danger"
 
 			%td

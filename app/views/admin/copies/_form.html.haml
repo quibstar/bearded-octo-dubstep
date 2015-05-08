@@ -2,9 +2,9 @@
   Too many lines.
 %ul.form-list.label-left.list-bordered.form-horizontal
   %li.control-group
-    .span5.clear-both
+    .span3.clear-both
       =f.text_area :content, :class => "ad-content"
-    .span5.counter
+    .span2.counter
       .counter-one-container
         Line one:
         %span.count-one
@@ -16,6 +16,12 @@
       .counter-three-container
         Line three:
         %span.count-three
+
+    -if @group.keywords.count > 0
+      .span3.keyword-edit-container
+        -@group.keywords.each do |k|
+          =k.word
+          %br/
 
   %li.control-group
     %label.checkbox.inline

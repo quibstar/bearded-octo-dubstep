@@ -43,6 +43,10 @@ class Admin::CopiesController < ApplicationController
   def destroy
     @copy = Copy.find(params[:id])
     redirect_to admin_topic_path(@copy.group.topic_id)
+    Copy.where("copy_id = ?", @copy.id).find_each do |copy|
+      copy.copy_id = 0
+      copy.save!
+    end
     @copy.destroy
     
   end

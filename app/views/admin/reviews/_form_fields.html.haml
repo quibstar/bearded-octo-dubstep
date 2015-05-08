@@ -1,0 +1,10 @@
+=f.hidden_field :client_id, :value => @client.id
+%ul.form-list.label-left.list-bordered.form-horizontal
+  %li.control-group
+  -if @client.topics.count > 0  
+    -@client.topics.each do |topic|
+      %label.checkbox.inline
+        =check_box_tag "review[topic_ids][]",topic.id, @review.topics.include?(topic), :id => topic.id, :class => "checkbox"
+        =topic.name
+  -else
+    No Topic to select

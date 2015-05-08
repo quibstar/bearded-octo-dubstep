@@ -30,21 +30,21 @@
 		transition:all 0.4s ease-in-out;
 		&:hover,
 		&:focus {
-			color:#72c02c;
-			border-bottom:solid 2px #72c02c;
+			color:defaultLinkColor;
+			border-bottom:solid 2px defaultLinkColor;
 		}
 		&.current,
 		&.current:focus {
-			color:#72c02c;	
+			color:defaultLinkColor;	
 			text-decoration:none;
-			border-bottom:solid 2px #72c02c;
+			border-bottom:solid 2px defaultLinkColor;
 			background:none;	
 			@include box-shadow(none);
 		}
 		&.current:hover {
-		  	color:#72c02c;	
+		  	color:defaultLinkColor;	
 			background:none;		
-			border-bottom:solid 2px #72c02c;
+			border-bottom:solid 2px defaultLinkColor;
 		  	@include box-shadow(none);
 		}
 	}
@@ -61,7 +61,7 @@
 	margin:-2px 0; 
 	min-width:200px;
 	border-radius:0; 
-	border-top:solid 2px #72c02c; 
+	border-top:solid 2px defaultLinkColor; 
 	border-bottom:solid 2px #687074; 
 	z-index: 9999 !important;
 	background: white;
@@ -126,8 +126,8 @@
 	border-bottom-color:#aaa;
 }
 .navbar .nav > li > a.search:hover {
-	color:#72c02c;
-	border-bottom-color:#72c02c;
+	color:defaultLinkColor;
+	border-bottom-color:defaultLinkColor;
 }
 
 /*Fancybox for gallery page*/

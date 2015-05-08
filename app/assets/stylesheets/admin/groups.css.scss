@@ -144,7 +144,7 @@
 	}
 
 	.group {
-		padding: 50px 0 20px 0;
+		padding: 0 0 20px 0;
 		margin-top: 10px;
 		overflow: auto;
 	}
@@ -161,6 +161,7 @@
 }
 
 .google-display {
+	max-width: 270px;
 	color: #333!important;
 	margin: 10px 0 ;
 	border: 1px solid #CCC;

@@ -11,6 +11,18 @@ class Admin::GroupsController < ApplicationController
     render :layout => false
   end
 
+  def show
+    @group = Group.find(params[:id])
+    @title = ""
+    @group.keywords_only = params[:keywords_only]
+    puts @group.keywords_only
+    fileName = "DDM Ad Review -" + @group.name 
+    respond_to do |format|
+      format.xls
+      format.xlsx{response.headers['Content-Disposition'] = "attachment; filename='" + fileName[0..30] + ".xlsx'"}
+    end
+  end
+
   def create
     @group = Group.new(group_params)
     if @group.save 

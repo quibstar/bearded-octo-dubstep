@@ -15,7 +15,6 @@ class Topic < ActiveRecord::Base
 
   def create_review_url
     review = Review.new
-    review.user = "" 
     review.topic_id = self.id
     review.save    
   end
@@ -92,7 +91,7 @@ class Topic < ActiveRecord::Base
       end
 
       if xls
-        xls.each(:campaign => 'Campaign', :keyword => '^Keyword$', :ad_group => 'Ad group',:ad_group_id => '^Ad group ID$') do |hash|
+        xls.each(:campaign => 'Campaign', :keyword => '^Keyword$', :ad_group => 'Ad group', :keyword_id => '^Keyword ID$',:ad_group_id => '^Ad group ID$') do |hash|
 
           unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
             topic = Topic.find_by_name hash[:campaign]
@@ -109,6 +108,7 @@ class Topic < ActiveRecord::Base
               group = Group.find_by_name hash[:ad_group]
               if !group
                 group = Group.new
+                group.save
               end
 
               group.name = hash[:ad_group]
@@ -116,9 +116,24 @@ class Topic < ActiveRecord::Base
               group.network = "Google"
               topic.groups << group
               if group.keywords !=nil
-                group.keywords += "#{hash[:keyword]}\n"
-              else
-                group.keywords = "#{hash[:keyword]}\n"
+
+                keyword = Keyword.find_by_keyword_id(hash[:keyword_id])
+
+                if keyword == nil
+                  keyword = Keyword.new 
+                  keyword.group_id = group.id
+                  keyword.word = hash[:keyword]
+                  keyword.is_chosen = 1
+                  keyword.under_review = 0
+                  keyword.keyword_id = hash[:keyword_id]
+                  keyword.ad_group_id = hash[:ad_group_id]
+                  keyword.save
+                end
+
+                
+                # group.keywords += "#{hash[:keyword]}\n"                
+              # else
+              #   group.keywords = "#{hash[:keyword]}\n"
               end
               group.save
             end

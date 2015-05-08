@@ -2,6 +2,8 @@ class Review < ActiveRecord::Base
 
   before_create :add_token
 
+  has_and_belongs_to_many :topics
+
   private
   def add_token
     begin

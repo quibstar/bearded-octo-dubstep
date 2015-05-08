@@ -1,0 +1,72 @@
+-if topic.groups.count > 0
+  %ul.widget-list
+    -topic.groups.each do |group|
+      %li{:id => "group-#{group.id}", :class => "group"}
+        .group-name.clear-both
+          %h2
+            =group.name
+
+            =link_to content_tag(:i,'',:class => 'fontello-icon-pencil') + " New Ad", new_topic_group_copy_path(topic, group, :rev_id => @review.url), :class => "btn btn-yellow btn-mini new-copy fbox fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}
+
+        
+          -if (group.network == 'Google')
+            .keywords.span3
+              %strong
+                Keywords:
+
+                =link_to "+ New", new_keyword_path(:group_id => group.id, :review_url => @review.url), :class => 'btn btn-mini btn-green fbox fancybox.ajax '
+                  
+              -if (group.keywords.count > 0)
+                %table
+                  %thead
+                    %th
+                      Word
+                    %th
+                      Is Chosen
+                    %th
+                      Under Review
+                    
+                    
+                  -group.keywords.each do |keyword|
+                    %tr
+                      %td
+                        =link_to keyword.word, edit_keyword_path(keyword, :review_url => @review.url), :class => 'fbox fancybox.ajax '
+                      %td
+                        -if keyword.under_review != 1
+                          = green_or_red keyword.is_chosen
+                        -else
+                          =content_tag(:span, "✕", :class =>"label label-negative")
+                      %td
+                        -if keyword.under_review == 1
+                          =content_tag(:span, "✓", :class =>"label label-positive")
+
+
+        -if (group.network == 'Google')
+          -span = "span8"
+        -else
+          -span = "span11"
+          
+        %div{:class => "copies #{span}"}
+        
+          -if group.copies.count > 0  
+            %div.group-copy
+            %ul.group-copy
+              -group.copies.where(:copy_id => 0).each_with_index do |copy, index|
+                %li
+                  -if copy.alternates.where(:is_duplicate => "true").count > 0
+                    .col-50
+                      =render partial: "reviews/copy", locals: {topic: topic, group: group, copy: copy, index: index}
+                      
+                    .col-50.dups
+                      =render partial: "admin/topics/tabbed_versions", locals: {topic: topic, group: group, copy: copy, index: index}
+                  -else
+                    =render partial: "reviews/copy", locals: {topic: topic, group: group, copy: copy, index: index}
+                    
+
+
+                  -if copy.alternates.where(:is_duplicate => "false").count > 0
+                    %ul.alt-group-copy
+                      -copy.alternates.where(:is_duplicate => "false").each do |c|
+                        %li.span4
+                          =render partial: "admin/topics/alt_copy", locals: {copy: c, index: index}
+

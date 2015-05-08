@@ -1,60 +1,52 @@
-#topic-show.front-end
-  #form-remote.widget.widget-box
-    .widget-header
-      = link_to "Edit Mode", "#", :id => 'edit-mode', :class => "pull-right"
-      %h1
-        -if @topic.client
-          =@topic.client.name
-          \:
-        =@topic.name
-    .widget-content
-      .widget-body
-        -if @topic.groups.count > 0
-          %ul.widget-list
-            -@topic.groups.each do |group|
-              %li{:id => "group-#{group.id}", :class => "group"}
-                .group-name.clear-both
-                  %h2
-                    Group:
-                    =group.name
-
-                    =link_to content_tag(:i,'',:class => 'fontello-icon-pencil') + " New Ad", new_topic_group_copy_path(@topic, group, :rev_id => @review.url), :class => "btn btn-yellow btn-mini new-copy fbox fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}
-
-                
-                  -if (group.network == 'Google')
-                    .keywords.span3
-                      %strong
-                        Keywords:
-                      =simple_format group.keywords
+-if @topic
+  #topic-show.front-end
+    #form-remote.widget.widget-box
+      .widget-header
+        = link_to "Edit Mode", "#", :id => 'edit-mode', :class => "pull-right"
+        %h1
+          -if @topic.client
+            =@topic.client.name
+            \:
+          =@topic.name
+      .widget-content
+        .widget-body
+          =render partial: "topic", locals: {topic: @topic}
 
 
-                -if (group.network == 'Google')
-                  -span = "span8"
+-else
+  #topic-show.front-end
+    #form-remote.widget.widget-box
+      .widget-header
+        = link_to "Edit Mode", "#", :id => 'edit-mode', :class => "pull-right"
+        %h1
+          -if @client
+            =@client.name
+      .widget-content
+        .widget-body
+          -if @review.topics.count > 1
+            %ul.nav.nav-tabs
+              -@review.topics.each_with_index do |topic,i|
+                -if i == 0
+                  -active = "active"
+
                 -else
-                  -span = "span11"
-                  
-                %div{:class => "copies #{span}"}
-                
-                  -if group.copies.count > 0  
-                    %div.group-copy
-                      %strong
-                        Copy:
-                    %ul.group-copy
-                      -group.copies.where(:copy_id => 0).each_with_index do |copy, index|
-                        %li
-                          -if copy.alternates.where(:is_duplicate => "true").count > 0
-                            .col-50
-                              =render partial: "reviews/copy", locals: {group: group, copy: copy, index: index}
-                              
-                            .col-50.dups
-                              =render partial: "admin/topics/tabbed_versions", locals: {group: group, copy: copy, index: index}
-                          -else
-                            =render partial: "reviews/copy", locals: {group: group, copy: copy, index: index}
-                            
+                  -active = ""
 
+                %li{:class => active}
+                  %a{:href => "#topic-#{topic.id}", :data => {:toggle => "tab"}}
+                    =topic.name
 
-                          -if copy.alternates.where(:is_duplicate => "false").count > 0
-                            %ul.alt-group-copy
-                              -copy.alternates.where(:is_duplicate => "false").each do |c|
-                                %li.span4
-                                  =render partial: "admin/topics/alt_copy", locals: {copy: c, index: index}
+            .tab-content
+              -@review.topics.each_with_index do |topic,i|
+                -if i == 0
+                  -active = "active"
+
+                -else
+                  -active = ""
+
+                %div{:class => "tab-pane #{active}", :id => "topic-#{topic.id}"}
+                  =render partial: "topic", locals: {topic: topic}
+
+          -else
+            -@review.topics.each do |topic|
+              =render partial: "topic", locals: {topic: topic}

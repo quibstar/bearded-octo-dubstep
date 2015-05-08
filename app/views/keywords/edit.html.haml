@@ -1,0 +1,11 @@
+#form-remote
+  =form_for @keyword , :html => {:id => "edit_keyword"} do |f|
+    .modal-header
+      %h4
+        Edit Keyword
+    .modal-body
+      -if @keyword
+        =render 'shared/error_messages', :object => @keyword 
+      =render "form_fields", :f => f
+    .modal-footer
+      =f.submit "Save", :class =>'btn btn-primary'

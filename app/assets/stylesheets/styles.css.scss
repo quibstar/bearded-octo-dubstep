@@ -7,7 +7,7 @@
 // BEGIN
 
 html {
-	background-color: #444;
+	/*background-color: #444;*/
 	
 	overflow-x: hidden;
 	overflow-y: visible;
@@ -45,9 +45,9 @@ h2, h3, h4 {
 }
 
 a {
-	color: #72c02c;
+	color: $defaultLinkColor;
 	&:hover {
-		color: darken(#72c02c, 20);
+		color: darken($defaultLinkColor, 20);
 		text-decoration: underline;
 		}
 }
@@ -94,7 +94,7 @@ a {
 #footer {
 	margin-top: 40px;
 	padding: 20px 10px;
-	background: #585f69;
+	/*background: #585f69;*/
 	color: #dadada;
 	a {
 		&:hover {
@@ -115,7 +115,7 @@ a {
 }
 .copyright a {
 	margin:0 5px;
-	color:#72c02c;
+	color:defaultLinkColor;
 }
 .copyright a:hover {
 	color:#a8f85f;
@@ -153,7 +153,7 @@ a {
 	cursor:pointer;
 	padding:5px 13px;
 	position:relative;
-	background:#72c02c;
+	background:defaultLinkColor;
 	display:inline-block;
 	color:#fff !important;
 	text-decoration:none !important;
@@ -285,13 +285,13 @@ a.btn-u-large {
 .testimonial-position,
 .testimonial-company {
 	font-style: italic;
-	color: $rtGreenHover; 
+	color: $defaultLinkColorHover; 
 	font-size: 85%;
 }
 
 
 blockquote:hover {
-	border-color: $rtGreenHover;
+	border-color: $defaultLinkColorHover;
 	@include transition-property(all);
 	@include transition-duration(0.5s);
 	@include transition-timing-function(ease-in-out);
@@ -300,3 +300,70 @@ blockquote:hover {
 // ----- END --------------------------------------------------------------
 
 
+
+// ------------------------------------------------------------------------
+//    modal
+// ------------------------------------------------------------------------
+// BEGIN
+
+.modal-body {
+	background: white;
+}
+
+.modal-header {
+	color: white;
+	background-color: #0182b8;
+}
+
+// ----- END --------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------
+//    keyword labels
+// ------------------------------------------------------------------------
+// BEGIN
+
+.label-positive,
+.badge-positive {
+  background-color: #57A957;
+}
+
+.label-positive[href],
+.badge-positive[href] {
+  background-color: #57A957;
+}
+
+.label-negative,
+.badge-negative {
+  background-color: #DB6464;
+}
+
+.label-negative[href],
+.badge-negative[href] {
+  background-color: #DB6464;
+}
+
+.label-notification,
+.badge-notification {
+  background-color: #ED7A53;
+}
+
+.label-notification[href],
+.badge-notification[href] {
+  background-color: #ED7A53;
+}
+
+.label-white,
+.badge-white {
+  background-color: #FFF;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.label-white[href],
+.badge-white[href] {
+  background-color: #FFF;
+  color: #333;
+}
+
+// ----- END --------------------------------------------------------------

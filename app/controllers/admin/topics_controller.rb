@@ -15,7 +15,6 @@ class Admin::TopicsController < ApplicationController
     @title = @topic.name
     respond_to do |format|
       format.html
-      format.csv {render text: @topic.to_csv(@topic)}
       format.xls
       format.xlsx
     end
@@ -34,7 +33,7 @@ class Admin::TopicsController < ApplicationController
     end
     respond_to do |format|
       if @topic.save
-            format.html {redirect_to admin_topics_path}
+        format.html {redirect_to admin_topics_path}
         format.js
       else
         @title = "New Topic"

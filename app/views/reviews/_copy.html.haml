@@ -8,8 +8,7 @@
 
   .tab-content
     .tab-pane.active
-
       .copy-content
         %div{:id => "copy-#{copy.id}"}
           =render partial: "admin/topics/content_per_network", locals: {group: group, copy: copy}
-        =link_to "Dupe", new_topic_group_copy_path(@topic, group, :dup_copy_id => copy.id, :rev_id => @review.url), :class => "btn btn-yellow btn-mini new-copy fbox-copy fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}
+        =link_to "Dupe", new_topic_group_copy_path(topic, group, :dup_copy_id => copy.id, :rev_id => @review.url), :class => "btn btn-yellow btn-mini new-copy fbox-copy fancybox.ajax",:remote => true, :data => {:textarea => "copy_content", :network => "#{group.network}"}

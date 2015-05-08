@@ -1,0 +1,65 @@
+# check to see if there is group or copy ids, if so ad was not created in adreview
+has_group_id = false
+has_copy_id = false
+
+# loop through groups and copies to see if there are ids
+  if @group.ad_group_id
+    has_group_id = true
+    @group.copies.each do |copy|
+      if copy.ad_id
+        has_copy_id = true
+      end
+    end
+  end
+
+wb = xlsx_package.workbook
+
+if @group.keywords_only == "true"
+  keywords_worksheet = "Keywords-" + @group.name[0..20]
+  wb.add_worksheet(name: keywords_worksheet) do |sheet|
+    sheet.add_row ["Keyword","keyword ID", "Ad group ID", "test"]
+    @group.keywords.each do |keyword|
+      kid = keyword.keyword_id ? keyword.keyword_id : ""
+      agi = keyword.ad_group_id ? keyword.ad_group_id : ""
+      sheet.add_row [keyword.word, kid, agi, @group.keywords_only == "true"]
+    end
+  end
+else
+
+  if has_group_id
+    wb.add_worksheet(name: @group.name[0..30]) do |sheet|
+      sheet.add_row ["Ad state","Ad","Description line 1","Description line 2","Display URL","Destination URL","Campaign", "Ad group","Status", "Ad group ID"]
+      @group.copies.each do |copy|
+        if(copy.selected == true)
+            con = copy.content.lines.map(&:chomp)
+            sheet.add_row ["enabled", con[0] , con[1] , con[2] , @group.display_url , @group.destination_url , @group.topic.name , @group.name , "approved", @group.ad_group_id]
+        end
+      end
+    end
+
+  elsif has_group_id && has_copy_id
+
+    wb.add_worksheet(name: @group.name[0..30]) do |sheet|
+      sheet.add_row ["Ad state","Ad","Description line 1","Description line 2","Display URL","Destination URL","Campaign", "Ad group","Status", "Ad ID", "Ad group ID"]
+      @group.copies.each do |copy|
+        if(copy.selected == true)
+            con = copy.content.lines.map(&:chomp)
+            sheet.add_row ["enabled", con[0] , con[1] , con[2] , @group.display_url , @group.destination_url , @group.topic.name , @group.name , "approved", copy.ad_id, @group.ad_group_id]
+        end
+      end
+    end
+
+  else
+    
+    wb.add_worksheet(name: @group.name[0..30]) do |sheet|
+      sheet.add_row ["Ad state","Ad","Description line 1","Description line 2","Display URL","Destination URL","Campaign", "Ad group","Status"]
+      @group.copies.each do |copy|
+        if(copy.selected == true)
+            con = copy.content.lines.map(&:chomp)
+            sheet.add_row ["enabled", con[0] , con[1] , con[2] , @group.display_url , @group.destination_url , @group.topic.name , @group.name , "approved"]
+        end
+      end
+    end
+
+  end
+end

@@ -84,8 +84,8 @@ $gray:		#555;
   }
 }
 
-$rtGreen: #72c02c;
-$rtGreenHover: #5fb611;
+$defaultLinkColor: #0182b8;
+$defaultLinkColorHover: darken($defaultLinkColor, 10);
 
 $location : 'public';
 

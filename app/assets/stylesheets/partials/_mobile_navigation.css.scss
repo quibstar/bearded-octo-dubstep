@@ -31,12 +31,12 @@ a#menu-btn {
 			position: relative;
 			a {
 				display: block;
-				color: $rtGreen;
+				color: $defaultLinkColor;
 				text-decoration: none;
-				border-bottom: 1px solid $rtGreen;
+				border-bottom: 1px solid $defaultLinkColor;
 				padding: 5px;
 				&:hover {
-					color: darken($rtGreen, 20);
+					color: darken($defaultLinkColor, 20);
 				}
 			}
 			.show-sub {
@@ -62,7 +62,7 @@ a#menu-btn {
 					
 					margin-left: 15px;
 					&:hover {
-						color: darken($rtGreen, 10);
+						color: darken($defaultLinkColor, 10);
 					}
 				}
 			}

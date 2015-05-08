@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302141041) do
+ActiveRecord::Schema.define(version: 20150424132423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -294,6 +294,7 @@ ActiveRecord::Schema.define(version: 20150302141041) do
     t.string   "image"
     t.boolean  "is_card",                   default: false
     t.integer  "ad_group_id",     limit: 8
+    t.integer  "ad_id",           limit: 8
   end
 
   create_table "help_categories", force: true do |t|
@@ -323,6 +324,17 @@ ActiveRecord::Schema.define(version: 20150302141041) do
     t.string   "image"
     t.string   "content_type"
     t.string   "file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "keywords", force: true do |t|
+    t.integer  "group_id"
+    t.string   "word"
+    t.integer  "is_chosen",              default: 0
+    t.integer  "under_review",           default: 0
+    t.integer  "keyword_id",   limit: 8
+    t.integer  "ad_group_id",  limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -508,15 +520,19 @@ ActiveRecord::Schema.define(version: 20150302141041) do
   end
 
   create_table "reviews", force: true do |t|
-    t.string   "topic_id"
     t.string   "url"
-    t.string   "user"
-    t.boolean  "viewed"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "client_id"
+    t.integer  "topic_id"
   end
 
   add_index "reviews", ["url"], name: "index_reviews_on_url", using: :btree
+
+  create_table "reviews_topics", id: false, force: true do |t|
+    t.integer "review_id", null: false
+    t.integer "topic_id",  null: false
+  end
 
   create_table "rewrites", force: true do |t|
     t.integer  "page_id"
