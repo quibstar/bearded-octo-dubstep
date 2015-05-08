@@ -16,10 +16,10 @@
         .controls
           =f.check_box :is_chosen,  {checked: false}
 
-      %li.control-group
-        =f.label :under_review, :class => "control-label"
-        .controls
-          =f.check_box :under_review,  {checked: true}
+      / %li.control-group
+      /   =f.label :under_review, :class => "control-label"
+      /   .controls
+      /     =f.check_box :under_review,  {checked: true}
 
       =f.hidden_field :review_url, :value => @review.url
 
