@@ -17,13 +17,14 @@ wb = xlsx_package.workbook
 if @group.keywords_only == "true"
   keywords_worksheet = "Keywords-" + @group.name[0..20]
   wb.add_worksheet(name: keywords_worksheet) do |sheet|
-    sheet.add_row ["Keyword","keyword ID", "Ad group ID", "test"]
+    sheet.add_row ["Keyword","keyword ID", "Ad group ID"]
     @group.keywords.each do |keyword|
       kid = keyword.keyword_id ? keyword.keyword_id : ""
       agi = keyword.ad_group_id ? keyword.ad_group_id : ""
-      sheet.add_row [keyword.word, kid, agi, @group.keywords_only == "true"]
+      sheet.add_row [keyword.word, kid, agi]
     end
   end
+  
 else
 
   if has_group_id

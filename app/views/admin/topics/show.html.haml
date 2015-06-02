@@ -62,23 +62,17 @@
                         %table
                           %thead
                             %th
-                              Word
-                            %th
-                              Is Chosen
-                            %th
-                              Under Review
-                            
-                            
+                              Word                         
                           -group.keywords.each do |keyword|
                             %tr
                               %td
-                                =link_to keyword.word, edit_admin_keyword_path(keyword), :class => 'fboxForm fancybox.ajax '
-                              %td
                                 -if keyword.is_chosen == 1
                                   =content_tag(:span, "✓", :class =>"label label-positive")
-                              %td
                                 -if keyword.is_chosen != 1
                                   =content_tag(:span, "✕", :class =>"label label-negative")
+                                =link_to keyword.word, edit_admin_keyword_path(keyword), :class => 'fboxForm fancybox.ajax '
+                              %td
+                                
 
                               
                             
