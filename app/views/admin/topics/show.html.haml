@@ -119,9 +119,9 @@
         %h3
           Review Url
 
-        = "#{current_environment}/reviews/#{@topic.reviews.first.url}"
+        = "#{request.protocol + request.host}/reviews/#{@topic.reviews.first.url}"
         %br/
-        %button{:class => "btn btn-primary", :id => "copy-button", :data => {"clipboard-text" => "#{current_environment}/reviews/#{@topic.reviews.first.url}"}, :title => "Click to copy review URL to clipboard."}
+        %button{:class => "btn btn-primary", :id => "copy-button", :data => {"clipboard-text" => "#{request.protocol + request.host}/reviews/#{@topic.reviews.first.url}"}, :title => "Click to copy review URL to clipboard."}
           Copy to Clipboard
       / .span4
       /   =link_to content_tag(:i,'',:class => 'fontello-icon-mail') +' Client Review', "#", :class => "btn btn-yellow send-to"

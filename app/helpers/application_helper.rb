@@ -1,11 +1,11 @@
 module ApplicationHelper
 
-  def current_environment
-    env = "http://adreview.teamddm.com"
-    if Rails.env == 'development'
-      env = "localhost:3000"
-    end
-  end
+  # def current_environment
+  #   env = "http://adreview.teamddm.com"
+  #   if Rails.env == 'development'
+  #     env = "localhost:3000"
+  #   end
+  # end
 
   # Gets class for the body tag
   def column_type( pageObject, controller)

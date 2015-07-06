@@ -5,7 +5,7 @@ class ReviewMailer < ActionMailer::Base
     
     @user = user
     email_with_name = %("#{@user.name}" <#{@user.email}>)
-    @url = "#{current_environment}/reviews/#{url}"
+    @url = "#{request.protocol + request.host}/reviews/#{url}"
     mail(from: email_with_name, cc:@user.email, to: user_email, subject: 'Please review content.')
   end
 
@@ -13,7 +13,7 @@ class ReviewMailer < ActionMailer::Base
 
     @user = user
     email_with_name = %("#{@user.name}" <#{@user.email}>)
-    @url = "#{current_environment}/banners/#{url}"
+    @url = "#{request.protocol + request.host}/banners/#{url}"
     mail(from: email_with_name, cc:@user.email, to: user_email, subject: 'Please review banner ad content.')
   end
 end

@@ -37,7 +37,7 @@
 					=link_to "Create New Review URL", new_admin_review_path(:client_id => client.id), :class => "fboxForm fancybox.ajax btn btn-primary btn-mini"
 					%hr
 					-client.reviews.each do |review|
-						=link_to "#{current_environment}/reviews/#{review.url}","#{current_environment}/reviews/#{review.url}", :target => "_blank"
+						=link_to "#{request.protocol + request.host}/reviews/#{review.url}","#{request.protocol + request.host}/reviews/#{review.url}", :target => "_blank"
 						=link_to "Edit topics included in URL", edit_admin_review_path(review), :class => "fboxForm fancybox.ajax btn btn-green btn-mini"
 				-else
 					No topics created for client.
