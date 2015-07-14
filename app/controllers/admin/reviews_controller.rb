@@ -29,7 +29,7 @@ class Admin::ReviewsController < ApplicationController
     @review = Review.new(review_params)
     if @review.save 
       flash[:success]= "Successfully created review."
-      redirect_to admin_client_path(@review.client_id)
+      redirect_to admin_clients_path(@review.client_id)
     else
       flash[:success]= "Something went wrong please try again."
       redirect_to admin_clients_path
@@ -49,7 +49,7 @@ class Admin::ReviewsController < ApplicationController
       redirect_to admin_clients_path(anchor: "client-#{@review.client_id}")
     else
       flash[:success]= "Something went wrong please try again."
-      redirect_to admin_client_path(anchor: "client-#{@review.client_id}")
+      redirect_to admin_clients_path(anchor: "client-#{@review.client_id}")
     end
   end
 
