@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
 
   belongs_to :topic 
   has_many :copies, :dependent => :destroy
-  has_many :keywords
+  has_many :keywords, :dependent => :destroy
 
   mount_uploader :image, GroupUploader
 

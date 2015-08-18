@@ -29,17 +29,20 @@
 					n/a
 			%td
 				-topic.groups.each do|group|
+					%strong
+						Group name: 
 					=group.name
 					%br/
 
 					-if group.ad_group_id
 						%strong
-							Group Ad Id - 
+							Group Ad Id: 
 						=group.ad_group_id
 						%br/
 					-group.copies.each do |copy|
 						-if copy.ad_id
 							%strong
-								Ad Id - 
+								Ad Id:  
 							=copy.ad_id
 							%br/
+					

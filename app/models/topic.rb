@@ -115,12 +115,23 @@ class Topic < ActiveRecord::Base
               group.ad_group_id = hash[:ad_group_id]
               group.network = "Google"
               topic.groups << group
+
               if group.keywords !=nil
 
                 keyword = Keyword.find_by_keyword_id(hash[:keyword_id])
 
                 if keyword == nil
+                  puts "KEYWORD IS NIL NOT FOUND"
                   keyword = Keyword.new 
+                  keyword.group_id = group.id
+                  keyword.word = hash[:keyword]
+                  keyword.is_chosen = 1
+                  keyword.under_review = 0
+                  keyword.keyword_id = hash[:keyword_id]
+                  keyword.ad_group_id = hash[:ad_group_id]
+                  keyword.save
+                else
+                  puts "Keyword NOT NIL - FOUND"
                   keyword.group_id = group.id
                   keyword.word = hash[:keyword]
                   keyword.is_chosen = 1
