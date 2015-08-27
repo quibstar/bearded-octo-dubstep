@@ -29,7 +29,7 @@
                           =content_tag(:span, "✓", :class =>"label label-positive")
                         -if keyword.is_chosen != 1
                           =content_tag(:span, "✕", :class =>"label label-negative")
-                        -if @topic.client.can_edit
+                        -if topic.client.can_edit
                           =link_to keyword.word, edit_keyword_path(keyword, :review_url => @review.url), :class => 'fbox fancybox.ajax '
                         -else
                           = keyword.word
