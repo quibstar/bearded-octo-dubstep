@@ -5,3 +5,9 @@
 		=f.label :name, :class => "control-label"
 		.controls
 			=f.text_field :name, :class => "required"
+
+	%li.control-group
+		=f.label "Client can edit content", :class => "control-label"
+		.controls
+			=f.check_box :can_edit, :class => "required"
+
