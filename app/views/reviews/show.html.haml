@@ -19,7 +19,8 @@
   #topic-show.front-end
     #form-remote.widget.widget-box
       .widget-header
-        = link_to "Edit Mode", "#", :id => 'edit-mode', :class => "pull-right"
+        -if @client.can_edit
+          = link_to "Edit Mode", "#", :id => 'edit-mode', :class => "pull-right"
         %h1
           -if @client
             =@client.name
