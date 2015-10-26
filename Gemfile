@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.1'
+gem 'rails', '4.2.4'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
 gem "geocoder"
-gem 'haml-rails' 
+gem 'haml-rails'
 gem 'devise'
 gem 'devise_invitable', '~> 1.3.4'
 gem "cancan"
@@ -23,12 +23,14 @@ gem 'thin'
 gem 'mailcatcher'
 gem 'roo'
 gem 'spreadsheet'
+gem 'zip-zip'
+gem 'axlsx', '~> 2.0'
 gem 'axlsx_rails'
 gem 'zeroclipboard-rails'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
-gem "compass-rails", "~> 1.1.2"
+gem 'sass-rails'
+gem 'compass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
