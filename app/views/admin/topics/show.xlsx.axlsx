@@ -22,7 +22,7 @@ if has_group_id
     @group.copies.each do |copy|
       if(copy.selected == true)
           con = copy.content.lines.map(&:chomp)
-          sheet.add_row ["enabled", con[0] , con[1] , con[2] , @group.display_url , @group.destination_url , @group.topic.name , @group.name , "approved", @group.ad_group_id]
+          sheet.add_row ["enabled", con[0] , con[1] , con[2] , @group.display_url , @group.destination_url , @topic.name , @group.name , "approved", @group.ad_group_id]
       end
     end
   end
@@ -35,7 +35,7 @@ elsif has_group_id && has_copy_id
     @group.copies.each do |copy|
       if(copy.selected == true)
           con = copy.content.lines.map(&:chomp)
-          sheet.add_row ["enabled", con[0] , con[1] , con[2] , @group.display_url , @group.destination_url , @group.topic.name , @group.name , "approved", copy.ad_id, @group.ad_group_id]
+          sheet.add_row ["enabled", con[0] , con[1] , con[2] , @group.display_url , @group.destination_url , @topic.name , @group.name , "approved", copy.ad_id, @group.ad_group_id]
       end
     end
   end
