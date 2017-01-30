@@ -228,7 +228,7 @@ function googleCharCheck(str) {
 	    if(n[0] && n[0].length > 0) {
 	    	var charCount = n[0].length;
 	    	counterOne.html(charCount);
-	    	checkCharacterCount(counterOne, charCount, 25);
+	    	checkCharacterCount(counterOne, charCount, 30);
 	    } else {
 	    	counterTwo.html('')
 	    }
@@ -237,7 +237,7 @@ function googleCharCheck(str) {
 	    if(n[1] && n[1].length > 0) {
 	    	var charCount = n[1].length;
 	    	counterTwo.html(n[1].length);
-	    	checkCharacterCount(counterTwo, charCount, 35);
+	    	checkCharacterCount(counterTwo, charCount, 30);
 	    } else {
 	    	counterTwo.html('')
 	    }
@@ -245,7 +245,7 @@ function googleCharCheck(str) {
 	    if(n[2] && n[2].length > 0) {
 	    	var charCount = n[2].length;
 	    	counterThree.html(n[2].length);
-	    	checkCharacterCount(counterThree, charCount, 35);
+	    	checkCharacterCount(counterThree, charCount, 80);
 	    } else {
 	    	counterThree.html('')
 	    }
