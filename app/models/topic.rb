@@ -16,7 +16,7 @@ class Topic < ActiveRecord::Base
   def create_review_url
     review = Review.new
     review.topic_id = self.id
-    review.save    
+    review.save
   end
 
 
@@ -34,28 +34,29 @@ class Topic < ActiveRecord::Base
       end
 
       if xls
-        xls.each(:ad => '^Ad$',:description_1 => '^Description line 1$',:description_2 => '^Description line 2$',:ad_group => '^Ad group$', :campaign => '^Campaign$', :display_url => '^Display URL$', :destination_url => '^Destination URL', :ad_id => "^Ad ID$", :ad_group_id => "^Ad group ID$", :ad_type => "^Ad type$") do |hash|
+        xls.each(:ad => '^Description$',:description_1 => '^Headline 1$',:description_2 => '^Headline 2$',:ad_group => '^Ad group$', :campaign => '^Campaign$', :display_url => '^Final URL$', :destination_url => '^Final URL', :ad_id => "^Ad ID$", :ad_group_id => "^Ad group ID$", :ad_type => "^Ad type$") do |hash|
           #only import text ads
-          if hash[:ad_type] == "Text ad"
+          if hash[:ad_type] == "Expanded text ad"
             unless hash[:campaign] == " --" || hash[:campaign] == "Campaign" || hash[:campaign] == nil
               topic = Topic.find_by_name hash[:campaign]
               if !topic
                   topic = Topic.new
                   topic.name = hash[:campaign]
                   puts "New #{topic.name}"
-                  
+
               end
 
               topic.save
-                
+
               group = Group.find_by_ad_group_id hash[:ad_group_id]
               if !group
                 group = Group.new
               end
+
               group.name = hash[:ad_group]
               group.ad_group_id = hash[:ad_group_id]
               group.destination_url = hash[:destination_url]
-              group.display_url = hash[:display_url]
+              group.display_url = hash[:destination_url].split("/")[2]
               group.network = "Google"
               topic.groups << group
 
@@ -65,19 +66,19 @@ class Topic < ActiveRecord::Base
 
               copy = Copy.find_by_ad_id hash[:ad_id]
               if !copy
-                copy = Copy.new 
+                copy = Copy.new
                 copy.selected = true
               end
 
               copy.ad_id = hash[:ad_id]
               copy.content = content
-              copy.editor = @user.email 
+              copy.editor = @user.email
               group.copies << copy
 
             end
           end
         end
-      end      
+      end
     end
   end
 
@@ -104,7 +105,7 @@ class Topic < ActiveRecord::Base
             topic.save
 
             unless hash[:ad_group] == nil
-                  
+
               group = Group.find_by_name hash[:ad_group]
               if !group
                 group = Group.new
@@ -122,7 +123,7 @@ class Topic < ActiveRecord::Base
 
                 if keyword == nil
                   puts "KEYWORD IS NIL NOT FOUND"
-                  keyword = Keyword.new 
+                  keyword = Keyword.new
                   keyword.group_id = group.id
                   keyword.word = hash[:keyword]
                   keyword.is_chosen = 1
@@ -141,8 +142,8 @@ class Topic < ActiveRecord::Base
                   keyword.save
                 end
 
-                
-                # group.keywords += "#{hash[:keyword]}\n"                
+
+                # group.keywords += "#{hash[:keyword]}\n"
               # else
               #   group.keywords = "#{hash[:keyword]}\n"
               end
