@@ -62,7 +62,7 @@ class Topic < ActiveRecord::Base
 
               group.save
 
-              content = hash[:ad] + "\n" + hash[:description_1] + "\n" + hash[:description_2]
+              content =  hash[:description_1] + " - "+ hash[:description_2]  + "\n" + hash[:ad]
 
               copy = Copy.find_by_ad_id hash[:ad_id]
               if !copy
