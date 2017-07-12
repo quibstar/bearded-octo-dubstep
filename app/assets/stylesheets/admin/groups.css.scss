@@ -161,10 +161,23 @@
 }
 
 .google-display {
-	max-width: 270px;
+	max-width: 632px;
 	color: #333!important;
 	margin: 10px 0 ;
 	border: 1px solid #CCC;
+}
+
+.ad-circle {
+	    background-color: #fff;
+    border-radius: 3px;
+    color: #006621;
+    display: inline-block;
+    font-size: 11px;
+    border: 1px solid #006621;
+    padding: 1px 3px 0 2px;
+    line-height: 11px;
+    vertical-align: baseline;
+    margin-right: 7px;
 }
 
 .google-display .google-ad-header {

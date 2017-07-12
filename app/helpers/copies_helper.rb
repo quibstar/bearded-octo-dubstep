@@ -6,12 +6,12 @@ module CopiesHelper
       if i == 0
         t.sub!("{Keyword:", "")
         t.sub!("}", "")
-        text << "<div class='google-ad-header'>#{t}</div><div class='ads-visurl'>#{url}</div>"
+        text << "<div class='google-ad-header'>#{t}</div><div class='ads-visurl'><span class='ad-circle'>Ad</span>#{url}</div>"
       else
         text << "<div>#{t}</div>"
       end
     end
-    text.html_safe 
+    text.html_safe
   end
 
   def linkedIn_content(content)
